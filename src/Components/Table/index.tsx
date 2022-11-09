@@ -55,6 +55,7 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 							<Checkbox
 								checked={verifyIndeterminate(table)}
 								onClick={table.getToggleAllRowsSelectedHandler()}
+								{...{ disabled: selection.disableSelectionRow !== undefined }}
 							/>
 						),
 
@@ -120,6 +121,7 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 		getScrollElement: () => tableContainerRef.current,
 		count: rows.length,
 		estimateSize: () => 50,
+		enableSmoothScroll: true,
 	});
 	const { getVirtualItems, getTotalSize } = rowVirtualizer;
 
@@ -128,9 +130,10 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 	const paddingBottom =
 		getVirtualItems().length > 0
 			? getTotalSize() -
-			  (getVirtualItems()?.[getVirtualItems().length - 1]?.end || 0)
-			: 0;
-
+			  (getVirtualItems()?.[getVirtualItems().length - 1]?.end || 0) +
+			  13
+			: 0 + 13;
+	console.log({ paddingTop, paddingBottom });
 	return (
 		<div className="p-2">
 			<div

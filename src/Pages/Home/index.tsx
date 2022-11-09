@@ -12,7 +12,7 @@ export default function Home() {
 	const [selectedItems, setSelectedItems] = useState({});
 
 	useEffect(() => {
-		setData(makeData.person(20));
+		setData(makeData.person(50000));
 	}, []);
 
 	const columns = useMemo<ColumnDef<TPerson>[]>(
