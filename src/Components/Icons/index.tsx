@@ -339,6 +339,32 @@ function Xml({ ...rest }) {
 	);
 }
 
+function Indeterminate({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			width={width || '100%'}
+			height={height || '50%'}
+			xmlns="http://www.w3.org/2000/svg"
+			{...rest}
+		>
+			<g id="Layer_1">
+				<title>Layer 1</title>
+				<rect
+					stroke="#000"
+					rx="3"
+					id="svg_1"
+					width={width || '100%'}
+					height={height || '100%'}
+					y="-0.07418"
+					x="-0.01483"
+					strokeWidth="0"
+					fill={color || 'currentColor'}
+				/>
+			</g>
+		</svg>
+	);
+}
+
 export const Icons = {
 	Download,
 	Upload,
@@ -355,4 +381,5 @@ export const Icons = {
 	Pdf,
 	Excel,
 	Xml,
+	Indeterminate,
 };

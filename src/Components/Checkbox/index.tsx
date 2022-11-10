@@ -1,42 +1,83 @@
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
-import React from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 import { Icons } from '../Icons';
 
-type Props = {
-	checked: boolean | 'indeterminate';
-	onClick?: () => void;
-};
-
-type PropsContainer = {
-	children: React.ReactNode;
-};
-
-function Container({ children }: PropsContainer) {
-	return <div className="p-1">{children}</div>;
+interface Props
+	extends Omit<
+		React.ForwardRefExoticComponent<
+			CheckboxRadix.CheckboxProps & React.RefAttributes<HTMLButtonElement>
+		>,
+		'checked' | 'defaultChecked' | '$$typeof' | 'onClick'
+	> {
+	checked?: boolean | 'indeterminate';
+	defaultChecked?: boolean | 'indeterminate';
+	onClick?: (e?: MouseEvent<HTMLButtonElement, Event>) => void;
 }
 
-export function Checkbox({ checked, onClick, ...rest }: Props) {
+function Container({ children }: { children: React.ReactNode }) {
 	return (
-		<CheckboxRadix.Root
-			onClick={onClick}
-			checked={checked}
-			className={`${
-				!checked ? '' : 'bg-primary-500'
-			} rounded h-5 w-5 border-[1px] border-black disabled:cursor-not-allowed disabled:opacity-50`}
-			{...rest}
-		>
-			<CheckboxRadix.Indicator>
-				{checked === 'indeterminate' && (
-					<Container>
-						<div className="w-full h-1 bg-white rounded" />
-					</Container>
-				)}
-				{checked === true && (
-					<Container>
-						<Icons.Checked color="#fff" />
-					</Container>
-				)}
-			</CheckboxRadix.Indicator>
-		</CheckboxRadix.Root>
+		<div className="p-1 w-full h-full flex items-center justify-center">
+			{children}
+		</div>
+	);
+}
+
+export function Checkbox({ checked, onClick, defaultChecked, ...rest }: Props) {
+	const [situation, setSituation] = useState(() => {
+		if (checked === true || defaultChecked === true) {
+			return 'checked';
+		}
+		if (checked === 'indeterminate' || defaultChecked === 'indeterminate') {
+			return 'indeterminate';
+		}
+		return 'unchecked';
+	});
+
+	const ref = useCallback((node: any) => {
+		if (node !== null) {
+			const { attributes } = node as unknown as {
+				attributes: Record<string, { value: string }>;
+			};
+			console.log('vai ser: ', attributes['data-state'].value);
+			setSituation(attributes['data-state'].value);
+		}
+	}, []);
+
+	function verifyClass() {
+		const classes = [
+			'rounded h-5 w-5 border-[1px] border-black disabled:cursor-not-allowed disabled:opacity-50;',
+		];
+
+		if (situation === 'checked' || situation === 'indeterminate') {
+			classes.push('bg-primary-500');
+		}
+
+		return classes.join(' ');
+	}
+
+	return (
+		<div className="w-full h-full flex items-center justify-center">
+			<CheckboxRadix.Root
+				ref={ref}
+				onClick={onClick}
+				checked={checked}
+				defaultChecked={defaultChecked}
+				className={verifyClass()}
+				{...rest}
+			>
+				<CheckboxRadix.Indicator>
+					{situation === 'indeterminate' && (
+						<Container>
+							<Icons.Indeterminate color="#fff" />
+						</Container>
+					)}
+					{situation === 'checked' && (
+						<Container>
+							<Icons.Checked color="#fff" />
+						</Container>
+					)}
+				</CheckboxRadix.Indicator>
+			</CheckboxRadix.Root>
+		</div>
 	);
 }

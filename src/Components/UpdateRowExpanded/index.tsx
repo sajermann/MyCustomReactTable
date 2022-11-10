@@ -51,11 +51,10 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 				onChange={handleChange}
 			/>
 			<Checkbox
-				{...{
-					checked: formData.isActive,
-				}}
+				defaultChecked={row.original.isActive}
+				id="isActive"
+				name="isActive"
 			/>
-
 			<button type="submit" className="!bg-primary-500 text-white p-2 rounded">
 				Salvar
 			</button>

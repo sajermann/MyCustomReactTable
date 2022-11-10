@@ -78,16 +78,14 @@ export function Table<T>({
 					align: 'center',
 					enableSorting: false,
 					cell: ({ row }: any) => (
-						<div className="w-full h-full flex items-center justify-center">
-							<Checkbox
-								{...{
-									disabled: selection.disableSelectionRow
-										? selection.disableSelectionRow(row)
-										: false,
-									checked: row.getIsSelected(),
-								}}
-							/>
-						</div>
+						<Checkbox
+							{...{
+								disabled: selection.disableSelectionRow
+									? selection.disableSelectionRow(row)
+									: false,
+								checked: row.getIsSelected(),
+							}}
+						/>
 					),
 				},
 			];

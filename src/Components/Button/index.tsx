@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import styles from './index.module.css';
 
