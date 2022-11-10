@@ -21,6 +21,8 @@ export function person(...lens: number[]) {
 				birthday: faker.date.past().toISOString(),
 				email: faker.internet.email(),
 				avatar: faker.internet.avatar(),
+				role: faker.helpers.arrayElement(['Admin', 'User', 'Dev']),
+				isActive: faker.helpers.arrayElement([true, false]),
 			})
 		);
 	};

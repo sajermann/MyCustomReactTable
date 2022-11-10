@@ -33,7 +33,7 @@ export function Checkbox({ checked, onClick, ...rest }: Props) {
 				)}
 				{checked === true && (
 					<Container>
-						<Icons.Checked />
+						<Icons.Checked color="#fff" />
 					</Container>
 				)}
 			</CheckboxRadix.Indicator>

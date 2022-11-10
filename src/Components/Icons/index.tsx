@@ -1,12 +1,15 @@
+/* eslint-disable react/no-unused-prop-types */
 type Props = {
 	color?: string;
+	width?: number;
+	height?: number;
 };
 
-function Download() {
+function Download({ width, height, color }: Props) {
 	return (
 		<svg
-			width="100%"
-			height="100%"
+			width={width || '100%'}
+			height={height || '100%'}
 			viewBox="0 0 16 20"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +18,7 @@ function Download() {
 				fillRule="evenodd"
 				clipRule="evenodd"
 				d="M9 11.175L12.243 7.933L13.657 9.347L8 15.004L2.343 9.347L3.757 7.933L7 11.175V0H9V11.175ZM0 14H2V18H14V14H16V18C16 19.1 15.1 20 14 20H2C0.9 20 0 19.037 0 18V14Z"
-				fill="white"
+				fill={color || 'currentColor'}
 			/>
 		</svg>
 	);
@@ -169,42 +172,44 @@ function Info() {
 	);
 }
 
-function Error() {
+function Error({ width, height, color, ...rest }: Props) {
 	return (
 		<svg
-			width="100%"
-			height="100%"
+			width={width || '100%'}
+			height={height || '100%'}
 			viewBox="0 0 23 23"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			{...rest}
 		>
 			<path
 				d="M13.5765 9.05096L11.3137 11.3137M11.3137 11.3137L9.05098 13.5764M11.3137 11.3137L13.5765 13.5764M11.3137 11.3137L9.05098 9.05096"
-				stroke="#FF0000"
+				stroke={color || 'currentColor'}
 				strokeWidth="2"
 				strokeLinecap="round"
 			/>
 			<path
 				d="M5.65687 16.9706C8.78106 20.0948 13.8464 20.0948 16.9706 16.9706C20.0948 13.8464 20.0948 8.78105 16.9706 5.65685C13.8464 2.53266 8.78106 2.53266 5.65687 5.65685C2.53267 8.78105 2.53267 13.8464 5.65687 16.9706Z"
-				stroke="#FF0000"
+				stroke={color || 'currentColor'}
 				strokeWidth="2"
 			/>
 		</svg>
 	);
 }
 
-function Checked() {
+function Checked({ width, height, color, ...rest }: Props) {
 	return (
 		<svg
-			width="100%"
-			height="100%"
+			width={width || '100%'}
+			height={height || '100%'}
 			viewBox="0 0 12 9"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
+			{...rest}
 		>
 			<path
 				d="M10.1347 0.286938C10.3421 0.10086 10.618 -0.00201204 10.9043 2.98247e-05C11.1906 0.00207169 11.4649 0.108868 11.6692 0.297882C11.8736 0.486897 11.992 0.743346 11.9996 1.01312C12.0072 1.28289 11.9033 1.54488 11.7098 1.74381L5.83628 8.66741C5.73529 8.76994 5.61339 8.85223 5.47788 8.90934C5.34238 8.96646 5.19604 8.99723 5.04763 8.99982C4.89922 9.00241 4.75177 8.97677 4.61412 8.92442C4.47646 8.87207 4.35141 8.7941 4.24646 8.69516L0.351393 5.02385C0.242921 4.92858 0.15592 4.81369 0.095577 4.68605C0.0352345 4.5584 0.00278735 4.4206 0.000171818 4.28087C-0.00244371 4.14115 0.024826 4.00236 0.0803535 3.87278C0.135881 3.74321 0.218529 3.6255 0.323367 3.52669C0.428205 3.42787 0.553086 3.34997 0.690558 3.29763C0.828031 3.2453 0.97528 3.21959 1.12352 3.22206C1.27176 3.22452 1.41796 3.25511 1.55338 3.31198C1.68881 3.36886 1.8107 3.45086 1.91177 3.5531L4.99426 6.45713L10.1067 0.317463C10.1159 0.306781 10.1258 0.29659 10.1362 0.286938H10.1347Z"
-				fill="white"
+				fill={color || 'currentColor'}
 			/>
 		</svg>
 	);

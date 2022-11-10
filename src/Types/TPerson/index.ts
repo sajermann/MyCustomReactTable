@@ -5,4 +5,6 @@ export type TPerson = {
 	birthday: string;
 	email: string;
 	avatar: string;
+	role: 'Admin' | 'User' | 'Dev';
+	isActive: boolean;
 };

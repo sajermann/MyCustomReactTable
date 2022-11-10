@@ -6,6 +6,7 @@ import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { UpdateRowExpanded } from '../../Components/UpdateRowExpanded';
+import { Icons } from '../../Components/Icons';
 
 export default function Home() {
 	const { translate } = useTranslation();
@@ -96,6 +97,30 @@ export default function Home() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
+			},
+			{
+				accessorKey: 'role',
+				header: 'Role',
+				minSize: 100,
+				size: 100,
+				align: 'center',
+			},
+			{
+				accessorKey: 'isActive',
+				header: 'Ativo',
+				minSize: 100,
+				size: 100,
+				align: 'center',
+				cell: ({ row }) =>
+					row.original.isActive ? (
+						<div className="flex items-center justify-center w-full h-6 text-green-500">
+							<Icons.Checked />
+						</div>
+					) : (
+						<div className="flex items-center justify-center w-full h-9 text-red-500">
+							<Icons.Error />
+						</div>
+					),
 			},
 		],
 		[]

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body{
-	@apply dark:bg-[#09090a] dark:text-zinc-100
+body {
+	@apply dark:bg-[#09090a] dark:text-zinc-100;
 }
