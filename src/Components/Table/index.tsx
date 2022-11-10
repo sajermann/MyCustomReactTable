@@ -4,6 +4,7 @@ import {
 	ColumnDef,
 	flexRender,
 	getCoreRowModel,
+	getExpandedRowModel,
 	getSortedRowModel,
 	OnChangeFn,
 	Row,
@@ -22,9 +23,13 @@ type Props<T> = {
 		setRowSelection: OnChangeFn<RowSelectionState>;
 		disableSelectionRow?: (data: Row<T>) => boolean;
 	};
+
 	columns: ColumnDef<T>[];
 	data: T[];
 	isLoading?: boolean;
+	expandLine?: {
+		render: (data: Row<T>) => React.ReactNode;
+	};
 };
 
 type PropsTableInternal = {
@@ -32,7 +37,13 @@ type PropsTableInternal = {
 	getIsSomeRowsSelected: () => boolean;
 };
 
-export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
+export function Table<T>({
+	selection,
+	columns,
+	data,
+	isLoading,
+	expandLine,
+}: Props<T>) {
 	function verifyIndeterminate(table: PropsTableInternal) {
 		if (table.getIsAllRowsSelected()) {
 			return true;
@@ -46,6 +57,8 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 	}
 
 	function buildColumns() {
+		const result: any[] = [];
+
 		if (selection) {
 			const t = [
 				{
@@ -78,9 +91,11 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 					),
 				},
 			];
-			return [...t, ...columns];
+			result.push(t);
 		}
-		return columns;
+
+		result.push(columns);
+		return result.flat();
 	}
 
 	const table = useReactTable({
@@ -97,6 +112,8 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 		onSortingChange: undefined,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
+		getRowCanExpand: () => !!expandLine,
+		getExpandedRowModel: getExpandedRowModel(),
 	});
 
 	function verifyIsSelected(row: Row<T>, index: number) {
@@ -133,7 +150,6 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 			  (getVirtualItems()?.[getVirtualItems().length - 1]?.end || 0) +
 			  13
 			: 0 + 13;
-	console.log({ paddingTop, paddingBottom });
 	return (
 		<div className="p-2">
 			<div
@@ -231,37 +247,48 @@ export function Table<T>({ selection, columns, data, isLoading }: Props<T>) {
 						{getVirtualItems().map(virtualRow => {
 							const row = rows[virtualRow.index];
 							return (
-								<tr
-									key={row.id}
-									className={verifyIsSelected(row, virtualRow.index)}
-									onClick={() => {
-										if (!selection) {
-											return;
-										}
-										if (selection?.disableSelectionRow) {
-											const result = selection.disableSelectionRow(row);
-											if (!result) {
+								<>
+									<tr
+										key={row.id}
+										className={verifyIsSelected(row, virtualRow.index)}
+										onClick={() => {
+											if (!selection) {
+												return;
+											}
+											if (selection?.disableSelectionRow) {
+												const result = selection.disableSelectionRow(row);
+												if (!result) {
+													row.toggleSelected();
+												}
+											} else {
 												row.toggleSelected();
 											}
-										} else {
-											row.toggleSelected();
-										}
-									}}
-								>
-									{row.getVisibleCells().map(cell => (
-										<td
-											className={styles.td}
-											key={cell.id}
-											// @ts-expect-error dasddas
-											style={{ textAlign: cell.column.columnDef.align }}
-										>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext()
-											)}
-										</td>
-									))}
-								</tr>
+										}}
+									>
+										{row.getVisibleCells().map(cell => (
+											<td
+												className={styles.td}
+												key={cell.id}
+												// @ts-expect-error dasddas
+												style={{ textAlign: cell.column.columnDef.align }}
+											>
+												{flexRender(
+													cell.column.columnDef.cell,
+													cell.getContext()
+												)}
+											</td>
+										))}
+									</tr>
+
+									{row.getIsExpanded() && (
+										<tr>
+											{/* 2nd row is a custom 1 cell row */}
+											<td colSpan={row.getVisibleCells().length}>
+												{expandLine?.render(row)}
+											</td>
+										</tr>
+									)}
+								</>
 							);
 						})}
 						{paddingBottom > 0 && (

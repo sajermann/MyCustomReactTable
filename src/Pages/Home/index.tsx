@@ -5,6 +5,7 @@ import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
+import { UpdateRowExpanded } from '../../Components/UpdateRowExpanded';
 
 export default function Home() {
 	const { translate } = useTranslation();
@@ -12,11 +13,36 @@ export default function Home() {
 	const [selectedItems, setSelectedItems] = useState({});
 
 	useEffect(() => {
-		setData(makeData.person(50000));
+		setData(makeData.person(100));
 	}, []);
+
+	function handleSaveUpdate(row: any, dataUpdate: any) {
+		console.log('Salvando', { dataUpdate }, row.index);
+		row.getToggleExpandedHandler()();
+	}
 
 	const columns = useMemo<ColumnDef<TPerson>[]>(
 		() => [
+			{
+				id: 'expander',
+				header: 'Ações',
+				size: 10,
+				cell: ({ row }) =>
+					row.getCanExpand() ? (
+						<button
+							key={row.id}
+							type="button"
+							onClick={row.getToggleExpandedHandler()}
+							{...{
+								style: { cursor: 'pointer' },
+							}}
+						>
+							{row.getIsExpanded() ? '✏' : '📝'}
+						</button>
+					) : (
+						'🔵'
+					),
+			},
 			{
 				accessorKey: 'id',
 				header: 'ID',
@@ -85,18 +111,23 @@ export default function Home() {
 	return (
 		<div className="p-4">
 			<h1>{translate('WELCOME_TO_VITE_BOILERPLATE')}</h1>
+
 			<div>
 				<Table
 					columns={columns}
 					data={data}
-					selection={{
-						rowSelection: selectedItems,
-						setRowSelection: setSelectedItems,
-						type: 'multi',
-						disableSelectionRow: verifyForDisable,
+					// selection={{
+					// 	rowSelection: selectedItems,
+					// 	setRowSelection: setSelectedItems,
+					// 	type: 'multi',
+					// 	disableSelectionRow: verifyForDisable,
+					// }}
+					expandLine={{
+						render: row => (
+							<UpdateRowExpanded row={row} onSave={handleSaveUpdate} />
+						),
 					}}
 				/>
-				{JSON.stringify(selectedItems, null, 2)}
 			</div>
 		</div>
 	);
