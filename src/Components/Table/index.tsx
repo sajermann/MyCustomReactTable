@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import {
 	ColumnDef,
 	flexRender,
@@ -245,7 +245,7 @@ export function Table<T>({
 						{getVirtualItems().map(virtualRow => {
 							const row = rows[virtualRow.index];
 							return (
-								<>
+								<Fragment key={row.id}>
 									<tr
 										key={row.id}
 										className={verifyIsSelected(row, virtualRow.index)}
@@ -286,7 +286,7 @@ export function Table<T>({
 											</td>
 										</tr>
 									)}
-								</>
+								</Fragment>
 							);
 						})}
 						{paddingBottom > 0 && (

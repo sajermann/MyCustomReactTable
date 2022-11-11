@@ -19,26 +19,6 @@ export default function Selection() {
 	const columns = useMemo<ColumnDef<TPerson>[]>(
 		() => [
 			{
-				id: 'expander',
-				header: 'Ações',
-				size: 10,
-				cell: ({ row }) =>
-					row.getCanExpand() ? (
-						<button
-							key={row.id}
-							type="button"
-							onClick={row.getToggleExpandedHandler()}
-							{...{
-								style: { cursor: 'pointer' },
-							}}
-						>
-							{row.getIsExpanded() ? '✏' : '📝'}
-						</button>
-					) : (
-						'🔵'
-					),
-			},
-			{
 				accessorKey: 'id',
 				header: 'ID',
 				minSize: 100,
@@ -130,7 +110,7 @@ export default function Selection() {
 	return (
 		<div className="p-4">
 			<h1>{translate('WELCOME_TO_VITE_BOILERPLATE')}</h1>
-
+			{JSON.stringify(selectedItems, null, 2)}
 			<div>
 				<Table
 					columns={columns}
