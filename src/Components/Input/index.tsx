@@ -24,11 +24,13 @@ interface Props
 }
 
 export function Input({ label, containerProps, labelProps, ...rest }: Props) {
+	const { id } = { ...rest };
 	return (
 		<ContainerInput
 			containerProps={containerProps}
 			label={label}
 			labelProps={labelProps}
+			id={id}
 		>
 			<input {...rest} className={styles.input} />
 		</ContainerInput>

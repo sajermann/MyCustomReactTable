@@ -23,12 +23,14 @@ interface Props
 		HTMLAttributes<HTMLDivElement>,
 		HTMLDivElement
 	>;
+	id?: string;
 }
 export function ContainerInput({
 	children,
 	label,
 	containerProps,
 	labelProps,
+	id,
 }: Props) {
 	function classContainer() {
 		if (containerProps?.className) {
@@ -45,9 +47,9 @@ export function ContainerInput({
 	return (
 		<div {...containerProps} className={classContainer()}>
 			<label
-				htmlFor={extractorIdChildren(children)}
-				{...labelProps}
+				htmlFor={id || extractorIdChildren(children)}
 				className={styles.label}
+				{...labelProps}
 			>
 				{label}
 			</label>

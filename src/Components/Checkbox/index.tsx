@@ -2,11 +2,14 @@
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
 import {
 	DetailedHTMLProps,
+	HTMLAttributes,
 	LabelHTMLAttributes,
 	MouseEvent,
+	Ref,
 	useCallback,
 	useState,
 } from 'react';
+import { ContainerInput } from '../ContainerInput';
 import { Icons } from '../Icons';
 
 interface Props
@@ -28,6 +31,11 @@ interface Props
 	onCheckedChange?: (data: {
 		target: { value: boolean | 'indeterminate'; id: string | undefined };
 	}) => void;
+
+	containerProps?: DetailedHTMLProps<
+		HTMLAttributes<HTMLDivElement>,
+		HTMLDivElement
+	>;
 }
 
 function Container({ children }: { children: React.ReactNode }) {
@@ -46,6 +54,7 @@ export function Checkbox({
 	onCheckedChange,
 	label,
 	id,
+	containerProps,
 	...rest
 }: Props) {
 	const [situation, setSituation] = useState(() => {
@@ -58,11 +67,13 @@ export function Checkbox({
 		return 'unchecked';
 	});
 
-	const ref = useCallback((node: any) => {
+	type PropsNode = {
+		attributes: Record<string, { value: string }>;
+	};
+
+	const ref = useCallback((node: PropsNode) => {
 		if (node !== null) {
-			const { attributes } = node as unknown as {
-				attributes: Record<string, { value: string }>;
-			};
+			const { attributes } = node;
 			setSituation(attributes['data-state'].value);
 		}
 	}, []);
@@ -92,9 +103,14 @@ export function Checkbox({
 	}
 
 	return (
-		<div className="flex items-center gap-2 w-full h-full">
+		<ContainerInput
+			containerProps={containerProps}
+			label={label}
+			labelProps={labelProps}
+			id={id}
+		>
 			<CheckboxRadix.Root
-				ref={ref}
+				ref={ref as unknown as Ref<HTMLButtonElement> | undefined}
 				onClick={onClick}
 				checked={checked}
 				defaultChecked={defaultChecked}
@@ -116,11 +132,6 @@ export function Checkbox({
 					)}
 				</CheckboxRadix.Indicator>
 			</CheckboxRadix.Root>
-			{label && (
-				<label htmlFor={id} {...labelProps}>
-					{label}
-				</label>
-			)}
-		</div>
+		</ContainerInput>
 	);
 }

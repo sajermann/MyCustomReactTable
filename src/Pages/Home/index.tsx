@@ -7,7 +7,6 @@ import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { UpdateRowExpanded } from '../../Components/UpdateRowExpanded';
 import { Icons } from '../../Components/Icons';
-import { Select } from '../../Components/Select';
 
 export default function Home() {
 	const { translate } = useTranslation();
@@ -129,8 +128,8 @@ export default function Home() {
 	return (
 		<div className="p-4">
 			<h1>{translate('WELCOME_TO_VITE_BOILERPLATE')}</h1>
-			<Select />
-			{/* <div>
+
+			<div>
 				<Table
 					columns={columns}
 					data={data}
@@ -140,7 +139,7 @@ export default function Home() {
 						),
 					}}
 				/>
-			</div> */}
+			</div>
 		</div>
 	);
 }
