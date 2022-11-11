@@ -1,5 +1,12 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
-import { MouseEvent, useCallback, useState } from 'react';
+import {
+	DetailedHTMLProps,
+	LabelHTMLAttributes,
+	MouseEvent,
+	useCallback,
+	useState,
+} from 'react';
 import { Icons } from '../Icons';
 
 interface Props
@@ -7,11 +14,20 @@ interface Props
 		React.ForwardRefExoticComponent<
 			CheckboxRadix.CheckboxProps & React.RefAttributes<HTMLButtonElement>
 		>,
-		'checked' | 'defaultChecked' | '$$typeof' | 'onClick'
+		'checked' | 'defaultChecked' | '$$typeof' | 'onClick' | 'id'
 	> {
 	checked?: boolean | 'indeterminate';
 	defaultChecked?: boolean | 'indeterminate';
 	onClick?: (e?: MouseEvent<HTMLButtonElement, Event>) => void;
+	labelProps?: DetailedHTMLProps<
+		LabelHTMLAttributes<HTMLLabelElement>,
+		HTMLLabelElement
+	>;
+	label?: string;
+	id?: string;
+	onCheckedChange?: (data: {
+		target: { value: boolean | 'indeterminate'; id: string | undefined };
+	}) => void;
 }
 
 function Container({ children }: { children: React.ReactNode }) {
@@ -22,7 +38,16 @@ function Container({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export function Checkbox({ checked, onClick, defaultChecked, ...rest }: Props) {
+export function Checkbox({
+	checked,
+	onClick,
+	defaultChecked,
+	labelProps,
+	onCheckedChange,
+	label,
+	id,
+	...rest
+}: Props) {
 	const [situation, setSituation] = useState(() => {
 		if (checked === true || defaultChecked === true) {
 			return 'checked';
@@ -38,7 +63,6 @@ export function Checkbox({ checked, onClick, defaultChecked, ...rest }: Props) {
 			const { attributes } = node as unknown as {
 				attributes: Record<string, { value: string }>;
 			};
-			console.log('vai ser: ', attributes['data-state'].value);
 			setSituation(attributes['data-state'].value);
 		}
 	}, []);
@@ -55,14 +79,28 @@ export function Checkbox({ checked, onClick, defaultChecked, ...rest }: Props) {
 		return classes.join(' ');
 	}
 
+	function handleCheckedChange(e: boolean | 'indeterminate') {
+		const result = {
+			target: {
+				value: e,
+				id,
+			},
+		};
+		if (onCheckedChange) {
+			onCheckedChange(result);
+		}
+	}
+
 	return (
-		<div className="w-full h-full flex items-center justify-center">
+		<div className="flex items-center gap-2 w-full h-full">
 			<CheckboxRadix.Root
 				ref={ref}
 				onClick={onClick}
 				checked={checked}
 				defaultChecked={defaultChecked}
+				onCheckedChange={handleCheckedChange}
 				className={verifyClass()}
+				id={id}
 				{...rest}
 			>
 				<CheckboxRadix.Indicator>
@@ -78,6 +116,11 @@ export function Checkbox({ checked, onClick, defaultChecked, ...rest }: Props) {
 					)}
 				</CheckboxRadix.Indicator>
 			</CheckboxRadix.Root>
+			{label && (
+				<label htmlFor={id} {...labelProps}>
+					{label}
+				</label>
+			)}
 		</div>
 	);
 }

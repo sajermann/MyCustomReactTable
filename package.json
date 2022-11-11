@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.1",
+    "@radix-ui/react-icons": "^1.1.1",
+    "@radix-ui/react-select": "^1.1.1",
     "@sajermann/utils": "^0.0.10",
     "@tanstack/react-table": "^8.5.22",
     "@tanstack/react-virtual": "^3.0.0-beta.21",
@@ -18,8 +20,10 @@
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",
     "react": "^18.2.0",
+    "react-aria": "^3.20.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
+    "react-dropdown": "^1.11.0",
     "react-i18next": "^11.18.6",
     "react-router-dom": "^6.4.1"
   },

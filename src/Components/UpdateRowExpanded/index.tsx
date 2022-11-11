@@ -16,14 +16,16 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 	});
 
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
+		const { id, value } = e.target;
 		updateFormData({
 			...formData,
-			[e.target.name]: e.target.value.trim(),
+			[id]: value,
 		});
 	}
 
 	function handleSave(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+		console.log('form', { e });
 		onSave(row, formData);
 	}
 
@@ -34,14 +36,18 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 				defaultValue={row.original.name}
 				onChange={handleChange}
 				id="name"
-				name="name"
 			/>
 			<Input
 				label="Sobrenome"
 				defaultValue={row.original.lastName}
 				onChange={handleChange}
 				id="lastName"
-				name="lastName"
+			/>
+			<Input
+				label="Email"
+				defaultValue={row.original.email}
+				id="email"
+				disabled
 			/>
 			<Datepicker
 				label="Data Nascimento"
@@ -50,11 +56,15 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 				customDefaultValue={new Date(row.original.birthday)}
 				onChange={handleChange}
 			/>
+			<div>Meter um Select aqui</div>
+
 			<Checkbox
 				defaultChecked={row.original.isActive}
 				id="isActive"
-				name="isActive"
+				onCheckedChange={e => handleChange(e as ChangeEvent<HTMLInputElement>)}
+				label="Usuário Ativo"
 			/>
+
 			<button type="submit" className="!bg-primary-500 text-white p-2 rounded">
 				Salvar
 			</button>

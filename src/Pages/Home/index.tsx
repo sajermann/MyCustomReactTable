@@ -1,4 +1,4 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { formatDate } from '@sajermann/utils/FormatDate';
 import { Table } from '../../Components/Table';
@@ -7,14 +7,14 @@ import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { UpdateRowExpanded } from '../../Components/UpdateRowExpanded';
 import { Icons } from '../../Components/Icons';
+import { Select } from '../../Components/Select';
 
 export default function Home() {
 	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
-	const [selectedItems, setSelectedItems] = useState({});
 
 	useEffect(() => {
-		setData(makeData.person(5));
+		setData(makeData.person(500));
 	}, []);
 
 	function handleSaveUpdate(row: any, dataUpdate: any) {
@@ -126,34 +126,21 @@ export default function Home() {
 		[]
 	);
 
-	function verifyForDisable(row: Row<TPerson>) {
-		if (Number(row.original.id) < 5) {
-			return true;
-		}
-		return false;
-	}
-
 	return (
 		<div className="p-4">
 			<h1>{translate('WELCOME_TO_VITE_BOILERPLATE')}</h1>
-
-			<div>
+			<Select />
+			{/* <div>
 				<Table
 					columns={columns}
 					data={data}
-					// selection={{
-					// 	rowSelection: selectedItems,
-					// 	setRowSelection: setSelectedItems,
-					// 	type: 'multi',
-					// 	disableSelectionRow: verifyForDisable,
-					// }}
 					expandLine={{
 						render: row => (
 							<UpdateRowExpanded row={row} onSave={handleSaveUpdate} />
 						),
 					}}
 				/>
-			</div>
+			</div> */}
 		</div>
 	);
 }
