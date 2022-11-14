@@ -51,10 +51,7 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 	}
 
 	return (
-		<form
-			onSubmit={handleSave}
-			className="p-2 flex flex-col gap-2 rounded border-2 border-t-0"
-		>
+		<form onSubmit={handleSave} className="p-2 flex flex-col gap-2 ">
 			<div className="grid grid-cols-12 gap-6">
 				<Input
 					label="Nome"

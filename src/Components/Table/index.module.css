@@ -45,9 +45,17 @@
 	text-overflow: ellipsis;
 }
 
-/* .tr:nth-child(even) {
-	background-color: #f2f2f2;
-} */
+.isExpanded {
+	border-color: #e5e7eb;
+	border-width: 2px;
+	border-bottom-width: 0px;
+}
+
+.isExpandedChild {
+	border-color: #e5e7eb;
+	border-width: 2px;
+	border-top-width: 0px;
+}
 
 .even {
 	background-color: #f2f2f2;

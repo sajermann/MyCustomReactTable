@@ -15,6 +15,7 @@ import { useVirtualizer as useVirtual } from '@tanstack/react-virtual';
 import { Checkbox } from '../Checkbox';
 
 import styles from './index.module.css';
+import { log } from '../../Utils/Log';
 
 type Props<T> = {
 	selection?: {
@@ -113,19 +114,31 @@ export function Table<T>({
 		getExpandedRowModel: getExpandedRowModel(),
 	});
 
-	function verifyIsSelected(row: Row<T>, index: number) {
+	function verifyClassesRow(row: Row<T>, index: number) {
 		const classesTemp = [styles.tr];
 		if (index % 2 > 0) {
 			classesTemp.push(styles.even);
 		}
-		try {
-			if (row.getIsSelected()) {
-				classesTemp.push('active');
+		if (selection) {
+			try {
+				if (row.getIsSelected()) {
+					classesTemp.push(styles.isSelected);
+				}
+			} catch (e) {
+				log.error('Catch selection verifyIsSelected', e);
 			}
-			return classesTemp.join(' ');
-		} catch {
-			return classesTemp.join(' ');
 		}
+		if (expandLine) {
+			try {
+				if (row.getIsExpanded()) {
+					classesTemp.push(styles.isExpanded);
+				}
+			} catch (e) {
+				log.error('Catch expandLine verifyIsSelected', e);
+			}
+		}
+
+		return classesTemp.join(' ');
 	}
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -247,7 +260,7 @@ export function Table<T>({
 								<Fragment key={row.id}>
 									<tr
 										key={row.id}
-										className={verifyIsSelected(row, virtualRow.index)}
+										className={verifyClassesRow(row, virtualRow.index)}
 										onClick={() => {
 											if (!selection) {
 												return;
@@ -278,7 +291,7 @@ export function Table<T>({
 									</tr>
 
 									{row.getIsExpanded() && (
-										<tr>
+										<tr className={styles.isExpandedChild}>
 											{/* 2nd row is a custom 1 cell row */}
 											<td colSpan={row.getVisibleCells().length}>
 												{expandLine?.render(row)}
