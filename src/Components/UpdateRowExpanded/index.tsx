@@ -25,16 +25,17 @@ type Props = {
 	onSave: (row: any, dataEdit: any) => void;
 };
 export function UpdateRowExpanded({ row, onSave }: Props) {
-	const [formData, updateFormData] = useState({
+	const [formData, setFormData] = useState({
 		name: row.original.name,
 		lastName: row.original.lastName,
 		birthday: row.original.birthday,
 		isActive: row.original.isActive,
+		role: row.original.role,
 	});
 
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		const { id, value } = e.target;
-		updateFormData({
+		setFormData({
 			...formData,
 			[id]: value,
 		});
@@ -42,12 +43,15 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 
 	function handleSave(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		console.log('form', { e });
 		onSave(row, formData);
 	}
 
-	function onChange(e: any) {
+	function onChange(e: { id: number; name: string }) {
 		console.log('result onchange', e);
+		setFormData({
+			...formData,
+			role: e.name,
+		});
 	}
 
 	return (

@@ -1,12 +1,13 @@
 {
 	"translations": {
-		"WELCOME_TO_VITE_BOILERPLATE": "Welcome to Vite Boilerplate",
-		"TODO_LIST": "TODO List",
-		"ADDED_ITEMS": "Added Items",
-		"ADD": "Add",
-		"ADDING...": "Adding...",
-		"NEW_ITEM":"New Item",
-		"REMOVE":"Remove",
-		"REMOVING...": "Removing..."
+		"WELCOME_TO_CUSTOM_TABLE": "Welcome to Custom Table",
+		"EXPAND_LINE": "Expand Line",
+		"SELECTION": "Selection",
+		"EXPAND_LINE_MODE": "Expand Line Mode",
+		"NAME": "Name",
+		"LAST_NAME": "Last Name",
+		"BIRTHDAY": "Birthday",
+		"ACTIVE": "Active",
+		"ACTION": "Action"
 	}
 }

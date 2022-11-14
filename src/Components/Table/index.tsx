@@ -16,6 +16,7 @@ import { Checkbox } from '../Checkbox';
 
 import styles from './index.module.css';
 import { log } from '../../Utils/Log';
+import { useTranslation } from '../../Hooks/UseTranslation';
 
 type Props<T> = {
 	selection?: {
@@ -45,6 +46,7 @@ export function Table<T>({
 	isLoading,
 	expandLine,
 }: Props<T>) {
+	const { translate } = useTranslation();
 	function verifyIndeterminate(table: PropsTableInternal) {
 		if (table.getIsAllRowsSelected()) {
 			return true;
@@ -86,6 +88,28 @@ export function Table<T>({
 								checked: row.getIsSelected(),
 							}}
 						/>
+					),
+				},
+			];
+			result.push(t);
+		}
+
+		if (expandLine) {
+			const t = [
+				{
+					id: 'expander',
+					header: translate('ACTION'),
+					size: 10,
+					cell: ({ row }: any) => (
+						<button
+							type="button"
+							onClick={row.getToggleExpandedHandler()}
+							{...{
+								style: { cursor: 'pointer' },
+							}}
+						>
+							{row.getIsExpanded() ? '✏' : '📝'}
+						</button>
 					),
 				},
 			];

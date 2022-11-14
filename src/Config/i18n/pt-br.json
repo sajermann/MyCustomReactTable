@@ -1,13 +1,13 @@
 {
 	"translations": {
-		"WELCOME_TO_VITE_BOILERPLATE": "Bem Vindo ao Vite",
-		"userMessagesUnread_other": "Hello <1>{{name}}</1>, you have {{count}} unread messages.  <5>Go to messages</5>.",
-		"TODO_LIST": "Lista de Tarefas",
-		"ADDED_ITEMS": "Itens Adicionados",
-		"ADD": "Adicionar",
-		"ADDING...": "Adicionando...",
-		"NEW_ITEM":"Novo Item",
-		"REMOVE":"Remover",
-		"REMOVING...":"Removendo..."
+		"WELCOME_TO_CUSTOM_TABLE": "Bem Vindo ao Custom Table",
+		"EXPAND_LINE": "Expandir Linha",
+		"SELECTION": "Seleção",
+		"EXPAND_LINE_MODE": "Modo Expandir Linha",
+		"NAME": "Nome",
+		"LAST_NAME": "Sobrenome",
+		"BIRTHDAY": "Data Nascimento",
+		"ACTIVE": "Ativo",
+		"ACTION": "Ação"
 	}
 }
