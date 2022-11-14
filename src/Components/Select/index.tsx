@@ -5,7 +5,6 @@ import {
 } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { DetailedHTMLProps, HTMLAttributes, LabelHTMLAttributes } from 'react';
-import { Button } from '../Button';
 import { ContainerInput } from '../ContainerInput';
 
 function cx(...rest: string[]) {
@@ -58,8 +57,13 @@ export function Select<T>({
 				onValueChange={onChangeInternal}
 			>
 				<SelectPrimitive.Trigger asChild id={id}>
-					<button className="flex items-center justify-around">
-						<SelectPrimitive.Value placeholder={placeholder} />
+					<button
+						type="button"
+						className="flex items-center rounded border-2 p-1"
+					>
+						<div className="flex-1 text-left">
+							<SelectPrimitive.Value placeholder={placeholder} />
+						</div>
 						<SelectPrimitive.Icon>
 							<ChevronDownIcon />
 						</SelectPrimitive.Icon>

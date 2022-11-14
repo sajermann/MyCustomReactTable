@@ -17,5 +17,5 @@ export function Button({ ...rest }: Props) {
 
 		return styles.button;
 	}
-	return <button {...rest} className={buildClass()} />;
+	return <button ref={rest.ref} {...rest} className={buildClass()} />;
 }

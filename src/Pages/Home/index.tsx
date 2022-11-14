@@ -13,7 +13,7 @@ export default function Home() {
 	const [data, setData] = useState<TPerson[]>([]);
 
 	useEffect(() => {
-		setData(makeData.person(100));
+		setData(makeData.person(5));
 	}, []);
 
 	function handleSaveUpdate(row: any, dataUpdate: any) {
@@ -23,26 +23,22 @@ export default function Home() {
 
 	const columns = useMemo<ColumnDef<TPerson>[]>(
 		() => [
-			// {
-			// 	id: 'expander',
-			// 	header: 'Ações',
-			// 	size: 10,
-			// 	cell: ({ row }) =>
-			// 		row.getCanExpand() ? (
-			// 			<button
-			// 				// key={row.id}
-			// 				type="button"
-			// 				onClick={row.getToggleExpandedHandler()}
-			// 				{...{
-			// 					style: { cursor: 'pointer' },
-			// 				}}
-			// 			>
-			// 				{row.getIsExpanded() ? '✏' : '📝'}
-			// 			</button>
-			// 		) : (
-			// 			'🔵'
-			// 		),
-			// },
+			{
+				id: 'expander',
+				header: 'Ações',
+				size: 10,
+				cell: ({ row }) => (
+					<button
+						type="button"
+						onClick={row.getToggleExpandedHandler()}
+						{...{
+							style: { cursor: 'pointer' },
+						}}
+					>
+						{row.getIsExpanded() ? '✏' : '📝'}
+					</button>
+				),
+			},
 			{
 				accessorKey: 'id',
 				header: 'ID',
@@ -133,11 +129,11 @@ export default function Home() {
 				<Table
 					columns={columns}
 					data={data}
-					// expandLine={{
-					// 	render: row => (
-					// 		<UpdateRowExpanded row={row} onSave={handleSaveUpdate} />
-					// 	),
-					// }}
+					expandLine={{
+						render: row => (
+							<UpdateRowExpanded row={row} onSave={handleSaveUpdate} />
+						),
+					}}
 				/>
 			</div>
 		</div>

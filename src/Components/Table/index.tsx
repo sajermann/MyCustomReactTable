@@ -71,7 +71,6 @@ export function Table<T>({
 								{...{ disabled: selection.disableSelectionRow !== undefined }}
 							/>
 						),
-
 					size: 60,
 					minSize: 60,
 					maxSize: 60,

@@ -51,7 +51,10 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 	}
 
 	return (
-		<form onSubmit={handleSave} className="p-2 flex flex-col gap-2">
+		<form
+			onSubmit={handleSave}
+			className="p-2 flex flex-col gap-2 rounded border-2 border-t-0"
+		>
 			<div className="grid grid-cols-12 gap-6">
 				<Input
 					label="Nome"
@@ -103,10 +106,7 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 					containerProps={{ className: 'col-span-12 lg:col-span-3' }}
 				/>
 				<div className="col-span-12 lg:col-span-3 flex items-end">
-					<Button
-						type="submit"
-						className="!bg-primary-500 text-white p-2 rounded"
-					>
+					<Button type="submit" className="text-white p-2 rounded">
 						Salvar
 					</Button>
 				</div>
@@ -114,7 +114,7 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 					<Button
 						type="button"
 						onClick={row.getToggleExpandedHandler()}
-						className="!bg-red-500 text-white p-2 rounded"
+						className="!bg-red-500 hover:!bg-red-300 text-white p-2 rounded"
 					>
 						Cancelar
 					</Button>
