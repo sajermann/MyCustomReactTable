@@ -8,6 +8,11 @@
 		"LAST_NAME": "Sobrenome",
 		"BIRTHDAY": "Data Nascimento",
 		"ACTIVE": "Ativo",
-		"ACTION": "Ação"
+		"ACTION": "Ação",
+		"SELECTION_ROW_MODE": "Modo Seleção de Linha",
+		"MULTI": "Multipla",
+		"SINGLE": "Única",
+		"SELECTION_TYPE": "Tipo de Seleção",
+		"SELECTED_ROWS": "Linhas Selecionadas"
 	}
 }

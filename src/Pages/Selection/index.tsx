@@ -11,6 +11,9 @@ export default function Selection() {
 	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
 	const [selectedItems, setSelectedItems] = useState({});
+	const [selectionType, setSelecitonType] = useState<'single' | 'multi'>(
+		'single'
+	);
 
 	useEffect(() => {
 		setData(makeData.person(2));
@@ -107,21 +110,45 @@ export default function Selection() {
 		return false;
 	}
 
+	const OPTIONS_LIST = [
+		{ id: 'multi', text: translate('MULTI') },
+		{ id: 'single', text: translate('SINGLE') },
+	];
+
 	return (
 		<div className="p-4">
-			<h1>{translate('WELCOME_TO_VITE_BOILERPLATE')}</h1>
-			{JSON.stringify(selectedItems, null, 2)}
+			<h1>{translate('SELECTION_ROW_MODE')}</h1>
+
 			<div>
+				<div className="flex items-center gap-2">
+					<label htmlFor="selectionType">{translate('SELECTION_TYPE')}</label>
+					<select
+						id="selectionType"
+						data-testid="selectLanguage"
+						className="bg-slate-600 rounded h-7 flex justify-between items-center text-white"
+						onChange={e =>
+							setSelecitonType(e.target.value as 'single' | 'multi')
+						}
+						defaultValue={selectionType}
+					>
+						{OPTIONS_LIST.map(item => (
+							<option value={item.id} key={item.id}>
+								{item.text}
+							</option>
+						))}
+					</select>
+				</div>
 				<Table
 					columns={columns}
 					data={data}
 					selection={{
 						rowSelection: selectedItems,
 						setRowSelection: setSelectedItems,
-						type: 'multi',
+						type: selectionType,
 						// disableSelectionRow: verifyForDisable,
 					}}
 				/>
+				{translate('SELECTED_ROWS')}: {JSON.stringify(selectedItems, null, 2)}
 			</div>
 		</div>
 	);

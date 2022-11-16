@@ -8,6 +8,11 @@
 		"LAST_NAME": "Last Name",
 		"BIRTHDAY": "Birthday",
 		"ACTIVE": "Active",
-		"ACTION": "Action"
+		"ACTION": "Action",
+		"SELECTION_ROW_MODE": "Selection Row Mode",
+		"MULTI": "Multi",
+		"SINGLE": "Single",
+		"SELECTION_TYPE": "Selection Type",
+		"SELECTED_ROWS": "Selected Rows"
 	}
 }
