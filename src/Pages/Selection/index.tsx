@@ -6,6 +6,7 @@ import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { Icons } from '../../Components/Icons';
+import { Input } from '../../Components/Input';
 
 export default function Selection() {
 	const { translate } = useTranslation();
@@ -14,9 +15,10 @@ export default function Selection() {
 	const [selectionType, setSelecitonType] = useState<'single' | 'multi'>(
 		'single'
 	);
+	const [disableSelectionForId, setDisableSelectionForId] = useState('');
 
 	useEffect(() => {
-		setData(makeData.person(2));
+		setData(makeData.person(5));
 	}, []);
 
 	const columns = useMemo<ColumnDef<TPerson>[]>(
@@ -104,7 +106,7 @@ export default function Selection() {
 	);
 
 	function verifyForDisable(row: Row<TPerson>) {
-		if (Number(row.original.id) < 5) {
+		if (Number(row.original.id) > Number(disableSelectionForId)) {
 			return true;
 		}
 		return false;
@@ -137,6 +139,21 @@ export default function Selection() {
 							</option>
 						))}
 					</select>
+					<div className="">
+						<Input
+							id="disableSelection"
+							containerProps={{
+								className: 'flex flex-row items-center',
+							}}
+							labelProps={{
+								className: 'm-0 mr-2',
+							}}
+							label={translate('DISABLE_SELECTION_WHEN_ID_GREATER_THAN')}
+							className="max-w-[60px]"
+							value={disableSelectionForId}
+							onChange={e => setDisableSelectionForId(e.target.value)}
+						/>
+					</div>
 				</div>
 				<Table
 					columns={columns}
@@ -145,7 +162,8 @@ export default function Selection() {
 						rowSelection: selectedItems,
 						setRowSelection: setSelectedItems,
 						type: selectionType,
-						// disableSelectionRow: verifyForDisable,
+						disableSelectionRow:
+							disableSelectionForId !== '' ? verifyForDisable : undefined,
 					}}
 				/>
 				{translate('SELECTED_ROWS')}: {JSON.stringify(selectedItems, null, 2)}

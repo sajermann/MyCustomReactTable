@@ -32,7 +32,7 @@ export function Input({ label, containerProps, labelProps, ...rest }: Props) {
 			labelProps={labelProps}
 			id={id}
 		>
-			<input {...rest} className={styles.input} />
+			<input {...rest} className={`${styles.input} ${rest.className}`} />
 		</ContainerInput>
 	);
 }

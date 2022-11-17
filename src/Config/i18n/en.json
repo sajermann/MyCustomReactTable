@@ -13,6 +13,7 @@
 		"MULTI": "Multi",
 		"SINGLE": "Single",
 		"SELECTION_TYPE": "Selection Type",
-		"SELECTED_ROWS": "Selected Rows"
+		"SELECTED_ROWS": "Selected Rows",
+		"DISABLE_SELECTION_WHEN_ID_GREATER_THAN": "Disable selection when Id be greater than"
 	}
 }

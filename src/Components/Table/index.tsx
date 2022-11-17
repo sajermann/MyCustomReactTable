@@ -17,6 +17,7 @@ import { Checkbox } from '../Checkbox';
 import styles from './index.module.css';
 import { log } from '../../Utils/Log';
 import { useTranslation } from '../../Hooks/UseTranslation';
+import { LoadingBar } from '../LoadingBar';
 
 type Props<T> = {
 	selection?: {
@@ -69,6 +70,9 @@ export function Table<T>({
 					header: ({ table }: any) =>
 						selection.type === 'multi' && (
 							<Checkbox
+								containerProps={{
+									className: 'flex items-center justify-center',
+								}}
 								checked={verifyIndeterminate(table)}
 								onClick={table.getToggleAllRowsSelectedHandler()}
 								{...{ disabled: selection.disableSelectionRow !== undefined }}
@@ -81,6 +85,9 @@ export function Table<T>({
 					enableSorting: false,
 					cell: ({ row }: any) => (
 						<Checkbox
+							containerProps={{
+								className: 'flex items-center justify-center',
+							}}
 							{...{
 								disabled: selection.disableSelectionRow
 									? selection.disableSelectionRow(row)
@@ -163,6 +170,17 @@ export function Table<T>({
 		}
 
 		return classesTemp.join(' ');
+	}
+
+	function countColSpan() {
+		let count = Object.keys(columns).length;
+		if (selection) {
+			count += 1;
+		}
+		if (expandLine) {
+			count += 1;
+		}
+		return count;
 	}
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -252,7 +270,7 @@ export function Table<T>({
 						{data.length === 0 && !isLoading && (
 							<tr style={{ height: '100%' }} className={styles.tr}>
 								<td
-									colSpan={Object.keys(columns).length}
+									colSpan={countColSpan()}
 									className={styles.td}
 									style={{ textAlign: 'center' }}
 								>
@@ -260,11 +278,22 @@ export function Table<T>({
 								</td>
 							</tr>
 						)}
+						{isLoading && (
+							<tr style={{ height: '100%' }} className={styles.tr}>
+								<td
+									colSpan={countColSpan()}
+									className={styles.td}
+									style={{ textAlign: 'center', padding: 0 }}
+								>
+									<LoadingBar />
+								</td>
+							</tr>
+						)}
 
 						{data.length === 0 && isLoading && (
 							<tr style={{ height: '100%' }} className={styles.tr}>
 								<td
-									colSpan={Object.keys(columns).length}
+									colSpan={countColSpan()}
 									className={styles.td}
 									style={{ textAlign: 'center' }}
 								>

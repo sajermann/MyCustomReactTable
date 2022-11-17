@@ -11,9 +11,16 @@ import { Icons } from '../../Components/Icons';
 export default function ExpandedLine() {
 	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	async function load() {
+		setIsLoading(true);
+		setData(makeData.person(5));
+		setIsLoading(false);
+	}
 
 	useEffect(() => {
-		setData(makeData.person(5));
+		load();
 	}, []);
 
 	function handleSaveUpdate(row: any, dataUpdate: any) {
@@ -112,6 +119,7 @@ export default function ExpandedLine() {
 			<h1>{translate('EXPAND_LINE_MODE')}</h1>
 			<div>
 				<Table
+					isLoading={isLoading}
 					columns={columns}
 					data={data}
 					expandLine={{

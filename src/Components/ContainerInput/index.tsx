@@ -46,13 +46,15 @@ export function ContainerInput({
 
 	return (
 		<div {...containerProps} className={classContainer()}>
-			<label
-				htmlFor={id || extractorIdChildren(children)}
-				className={styles.label}
-				{...labelProps}
-			>
-				{label}
-			</label>
+			{label && (
+				<label
+					htmlFor={id || extractorIdChildren(children)}
+					className={styles.label}
+					{...labelProps}
+				>
+					{label}
+				</label>
+			)}
 			{children}
 		</div>
 	);

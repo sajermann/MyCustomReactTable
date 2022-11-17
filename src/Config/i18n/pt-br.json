@@ -13,6 +13,7 @@
 		"MULTI": "Multipla",
 		"SINGLE": "Única",
 		"SELECTION_TYPE": "Tipo de Seleção",
-		"SELECTED_ROWS": "Linhas Selecionadas"
+		"SELECTED_ROWS": "Linhas Selecionadas",
+		"DISABLE_SELECTION_WHEN_ID_GREATER_THAN": "Desabilitar seleção quando Id for maior que"
 	}
 }
