@@ -1,12 +1,11 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
-import { useEffect, useMemo, useState } from 'react';
-import { formatDate } from '@sajermann/utils/FormatDate';
+import { Row } from '@tanstack/react-table';
+import { useEffect, useState } from 'react';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
-import { Icons } from '../../Components/Icons';
 import { Input } from '../../Components/Input';
+import { useColumns } from '../../Hooks/UseColumns';
 
 export default function Selection() {
 	const { translate } = useTranslation();
@@ -16,94 +15,11 @@ export default function Selection() {
 		'single'
 	);
 	const [disableSelectionForId, setDisableSelectionForId] = useState('');
+	const { columns } = useColumns();
 
 	useEffect(() => {
 		setData(makeData.person(5));
 	}, []);
-
-	const columns = useMemo<ColumnDef<TPerson>[]>(
-		() => [
-			{
-				accessorKey: 'id',
-				header: 'ID',
-				minSize: 100,
-				size: 100,
-				align: 'center',
-			},
-			{
-				accessorKey: 'avatar',
-				header: 'Avatar',
-				minSize: 60,
-				size: 60,
-				align: 'left',
-				cell: ({ getValue }) => (
-					<div className="w-14 flex items-center justify-center">
-						<img
-							className="w-full rounded-full"
-							src={getValue() as string}
-							alt=""
-						/>
-					</div>
-				),
-			},
-			{
-				accessorKey: 'name',
-				header: 'Nome',
-				minSize: 100,
-				size: 100,
-				align: 'center',
-			},
-			{
-				accessorKey: 'lastName',
-				header: 'Sobrenome',
-				minSize: 100,
-				size: 100,
-				align: 'center',
-			},
-			{
-				accessorKey: 'birthday',
-				header: 'Data Nascimento',
-				minSize: 100,
-				size: 100,
-				cell: info => (
-					<div>{formatDate(new Date(info.getValue() as string))}</div>
-				),
-				align: 'center',
-			},
-			{
-				accessorKey: 'email',
-				header: 'Email',
-				minSize: 100,
-				size: 100,
-				align: 'center',
-			},
-			{
-				accessorKey: 'role',
-				header: 'Role',
-				minSize: 100,
-				size: 100,
-				align: 'center',
-			},
-			{
-				accessorKey: 'isActive',
-				header: 'Ativo',
-				minSize: 100,
-				size: 100,
-				align: 'center',
-				cell: ({ row }) =>
-					row.original.isActive ? (
-						<div className="flex items-center justify-center w-full h-6 text-green-500">
-							<Icons.Checked />
-						</div>
-					) : (
-						<div className="flex items-center justify-center w-full h-9 text-red-500">
-							<Icons.Error />
-						</div>
-					),
-			},
-		],
-		[]
-	);
 
 	function verifyForDisable(row: Row<TPerson>) {
 		if (Number(row.original.id) > Number(disableSelectionForId)) {
