@@ -19,6 +19,10 @@ export default function Home() {
 				<Button onClick={() => navigate('/selection')}>
 					{translate('SELECTION')}
 				</Button>
+
+				<Button onClick={() => navigate('/loading')}>
+					{translate('LOADING')}
+				</Button>
 			</div>
 		</div>
 	);

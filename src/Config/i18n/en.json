@@ -14,6 +14,12 @@
 		"SINGLE": "Single",
 		"SELECTION_TYPE": "Selection Type",
 		"SELECTED_ROWS": "Selected Rows",
-		"DISABLE_SELECTION_WHEN_ID_GREATER_THAN": "Disable selection when Id be greater than"
+		"DISABLE_SELECTION_WHEN_ID_GREATER_THAN": "Disable selection when Id be greater than",
+		"LOADING": "Loading",
+		"LOADING_MODE": "Loading Mode",
+		"LOADING_WITH_DATA": "Loading (With Data)",
+		"LOADING_WITHOUT_DATA": "Loading (Without Data)",
+		"NORMAL_STATE": "Normal State",
+		"LOADING...": "Loading..."
 	}
 }

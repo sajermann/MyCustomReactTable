@@ -297,7 +297,7 @@ export function Table<T>({
 									className={styles.td}
 									style={{ textAlign: 'center' }}
 								>
-									Carregando...
+									{translate('LOADING...')}
 								</td>
 							</tr>
 						)}
