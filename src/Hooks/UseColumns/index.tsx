@@ -39,6 +39,7 @@ export function useColumns() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
+				enableSorting: true,
 			},
 			{
 				accessorKey: 'lastName',

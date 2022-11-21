@@ -20,6 +20,8 @@
 		"LOADING_WITH_DATA": "Carregando (Com Dados)",
 		"LOADING_WITHOUT_DATA": "Carregando (Sem Dados)",
 		"NORMAL_STATE": "Estado Normal",
-		"LOADING...": "Carregando..."
+		"LOADING...": "Carregando...",
+		"SORT": "Ordenação",
+		"SORT_MODE": "Modo Ordenação"
 	}
 }

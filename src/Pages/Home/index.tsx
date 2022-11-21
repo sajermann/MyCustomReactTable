@@ -23,6 +23,7 @@ export default function Home() {
 				<Button onClick={() => navigate('/loading')}>
 					{translate('LOADING')}
 				</Button>
+				<Button onClick={() => navigate('/sort')}>{translate('SORT')}</Button>
 			</div>
 		</div>
 	);

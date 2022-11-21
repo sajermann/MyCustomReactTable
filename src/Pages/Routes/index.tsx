@@ -3,6 +3,7 @@ import ExpandedLine from '../ExpandedLine';
 import Home from '../Home';
 import Loading from '../Loading';
 import Selection from '../Selection';
+import Sort from '../Sort';
 import { Test } from '../Test';
 
 export default function RoutesConfig() {
@@ -12,6 +13,7 @@ export default function RoutesConfig() {
 			<Route path="/selection" element={<Selection />} />
 			<Route path="/expanded-line" element={<ExpandedLine />} />
 			<Route path="/loading" element={<Loading />} />
+			<Route path="/sort" element={<Sort />} />
 			<Route path="/test" element={<Test />} />
 		</Routes>
 	);
