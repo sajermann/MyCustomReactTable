@@ -244,17 +244,19 @@ export function Table<T>({
 													}[header.column.getIsSorted() as string] ?? null}
 												</div>
 												{/* SizingMode */}
-												<div
-													{...{
-														onMouseDown: header.getResizeHandler(),
-														onTouchStart: header.getResizeHandler(),
-														className: `${styles.resizer} ${
-															header.column.getIsResizing()
-																? styles.isResizing
-																: ''
-														}`,
-													}}
-												/>
+												{header.column.getCanResize() && (
+													<div
+														{...{
+															onMouseDown: header.getResizeHandler(),
+															onTouchStart: header.getResizeHandler(),
+															className: `${styles.resizer} ${
+																header.column.getIsResizing()
+																	? styles.isResizing
+																	: ''
+															}`,
+														}}
+													/>
+												)}
 											</>
 										)}
 									</th>
@@ -332,8 +334,13 @@ export function Table<T>({
 											<td
 												className={styles.td}
 												key={cell.id}
-												// @ts-expect-error dasddas
-												style={{ textAlign: cell.column.columnDef.align }}
+												style={{
+													// @ts-expect-error dasddas
+													textAlign: cell.column.columnDef.align,
+													borderRight: cell.column.getIsResizing()
+														? '0.1px solid'
+														: 'none',
+												}}
 											>
 												{flexRender(
 													cell.column.columnDef.cell,

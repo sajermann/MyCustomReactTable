@@ -23,7 +23,7 @@ export function useColumns() {
 				size: 60,
 				align: 'left',
 				cell: ({ getValue }) => (
-					<div className="w-14 flex items-center justify-center">
+					<div className="w-14 h-14 flex items-center justify-center">
 						<img
 							className="w-full rounded-full"
 							src={getValue() as string}
@@ -31,6 +31,7 @@ export function useColumns() {
 						/>
 					</div>
 				),
+				enableResizing: false,
 			},
 			{
 				accessorKey: 'name',
