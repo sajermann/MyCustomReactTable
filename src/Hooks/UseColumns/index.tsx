@@ -33,6 +33,7 @@ export function useColumns() {
 				),
 				enableResizing: false,
 				enableSorting: false,
+				enableGlobalFilter: false,
 			},
 			{
 				accessorKey: 'name',

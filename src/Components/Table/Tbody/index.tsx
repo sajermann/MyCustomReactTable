@@ -15,7 +15,7 @@ import styles from './index.module.css';
 import { log } from '../../../Utils/Log';
 
 type Props<T> = {
-	table: Table<T>;
+	table: Table<any>;
 	tableContainerRef: RefObject<HTMLDivElement>;
 	data: T[];
 	isLoading?: boolean;

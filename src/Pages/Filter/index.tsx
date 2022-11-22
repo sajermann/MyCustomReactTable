@@ -57,6 +57,7 @@ export default function Filter() {
 				size: 200,
 				align: 'left',
 				cell: info => info.getValue(),
+				enableGlobalFilter: false,
 			},
 		],
 		[translate]
