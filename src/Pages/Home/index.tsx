@@ -24,6 +24,9 @@ export default function Home() {
 					{translate('LOADING')}
 				</Button>
 				<Button onClick={() => navigate('/sort')}>{translate('SORT')}</Button>
+				<Button onClick={() => navigate('/filter')}>
+					{translate('FILTER')}
+				</Button>
 			</div>
 		</div>
 	);

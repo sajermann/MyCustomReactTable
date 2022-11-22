@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { ColumnDef } from '@tanstack/react-table';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
@@ -11,6 +12,21 @@ export default function Sort() {
 
 	const { columns } = useColumns();
 
+	const columns2 = useMemo<ColumnDef<TPerson>[]>(
+		() => [
+			{
+				accessorKey: 'friends',
+				accessorFn: e => e.friends.map(item => item.name).join(' | '),
+				header: translate('FRIENDS'),
+				minSize: 100,
+				size: 200,
+				align: 'left',
+				cell: info => info.getValue(),
+			},
+		],
+		[translate]
+	);
+
 	useEffect(() => {
 		setData(makeData.person(5));
 	}, []);
@@ -18,8 +34,9 @@ export default function Sort() {
 	return (
 		<div className="p-4">
 			<h1>{translate('SORT_MODE')}</h1>
+			{translate('FRIENDS_IS_ARRAY_OF_OBJECT')}
 
-			<Table columns={columns} data={data} />
+			<Table columns={[...columns, ...columns2]} data={data} />
 		</div>
 	);
 }

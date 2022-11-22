@@ -22,6 +22,10 @@
 		"NORMAL_STATE": "Normal State",
 		"LOADING...": "Loading...",
 		"SORT": "Sort",
-		"SORT_MODE": "Sort Mode"
+		"SORT_MODE": "Sort Mode",
+		"FRIENDS": "Friends",
+		"FRIENDS_IS_ARRAY_OF_OBJECT": "Friends is array of object",
+		"FILTER_MODE": "Filter Mode",
+		"FILTER": "Filter"
 	}
 }

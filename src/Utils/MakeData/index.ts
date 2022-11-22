@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { faker } from '@faker-js/faker/locale/pt_BR';
+import { TAnimal } from '../../Types/TAnimal';
 import { TPerson } from '../../Types/TPerson';
 
 const range = (len: number) => {
@@ -9,6 +10,24 @@ const range = (len: number) => {
 	}
 	return arr;
 };
+
+export function animal(...lens: number[]) {
+	const makeDataLevel = (depth = 0): TAnimal[] => {
+		const len = lens[depth]!;
+		return range(len).map(
+			(i): TAnimal => ({
+				id: String(i + 1),
+				name: faker.helpers.arrayElement([
+					faker.animal.dog(),
+					faker.animal.cat(),
+					faker.animal.bird(),
+				]),
+			})
+		);
+	};
+
+	return makeDataLevel();
+}
 
 export function person(...lens: number[]) {
 	const makeDataLevel = (depth = 0): TPerson[] => {
@@ -23,6 +42,7 @@ export function person(...lens: number[]) {
 				avatar: faker.internet.avatar(),
 				role: faker.helpers.arrayElement(['Admin', 'User', 'Dev']),
 				isActive: faker.helpers.arrayElement([true, false]),
+				friends: animal(faker.helpers.arrayElement([1, 2, 3])),
 			})
 		);
 	};

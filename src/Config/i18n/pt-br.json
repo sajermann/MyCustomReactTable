@@ -22,6 +22,10 @@
 		"NORMAL_STATE": "Estado Normal",
 		"LOADING...": "Carregando...",
 		"SORT": "Ordenação",
-		"SORT_MODE": "Modo Ordenação"
+		"SORT_MODE": "Modo Ordenação",
+		"FRIENDS": "Amigos",
+		"FRIENDS_IS_ARRAY_OF_OBJECT": "Amigos é um array de objetos",
+		"FILTER_MODE": "Modo Filtro",
+		"FILTER": "Filtro"
 	}
 }

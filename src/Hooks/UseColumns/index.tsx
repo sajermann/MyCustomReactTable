@@ -32,6 +32,7 @@ export function useColumns() {
 					</div>
 				),
 				enableResizing: false,
+				enableSorting: false,
 			},
 			{
 				accessorKey: 'name',

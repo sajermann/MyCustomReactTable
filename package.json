@@ -14,6 +14,7 @@
     "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-select": "^1.1.1",
     "@sajermann/utils": "^0.0.10",
+    "@tanstack/match-sorter-utils": "^8.5.14",
     "@tanstack/react-table": "^8.5.22",
     "@tanstack/react-virtual": "^3.0.0-beta.21",
     "date-fns": "^2.29.3",

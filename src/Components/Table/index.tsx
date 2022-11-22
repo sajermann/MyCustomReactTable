@@ -1,16 +1,28 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useRef, useState } from 'react';
 import {
+	CellContext,
 	ColumnDef,
+	FilterFn,
 	getCoreRowModel,
 	getExpandedRowModel,
 	getSortedRowModel,
+	HeaderContext,
 	OnChangeFn,
 	Row,
 	RowSelectionState,
+	SortingFn,
 	SortingState,
 	useReactTable,
+	sortingFns,
+	getFilteredRowModel,
 } from '@tanstack/react-table';
+import {
+	RankingInfo,
+	rankItem,
+	compareItems,
+} from '@tanstack/match-sorter-utils';
 import { Checkbox } from '../Checkbox';
 
 import styles from './index.module.css';
@@ -26,11 +38,16 @@ type Props<T> = {
 		disableSelectionRow?: (data: Row<T>) => boolean;
 	};
 
-	columns: ColumnDef<T>[];
+	columns: ColumnDef<T, unknown>[];
 	data: T[];
 	isLoading?: boolean;
 	expandLine?: {
 		render: (data: Row<T>) => React.ReactNode;
+	};
+
+	globalFilter?: {
+		filter: string;
+		setFilter: (data: string) => void;
 	};
 };
 
@@ -45,6 +62,7 @@ export function Table<T>({
 	data,
 	isLoading,
 	expandLine,
+	globalFilter,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const { translate } = useTranslation();
@@ -61,13 +79,13 @@ export function Table<T>({
 	}
 
 	function buildColumns() {
-		const result: any[] = [];
+		const result: ColumnDef<T, unknown>[] = [];
 
 		if (selection) {
 			const t = [
 				{
 					id: 'select',
-					header: ({ table }: any) =>
+					header: ({ table }: HeaderContext<T, unknown>) =>
 						selection.type === 'multi' && (
 							<Checkbox
 								containerProps={{
@@ -83,7 +101,7 @@ export function Table<T>({
 					maxSize: 60,
 					align: 'center',
 					enableSorting: false,
-					cell: ({ row }: any) => (
+					cell: ({ row }: CellContext<T, unknown>) => (
 						<Checkbox
 							containerProps={{
 								className: 'flex items-center justify-center',
@@ -98,7 +116,7 @@ export function Table<T>({
 					),
 				},
 			];
-			result.push(t);
+			result.push(t as unknown as ColumnDef<T, unknown>);
 		}
 
 		if (expandLine) {
@@ -107,7 +125,7 @@ export function Table<T>({
 					id: 'expander',
 					header: translate('ACTION'),
 					size: 10,
-					cell: ({ row }: any) => (
+					cell: ({ row }: CellContext<T, unknown>) => (
 						<button
 							type="button"
 							onClick={row.getToggleExpandedHandler()}
@@ -120,21 +138,56 @@ export function Table<T>({
 					),
 				},
 			];
-			result.push(t);
+			result.push(t as unknown as ColumnDef<T, unknown>);
 		}
 
-		result.push(columns);
+		result.push(columns as unknown as ColumnDef<T, unknown>);
 		return result.flat();
 	}
+
+	const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+		// Rank the item
+		const itemRank = rankItem(row.getValue(columnId), value);
+
+		// Store the itemRank info
+		addMeta({
+			itemRank,
+		});
+
+		// Return if the item should be filtered in/out
+		return itemRank.passed;
+	};
+
+	const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+		let dir = 0;
+
+		// Only sort by rank if the column has ranking information
+		if (rowA.columnFiltersMeta[columnId]) {
+			dir = compareItems(
+				rowA.columnFiltersMeta[columnId]?.itemRank!,
+				rowB.columnFiltersMeta[columnId]?.itemRank!
+			);
+		}
+
+		// Provide an alphanumeric fallback for when the item ranks are equal
+		return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
+	};
 
 	const table = useReactTable({
 		data,
 		columns: buildColumns(),
 		columnResizeMode: 'onChange',
+		filterFns: {
+			fuzzy: fuzzyFilter,
+		},
+		globalFilterFn: fuzzyFilter,
+		getFilteredRowModel: getFilteredRowModel(),
 		state: {
 			sorting,
 			rowSelection: selection?.rowSelection,
+			globalFilter: globalFilter?.filter,
 		},
+		onGlobalFilterChange: globalFilter?.setFilter,
 		onRowSelectionChange: selection?.setRowSelection,
 		enableRowSelection: selection !== undefined,
 		enableMultiRowSelection: selection?.type === 'multi',

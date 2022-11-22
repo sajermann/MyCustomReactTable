@@ -1,3 +1,5 @@
+import { TAnimal } from '../TAnimal';
+
 export type TPerson = {
 	id: string;
 	name: string;
@@ -7,4 +9,5 @@ export type TPerson = {
 	avatar: string;
 	role: 'Admin' | 'User' | 'Dev';
 	isActive: boolean;
+	friends: TAnimal[];
 };
