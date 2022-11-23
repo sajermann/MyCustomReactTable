@@ -229,6 +229,7 @@ export default function Editable() {
 						<Checkbox
 							defaultChecked={updateLine?.data.isActive}
 							id="isActive"
+							containerProps={{ className: 'flex items-center' }}
 							onCheckedChange={e =>
 								handleInput(e as ChangeEvent<HTMLInputElement>)
 							}
@@ -242,7 +243,7 @@ export default function Editable() {
 
 	async function load() {
 		setIsLoading(true);
-		setData(makeData.person(2));
+		setData(makeData.person(20));
 		setIsLoading(false);
 	}
 
@@ -253,7 +254,6 @@ export default function Editable() {
 	return (
 		<div className="p-4">
 			<h1>{translate('EXPAND_LINE_MODE')}</h1>
-			{JSON.stringify(updateLine, null, 2)}
 			<div>
 				<Table
 					isLoading={isLoading}
