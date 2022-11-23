@@ -30,6 +30,9 @@ export default function Home() {
 				<Button onClick={() => navigate('/editable')}>
 					{translate('EDITABLE')}
 				</Button>
+				<Button onClick={() => navigate('/virtualized')}>
+					{translate('VIRTUALIZED')}
+				</Button>
 			</div>
 		</div>
 	);

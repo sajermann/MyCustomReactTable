@@ -30,6 +30,7 @@ type Props<T> = {
 		render: (data: Row<T>) => React.ReactNode;
 	};
 	rowForUpdate?: { row: number; data: T } | null;
+	disabledVirtualization?: boolean;
 };
 
 export function Tbody<T>({
@@ -41,6 +42,7 @@ export function Tbody<T>({
 	selection,
 	expandLine,
 	rowForUpdate,
+	disabledVirtualization,
 }: Props<T>) {
 	const { translate } = useTranslation();
 	const { rows } = table.getRowModel();
@@ -137,69 +139,112 @@ export function Tbody<T>({
 				</tr>
 			)}
 
-			{paddingTop > 0 && (
-				<tr>
-					<td style={{ height: `${paddingTop}px` }} />
-				</tr>
-			)}
-			{getVirtualItems().map(virtualRow => {
-				const row = rows[virtualRow.index];
-				return (
-					<Fragment key={row.id}>
-						<tr
-							key={row.id}
-							className={verifyClassesRow(row, virtualRow.index)}
-							onClick={() => {
-								if (!selection) {
-									return;
-								}
-								if (selection?.disableSelectionRow) {
-									const result = selection.disableSelectionRow(row);
-									if (!result) {
-										row.toggleSelected();
-									}
-								} else {
+			{disabledVirtualization ? (
+				table.getRowModel().rows.map(row => (
+					<tr
+						key={row.id}
+						className={verifyClassesRow(row, row.index)}
+						onClick={() => {
+							if (!selection) {
+								return;
+							}
+							if (selection?.disableSelectionRow) {
+								const result = selection.disableSelectionRow(row);
+								if (!result) {
 									row.toggleSelected();
 								}
-							}}
-						>
-							{row.getVisibleCells().map(cell => (
-								<td
-									className={styles.td}
-									key={cell.id}
-									style={{
-										// @ts-expect-error align exists
-										textAlign: cell.column.columnDef.align,
-										borderRight: cell.column.getIsResizing()
-											? '0.1px solid'
-											: 'none',
+							} else {
+								row.toggleSelected();
+							}
+						}}
+					>
+						{row.getVisibleCells().map(cell => (
+							<td
+								key={cell.id}
+								className={styles.td}
+								style={{
+									// @ts-expect-error align exists
+									textAlign: cell.column.columnDef.align,
+									borderRight: cell.column.getIsResizing()
+										? '0.1px solid'
+										: 'none',
+								}}
+							>
+								{flexRender(cell.column.columnDef.cell, cell.getContext())}
+							</td>
+						))}
+					</tr>
+				))
+			) : (
+				<>
+					{paddingTop > 0 && (
+						<tr>
+							<td style={{ height: `${paddingTop}px` }} />
+						</tr>
+					)}
+					{getVirtualItems().map(virtualRow => {
+						const row = rows[virtualRow.index];
+						return (
+							<Fragment key={row.id}>
+								<tr
+									key={row.id}
+									className={verifyClassesRow(row, virtualRow.index)}
+									onClick={() => {
+										if (!selection) {
+											return;
+										}
+										if (selection?.disableSelectionRow) {
+											const result = selection.disableSelectionRow(row);
+											if (!result) {
+												row.toggleSelected();
+											}
+										} else {
+											row.toggleSelected();
+										}
 									}}
 								>
-									{rowForUpdate?.row === cell.row.index &&
-									// @ts-expect-error align cellEdit
-									cell.column.columnDef.cellEdit
-										? // @ts-expect-error align cellEdit
-										  cell.column.columnDef.cellEdit(cell.row)
-										: flexRender(cell.column.columnDef.cell, cell.getContext())}
-								</td>
-							))}
-						</tr>
+									{row.getVisibleCells().map(cell => (
+										<td
+											className={styles.td}
+											key={cell.id}
+											style={{
+												// @ts-expect-error align exists
+												textAlign: cell.column.columnDef.align,
+												borderRight: cell.column.getIsResizing()
+													? '0.1px solid'
+													: 'none',
+											}}
+										>
+											{rowForUpdate?.row === cell.row.index &&
+											// @ts-expect-error align cellEdit
+											cell.column.columnDef.cellEdit
+												? // @ts-expect-error align cellEdit
+												  cell.column.columnDef.cellEdit(cell.row)
+												: flexRender(
+														cell.column.columnDef.cell,
+														cell.getContext()
+												  )}
+										</td>
+									))}
+								</tr>
 
-						{row.getIsExpanded() && (
-							<tr className={styles.isExpandedChild}>
-								{/* 2nd row is a custom 1 cell row */}
-								<td colSpan={row.getVisibleCells().length}>
-									{expandLine?.render(row)}
-								</td>
-							</tr>
-						)}
-					</Fragment>
-				);
-			})}
-			{paddingBottom > 0 && (
-				<tr>
-					<td style={{ height: `${paddingBottom}px` }} />
-				</tr>
+								{row.getIsExpanded() && (
+									<tr className={styles.isExpandedChild}>
+										{/* 2nd row is a custom 1 cell row */}
+										<td colSpan={row.getVisibleCells().length}>
+											{expandLine?.render(row)}
+										</td>
+									</tr>
+								)}
+							</Fragment>
+						);
+					})}
+					{paddingBottom > 0 && (
+						<tr>
+							<td style={{ height: `${paddingBottom}px` }} />
+						</tr>
+					)}
+				</>
 			)}
 		</tbody>
 	);

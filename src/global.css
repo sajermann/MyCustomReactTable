@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '@sajermann/ui-react/index.css';
+
 body {
 	@apply dark:bg-[#09090a] dark:text-zinc-100;
 }

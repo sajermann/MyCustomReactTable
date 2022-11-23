@@ -70,8 +70,9 @@ export default function Filter() {
 	console.log({ data });
 
 	return (
-		<div className="p-4">
+		<div className="p-4 flex flex-col gap-4">
 			<h1>{translate('FILTER_MODE')}</h1>
+			<strong>{translate('UNDER_CONSTRUCTION')}</strong>
 			<DebouncedInput
 				value={globalFilter ?? ''}
 				onChange={value => setGlobalFilter(String(value))}

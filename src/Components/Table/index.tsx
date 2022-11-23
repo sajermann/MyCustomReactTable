@@ -51,6 +51,7 @@ type Props<T> = {
 	};
 
 	rowForUpdate?: { row: number; data: T } | null;
+	disabledVirtualization?: boolean;
 };
 
 type PropsTableInternal = {
@@ -66,6 +67,7 @@ export function Table<T>({
 	expandLine,
 	globalFilter,
 	rowForUpdate,
+	disabledVirtualization,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const { translate } = useTranslation();
@@ -207,6 +209,7 @@ export function Table<T>({
 						expandLine={expandLine}
 						selection={selection}
 						rowForUpdate={rowForUpdate}
+						disabledVirtualization={disabledVirtualization}
 					/>
 				</table>
 			</div>

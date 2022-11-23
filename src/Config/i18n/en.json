@@ -28,6 +28,11 @@
 		"FILTER_MODE": "Filter Mode",
 		"FILTER": "Filter",
 		"EDITABLE": "Editable",
-		"ACTIONS": "Actions"
+		"ACTIONS": "Actions",
+		"UNDER_CONSTRUCTION": "Under Construction",
+		"VIRTUALIZED": "Virtualized",
+		"VIRTUALIZED_MODE": "Virtualized Mode",
+		"ACTIVE_VIRTUALIZATION": "Active Virtualization",
+		"DISABLED_VIRTUALIZATION": "Disabled Virtualization"
 	}
 }

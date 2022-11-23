@@ -1,0 +1,48 @@
+import { useEffect, useState } from 'react';
+import { Button } from '@sajermann/ui-react';
+import { Table } from '../../Components/Table';
+import { useTranslation } from '../../Hooks/UseTranslation';
+import { TPerson } from '../../Types/TPerson';
+import { makeData } from '../../Utils/MakeData';
+import { useColumns } from '../../Hooks/UseColumns';
+
+export default function Virtualized() {
+	const { translate } = useTranslation();
+	const [data, setData] = useState<TPerson[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [virtualized, setVirtualized] = useState(false);
+	const { columns } = useColumns();
+
+	async function load() {
+		setIsLoading(true);
+		setData(makeData.person(200));
+		setIsLoading(false);
+	}
+
+	useEffect(() => {
+		load();
+	}, []);
+
+	return (
+		<div className="p-4">
+			<h1>{translate('VIRTUALIZED_MODE')}</h1>
+			<Button
+				colorStyle="Secondary"
+				type="button"
+				onClick={() => setVirtualized(prev => !prev)}
+			>
+				{translate(
+					virtualized ? 'DISABLED_VIRTUALIZATION' : 'ACTIVE_VIRTUALIZATION'
+				)}
+			</Button>
+			<div>
+				<Table
+					isLoading={isLoading}
+					columns={[...columns]}
+					data={data}
+					disabledVirtualization={!virtualized}
+				/>
+			</div>
+		</div>
+	);
+}

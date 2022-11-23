@@ -7,6 +7,7 @@ import Loading from '../Loading';
 import Selection from '../Selection';
 import Sort from '../Sort';
 import { Test } from '../Test';
+import Virtualized from '../Virtualized';
 
 export default function RoutesConfig() {
 	return (
@@ -18,6 +19,7 @@ export default function RoutesConfig() {
 			<Route path="/sort" element={<Sort />} />
 			<Route path="/filter" element={<Filter />} />
 			<Route path="/editable" element={<Editable />} />
+			<Route path="/virtualized" element={<Virtualized />} />
 			<Route path="/test" element={<Test />} />
 		</Routes>
 	);
