@@ -3,6 +3,7 @@ import Routes from './Pages/Routes';
 import { Header } from './Components/Header';
 import { DarkModeProvider } from './Hooks/UseDarkMode';
 import { TestProvider } from './Hooks/UseTest';
+import '@sajermann/ui-react/index.css';
 
 function App() {
 	return (

@@ -26,6 +26,8 @@
 		"FRIENDS": "Friends",
 		"FRIENDS_IS_ARRAY_OF_OBJECT": "Friends is array of object",
 		"FILTER_MODE": "Filter Mode",
-		"FILTER": "Filter"
+		"FILTER": "Filter",
+		"EDITABLE": "Editable",
+		"ACTIONS": "Actions"
 	}
 }

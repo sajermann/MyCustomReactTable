@@ -1,24 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { ROLES } from '../../Constants/Roles';
 import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { Datepicker } from '../Datepicker';
 import { Input } from '../Input';
 import { Select } from '../Select';
-
-const DEFAULT = [
-	{
-		id: 1,
-		name: 'Admin',
-	},
-	{
-		id: 2,
-		name: 'Dev',
-	},
-	{
-		id: 3,
-		name: 'User',
-	},
-];
 
 type Props = {
 	row: any;
@@ -87,8 +73,8 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 					containerProps={{ className: 'col-span-12 lg:col-span-3' }}
 				/>
 				<Select
-					defaultValue={DEFAULT.find(item => item.name === row.original.role)}
-					items={DEFAULT}
+					defaultValue={ROLES.find(item => item.name === row.original.role)}
+					items={ROLES}
 					textProp="name"
 					onChange={onChange}
 					placeholder="Selecione a Role"

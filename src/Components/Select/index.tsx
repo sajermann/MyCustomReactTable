@@ -69,7 +69,7 @@ export function Select<T>({
 						</SelectPrimitive.Icon>
 					</button>
 				</SelectPrimitive.Trigger>
-				<SelectPrimitive.Content>
+				<SelectPrimitive.Content className="z-[1]">
 					<SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700 dark:text-gray-300">
 						<ChevronUpIcon />
 					</SelectPrimitive.ScrollUpButton>

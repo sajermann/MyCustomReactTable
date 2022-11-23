@@ -49,6 +49,8 @@ type Props<T> = {
 		filter: string;
 		setFilter: (data: string) => void;
 	};
+
+	rowForUpdate?: { row: number; data: T } | null;
 };
 
 type PropsTableInternal = {
@@ -63,6 +65,7 @@ export function Table<T>({
 	isLoading,
 	expandLine,
 	globalFilter,
+	rowForUpdate,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const { translate } = useTranslation();
@@ -163,7 +166,6 @@ export function Table<T>({
 		columns: buildColumns(),
 		columnResizeMode: 'onChange',
 		filterFns: {
-			equalsString: true,
 			fuzzy: fuzzyFilter,
 		},
 		globalFilterFn: fuzzyFilter,
@@ -204,6 +206,7 @@ export function Table<T>({
 						isLoading={isLoading}
 						expandLine={expandLine}
 						selection={selection}
+						rowForUpdate={rowForUpdate}
 					/>
 				</table>
 			</div>

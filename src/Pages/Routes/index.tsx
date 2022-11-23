@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import Editable from '../Editable';
 import ExpandedLine from '../ExpandedLine';
 import Filter from '../Filter';
 import Home from '../Home';
@@ -16,6 +17,7 @@ export default function RoutesConfig() {
 			<Route path="/loading" element={<Loading />} />
 			<Route path="/sort" element={<Sort />} />
 			<Route path="/filter" element={<Filter />} />
+			<Route path="/editable" element={<Editable />} />
 			<Route path="/test" element={<Test />} />
 		</Routes>
 	);

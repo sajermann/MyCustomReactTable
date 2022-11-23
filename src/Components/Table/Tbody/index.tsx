@@ -29,6 +29,7 @@ type Props<T> = {
 	expandLine?: {
 		render: (data: Row<T>) => React.ReactNode;
 	};
+	rowForUpdate?: { row: number; data: T } | null;
 };
 
 export function Tbody<T>({
@@ -39,6 +40,7 @@ export function Tbody<T>({
 	columns,
 	selection,
 	expandLine,
+	rowForUpdate,
 }: Props<T>) {
 	const { translate } = useTranslation();
 	const { rows } = table.getRowModel();
@@ -166,14 +168,19 @@ export function Tbody<T>({
 									className={styles.td}
 									key={cell.id}
 									style={{
-										// @ts-expect-error dasddas
+										// @ts-expect-error align exists
 										textAlign: cell.column.columnDef.align,
 										borderRight: cell.column.getIsResizing()
 											? '0.1px solid'
 											: 'none',
 									}}
 								>
-									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									{rowForUpdate?.row === cell.row.index &&
+									// @ts-expect-error align cellEdit
+									cell.column.columnDef.cellEdit
+										? // @ts-expect-error align cellEdit
+										  cell.column.columnDef.cellEdit(cell.row)
+										: flexRender(cell.column.columnDef.cell, cell.getContext())}
 								</td>
 							))}
 						</tr>

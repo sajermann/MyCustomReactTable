@@ -26,6 +26,8 @@
 		"FRIENDS": "Amigos",
 		"FRIENDS_IS_ARRAY_OF_OBJECT": "Amigos é um array de objetos",
 		"FILTER_MODE": "Modo Filtro",
-		"FILTER": "Filtro"
+		"FILTER": "Filtro",
+		"EDITABLE": "Editável",
+		"ACTIONS": "Ações"
 	}
 }
