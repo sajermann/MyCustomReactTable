@@ -33,6 +33,7 @@
 		"VIRTUALIZED": "Virtualizado",
 		"VIRTUALIZED_MODE": "Modo Virtualizado",
 		"ACTIVE_VIRTUALIZATION": "Ativar Virtualização",
-		"DISABLED_VIRTUALIZATION": "Desativar Virtualização"
+		"DISABLED_VIRTUALIZATION": "Desativar Virtualização",
+		"NO_DATA": "Sem Dados"
 	}
 }

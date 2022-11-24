@@ -42,6 +42,7 @@ export default function ExpandedLine() {
 							<UpdateRowExpanded row={row} onSave={handleSaveUpdate} />
 						),
 					}}
+					disabledVirtualization
 				/>
 			</div>
 		</div>

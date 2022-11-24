@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Button } from '@sajermann/ui-react';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { useColumns } from '../../Hooks/UseColumns';
+import { Button } from '../../Components/Button';
 
 export default function Virtualized() {
 	const { translate } = useTranslation();
@@ -24,13 +24,9 @@ export default function Virtualized() {
 	}, []);
 
 	return (
-		<div className="p-4">
+		<div className="p-4 flex flex-col gap-4">
 			<h1>{translate('VIRTUALIZED_MODE')}</h1>
-			<Button
-				colorStyle="Secondary"
-				type="button"
-				onClick={() => setVirtualized(prev => !prev)}
-			>
+			<Button onClick={() => setVirtualized(prev => !prev)} className="w-44">
 				{translate(
 					virtualized ? 'DISABLED_VIRTUALIZATION' : 'ACTIVE_VIRTUALIZATION'
 				)}

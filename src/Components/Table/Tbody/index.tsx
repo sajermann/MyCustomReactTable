@@ -102,19 +102,39 @@ export function Tbody<T>({
 		return classesTemp.join(' ');
 	}
 
-	return (
-		<tbody style={{ opacity: isLoading ? 0.5 : 1 }} className={styles.tbody}>
-			{data.length === 0 && !isLoading && (
-				<tr style={{ height: '100%' }} className={styles.tr}>
+	function buildExpandLine(row: Row<T>) {
+		if (!row.getIsExpanded()) return null;
+		return (
+			<tr className={styles.isExpandedChild}>
+				{/* 2nd row is a custom 1 cell row */}
+				<td colSpan={row.getVisibleCells().length}>
+					{expandLine?.render(row)}
+				</td>
+			</tr>
+		);
+	}
+
+	function buildNoData() {
+		if (data.length === 0 && !isLoading) {
+			return (
+				<tr className={styles.tr}>
 					<td
 						colSpan={countColSpan()}
 						className={styles.td}
 						style={{ textAlign: 'center' }}
 					>
-						Sem Dados
+						{translate('NO_DATA')}
 					</td>
 				</tr>
-			)}
+			);
+		}
+		return null;
+	}
+
+	return (
+		<tbody style={{ opacity: isLoading ? 0.5 : 1 }} className={styles.tbody}>
+			{buildNoData()}
+
 			{isLoading && (
 				<tr style={{ height: '100%' }} className={styles.tr}>
 					<td
@@ -128,7 +148,7 @@ export function Tbody<T>({
 			)}
 
 			{data.length === 0 && isLoading && (
-				<tr style={{ height: '100%' }} className={styles.tr}>
+				<tr className={styles.tr}>
 					<td
 						colSpan={countColSpan()}
 						className={styles.td}
@@ -141,39 +161,42 @@ export function Tbody<T>({
 
 			{disabledVirtualization ? (
 				table.getRowModel().rows.map(row => (
-					<tr
-						key={row.id}
-						className={verifyClassesRow(row, row.index)}
-						onClick={() => {
-							if (!selection) {
-								return;
-							}
-							if (selection?.disableSelectionRow) {
-								const result = selection.disableSelectionRow(row);
-								if (!result) {
+					<Fragment key={row.id}>
+						<tr
+							className={verifyClassesRow(row, row.index)}
+							onClick={() => {
+								if (!selection) {
+									return;
+								}
+								if (selection?.disableSelectionRow) {
+									const result = selection.disableSelectionRow(row);
+									if (!result) {
+										row.toggleSelected();
+									}
+								} else {
 									row.toggleSelected();
 								}
-							} else {
-								row.toggleSelected();
-							}
-						}}
-					>
-						{row.getVisibleCells().map(cell => (
-							<td
-								key={cell.id}
-								className={styles.td}
-								style={{
-									// @ts-expect-error align exists
-									textAlign: cell.column.columnDef.align,
-									borderRight: cell.column.getIsResizing()
-										? '0.1px solid'
-										: 'none',
-								}}
-							>
-								{flexRender(cell.column.columnDef.cell, cell.getContext())}
-							</td>
-						))}
-					</tr>
+							}}
+						>
+							{row.getVisibleCells().map(cell => (
+								<td
+									key={cell.id}
+									className={styles.td}
+									style={{
+										// @ts-expect-error align exists
+										textAlign: cell.column.columnDef.align,
+										borderRight: cell.column.getIsResizing()
+											? '0.1px solid'
+											: 'none',
+									}}
+								>
+									{flexRender(cell.column.columnDef.cell, cell.getContext())}
+								</td>
+							))}
+						</tr>
+
+						{buildExpandLine(row)}
+					</Fragment>
 				))
 			) : (
 				<>
@@ -228,14 +251,7 @@ export function Tbody<T>({
 									))}
 								</tr>
 
-								{row.getIsExpanded() && (
-									<tr className={styles.isExpandedChild}>
-										{/* 2nd row is a custom 1 cell row */}
-										<td colSpan={row.getVisibleCells().length}>
-											{expandLine?.render(row)}
-										</td>
-									</tr>
-								)}
+								{buildExpandLine(row)}
 							</Fragment>
 						);
 					})}
