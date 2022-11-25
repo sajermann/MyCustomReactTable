@@ -11,7 +11,7 @@ const range = (len: number) => {
 	return arr;
 };
 
-export function animal(...lens: number[]) {
+function animal(...lens: number[]) {
 	const makeDataLevel = (depth = 0): TAnimal[] => {
 		const len = lens[depth]!;
 		return range(len).map(
@@ -29,7 +29,7 @@ export function animal(...lens: number[]) {
 	return makeDataLevel();
 }
 
-export function person(...lens: number[]) {
+function person(...lens: number[]) {
 	const makeDataLevel = (depth = 0): TPerson[] => {
 		const len = lens[depth]!;
 		return range(len).map(
@@ -50,4 +50,20 @@ export function person(...lens: number[]) {
 	return makeDataLevel();
 }
 
-export const makeData = { person };
+type Props = {
+	pageIndex: number;
+	pageSize: number;
+};
+
+function personWithPagination({ pageIndex, pageSize }: Props) {
+	return {
+		info: {
+			pageIndex,
+			pageSize,
+			pageCount: 20,
+		},
+		data: person(pageSize),
+	};
+}
+
+export const makeData = { person, personWithPagination };

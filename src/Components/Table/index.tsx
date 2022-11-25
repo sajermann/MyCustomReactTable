@@ -1,6 +1,7 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useRef, useState } from 'react';
 import {
 	CellContext,
 	ColumnDef,
@@ -17,6 +18,7 @@ import {
 	useReactTable,
 	sortingFns,
 	getFilteredRowModel,
+	PaginationState,
 } from '@tanstack/react-table';
 import {
 	RankingInfo,
@@ -52,6 +54,13 @@ type Props<T> = {
 
 	rowForUpdate?: { row: number; data: T } | null;
 	disabledVirtualization?: boolean;
+
+	enablePagination?: {
+		pagination: PaginationState & { pageCount: number };
+		setPagination: Dispatch<
+			SetStateAction<PaginationState & { pageCount: number }>
+		>;
+	};
 };
 
 type PropsTableInternal = {
@@ -68,9 +77,22 @@ export function Table<T>({
 	globalFilter,
 	rowForUpdate,
 	disabledVirtualization,
+	enablePagination,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
+
+	const paginationConfig = useMemo(
+		() => ({
+			pageIndex: enablePagination?.pagination.pageIndex || 0,
+			pageSize: enablePagination?.pagination.pageSize || 0,
+		}),
+		[enablePagination]
+	);
+
+	console.log({ enablePagination });
+
 	const { translate } = useTranslation();
+
 	function verifyIndeterminate(table: PropsTableInternal) {
 		if (table.getIsAllRowsSelected()) {
 			return true;
@@ -172,7 +194,9 @@ export function Table<T>({
 		},
 		globalFilterFn: fuzzyFilter,
 		getFilteredRowModel: getFilteredRowModel(),
+		pageCount: enablePagination?.pagination.pageCount,
 		state: {
+			pagination: paginationConfig,
 			sorting,
 			rowSelection: selection?.rowSelection,
 			globalFilter: globalFilter?.filter,
@@ -186,6 +210,10 @@ export function Table<T>({
 		getSortedRowModel: getSortedRowModel(),
 		getRowCanExpand: () => !!expandLine,
 		getExpandedRowModel: getExpandedRowModel(),
+		manualPagination: true,
+		onPaginationChange: enablePagination?.setPagination as Dispatch<
+			SetStateAction<PaginationState>
+		>,
 	});
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -212,6 +240,71 @@ export function Table<T>({
 						disabledVirtualization={disabledVirtualization}
 					/>
 				</table>
+				<div>
+					<div className="h-2" />
+					<div className="flex items-center gap-2">
+						<button
+							className="border rounded p-1"
+							onClick={() => table.setPageIndex(0)}
+							disabled={!table.getCanPreviousPage()}
+						>
+							{'<<'}
+						</button>
+						<button
+							className="border rounded p-1"
+							onClick={() => table.previousPage()}
+							disabled={!table.getCanPreviousPage()}
+						>
+							{'<'}
+						</button>
+						<button
+							className="border rounded p-1"
+							onClick={() => table.nextPage()}
+							disabled={!table.getCanNextPage()}
+						>
+							{'>'}
+						</button>
+						<button
+							className="border rounded p-1"
+							onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+							disabled={!table.getCanNextPage()}
+						>
+							{'>>'}
+						</button>
+						<span className="flex items-center gap-1">
+							<div>Page</div>
+							<strong>
+								{table.getState().pagination.pageIndex + 1} of{' '}
+								{table.getPageCount()}
+							</strong>
+						</span>
+						<span className="flex items-center gap-1">
+							| Go to page:
+							<input
+								type="number"
+								defaultValue={table.getState().pagination.pageIndex + 1}
+								onChange={e => {
+									const page = e.target.value ? Number(e.target.value) - 1 : 0;
+									table.setPageIndex(page);
+								}}
+								className="border p-1 rounded w-16"
+							/>
+						</span>
+						<select
+							value={table.getState().pagination.pageSize}
+							onChange={e => {
+								table.setPageSize(Number(e.target.value));
+							}}
+						>
+							{[10, 20, 30, 40, 50].map(item => (
+								<option key={item} value={item}>
+									Show {item}
+								</option>
+							))}
+						</select>
+					</div>
+					<div>{table.getRowModel().rows.length} Rows</div>
+				</div>
 			</div>
 		</div>
 	);

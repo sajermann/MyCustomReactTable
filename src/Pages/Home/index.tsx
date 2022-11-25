@@ -33,6 +33,9 @@ export default function Home() {
 				<Button onClick={() => navigate('/virtualized')}>
 					{translate('VIRTUALIZED')}
 				</Button>
+				<Button onClick={() => navigate('/pagination')}>
+					{translate('PAGINATION')}
+				</Button>
 			</div>
 		</div>
 	);

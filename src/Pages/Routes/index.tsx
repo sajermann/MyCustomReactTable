@@ -4,6 +4,7 @@ import ExpandedLine from '../ExpandedLine';
 import Filter from '../Filter';
 import Home from '../Home';
 import Loading from '../Loading';
+import Pagination from '../Pagination';
 import Selection from '../Selection';
 import Sort from '../Sort';
 import { Test } from '../Test';
@@ -20,6 +21,7 @@ export default function RoutesConfig() {
 			<Route path="/filter" element={<Filter />} />
 			<Route path="/editable" element={<Editable />} />
 			<Route path="/virtualized" element={<Virtualized />} />
+			<Route path="/pagination" element={<Pagination />} />
 			<Route path="/test" element={<Test />} />
 		</Routes>
 	);

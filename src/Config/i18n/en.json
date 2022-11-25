@@ -34,6 +34,8 @@
 		"VIRTUALIZED_MODE": "Virtualized Mode",
 		"ACTIVE_VIRTUALIZATION": "Active Virtualization",
 		"DISABLED_VIRTUALIZATION": "Disabled Virtualization",
-		"NO_DATA": "No Data"
+		"NO_DATA": "No Data",
+		"PAGINATION_MODE": "Pagination Mode",
+		"PAGINATION": "Pagination"
 	}
 }
