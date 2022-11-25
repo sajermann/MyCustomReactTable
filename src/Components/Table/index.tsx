@@ -1,7 +1,14 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Dispatch, SetStateAction, useMemo, useRef, useState } from 'react';
+import {
+	Dispatch,
+	SetStateAction,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import {
 	CellContext,
 	ColumnDef,
@@ -32,6 +39,9 @@ import { useTranslation } from '../../Hooks/UseTranslation';
 import { Thead } from './Thead';
 import { Tbody } from './Tbody';
 
+// Page Count = Quantity Pages
+// Page Size = Quantity Items per Page
+
 type Props<T> = {
 	selection?: {
 		type: 'multi' | 'single';
@@ -56,10 +66,8 @@ type Props<T> = {
 	disabledVirtualization?: boolean;
 
 	enablePagination?: {
-		pagination: PaginationState & { pageCount: number };
-		setPagination: Dispatch<
-			SetStateAction<PaginationState & { pageCount: number }>
-		>;
+		pageCount: number;
+		onChange: () => void;
 	};
 };
 
@@ -80,16 +88,22 @@ export function Table<T>({
 	enablePagination,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
+	const [pagination, setPagination] = useState({
+		pageIndex: 0,
+		pageSize: 50,
+	});
 
 	const paginationConfig = useMemo(
 		() => ({
-			pageIndex: enablePagination?.pagination.pageIndex || 0,
-			pageSize: enablePagination?.pagination.pageSize || 0,
+			pageIndex: pagination.pageIndex || 0,
+			pageSize: pagination.pageSize || 0,
 		}),
 		[enablePagination]
 	);
 
-	console.log({ enablePagination });
+	useEffect(() => {
+		enablePagination?.onChange();
+	}, [pagination]);
 
 	const { translate } = useTranslation();
 
@@ -194,7 +208,7 @@ export function Table<T>({
 		},
 		globalFilterFn: fuzzyFilter,
 		getFilteredRowModel: getFilteredRowModel(),
-		pageCount: enablePagination?.pagination.pageCount,
+		pageCount: enablePagination?.pageCount,
 		state: {
 			pagination: paginationConfig,
 			sorting,
@@ -211,9 +225,7 @@ export function Table<T>({
 		getRowCanExpand: () => !!expandLine,
 		getExpandedRowModel: getExpandedRowModel(),
 		manualPagination: true,
-		onPaginationChange: enablePagination?.setPagination as Dispatch<
-			SetStateAction<PaginationState>
-		>,
+		onPaginationChange: setPagination,
 	});
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);

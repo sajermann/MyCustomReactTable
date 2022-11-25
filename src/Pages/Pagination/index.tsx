@@ -4,42 +4,46 @@ import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { useColumns } from '../../Hooks/UseColumns';
+import { delay } from '../../Utils/Delay';
 
 export default function Pagination() {
 	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
-	const [pagination, setPagination] = useState({
-		pageIndex: 0,
-		pageSize: 50,
-		pageCount: 0,
-	});
+	const [pageCount, setPageCount] = useState(0);
+
+	const [isLoading, setIsLoading] = useState(true);
 
 	const { columns } = useColumns();
 
-	function load() {
+	async function load(pageIndex: number, pageSize: number) {
+		setIsLoading(true);
+		await delay(3000);
 		const result = makeData.personWithPagination({
-			pageIndex: pagination.pageIndex,
-			pageSize: pagination.pageSize,
+			pageIndex,
+			pageSize,
 		});
-		setData(result.data);
-		setPagination(result.info);
+		console.log({ result });
+		// setData(result.data);
+		// setPagination(result.info);
+		setIsLoading(false);
 	}
 
 	useEffect(() => {
-		load();
+		load(0, 30);
 	}, []);
 
 	return (
 		<div className="p-4">
 			<h1>{translate('PAGINATION_MODE')}</h1>
-			{translate('FRIENDS_IS_ARRAY_OF_OBJECT')}
-
 			<Table
+				isLoading={isLoading}
 				columns={[...columns]}
 				data={data}
 				enablePagination={{
-					pagination,
-					setPagination,
+					pageCount,
+					onChange: () => {
+						console.log('Mudou');
+					},
 				}}
 				disabledVirtualization
 			/>
