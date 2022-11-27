@@ -313,6 +313,7 @@ export function Table<T>({
 							value={table.getState().pagination.pageSize}
 							onChange={e => {
 								table.setPageSize(Number(e.target.value));
+								table.setPageIndex(0);
 							}}
 						>
 							{[10, 20, 30, 40, 50].map(item => (

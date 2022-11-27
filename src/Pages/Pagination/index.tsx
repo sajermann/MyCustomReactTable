@@ -24,6 +24,29 @@ export default function Pagination() {
 	const [pageCount, setPageCount] = useState(0);
 	const [pagination, setPagination] = useState(DEFAULT_PAG);
 
+	async function load(filter: string) {
+		if (filter === '') return null;
+		console.log({ filter });
+		await delay(3000);
+		const result = await fetch(
+			`https://rickandmortyapi.com/api/character/?${filter}`
+		).then(resp => resp.json());
+		console.log({ result });
+		if (result) {
+			setPageCount(result.info.pages);
+			return result.results;
+		}
+		return [];
+	}
+
+	const { data, isFetching, status, error } = useQuery<TRickAndMorty[]>({
+		queryKey: ['queryMorty', params],
+		queryFn: () => load(params),
+		keepPreviousData: true,
+	});
+
+	console.log({ status, error });
+
 	function handlePag() {
 		const removedPagParams = removeParamsFromQuery(
 			removeParamsFromQuery(params, 'pageIndex'),
@@ -101,27 +124,6 @@ export default function Pagination() {
 		],
 		[translate]
 	);
-
-	async function load(filter: string) {
-		if (filter === '') return;
-		console.log({ filter });
-		await delay(3000);
-		const result = await fetch(
-			`https://rickandmortyapi.com/api/character/?${filter}`
-		).then(resp => resp.json());
-		console.log({ result });
-		if (result) {
-			setPageCount(result.info.pages);
-			return result.results;
-		}
-		return [];
-	}
-
-	const { data, isFetching } = useQuery<TRickAndMorty[]>({
-		queryKey: ['queryMorty', params],
-		queryFn: () => load(params),
-		keepPreviousData: true,
-	});
 
 	// function handlePag(e: any) {
 	// 	const result = objectToQuery(e);
