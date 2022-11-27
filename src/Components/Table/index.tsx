@@ -67,7 +67,14 @@ type Props<T> = {
 
 	enablePagination?: {
 		pageCount: number;
-		onChange: () => void;
+		pageIndex: number;
+		pageSize: number;
+		setPagination: Dispatch<
+			SetStateAction<{
+				pageIndex: number;
+				pageSize: number;
+			}>
+		>;
 	};
 };
 
@@ -88,22 +95,19 @@ export function Table<T>({
 	enablePagination,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
-	const [pagination, setPagination] = useState({
-		pageIndex: 0,
-		pageSize: 50,
-	});
+	// const [pagination, setPagination] = useState({
+	// 	pageIndex: 0,
+	// 	pageSize: 50,
+	// });
 
-	const paginationConfig = useMemo(
-		() => ({
-			pageIndex: pagination.pageIndex || 0,
-			pageSize: pagination.pageSize || 0,
-		}),
-		[enablePagination]
-	);
+	// const paginationConfig = {
+	// 	pageIndex: pagination.pageIndex || 0,
+	// 	pageSize: pagination.pageSize || 0,
+	// };
 
-	useEffect(() => {
-		enablePagination?.onChange();
-	}, [pagination]);
+	// useEffect(() => {
+	// 	enablePagination?.onChange(pagination);
+	// }, [pagination]);
 
 	const { translate } = useTranslation();
 
@@ -210,7 +214,10 @@ export function Table<T>({
 		getFilteredRowModel: getFilteredRowModel(),
 		pageCount: enablePagination?.pageCount,
 		state: {
-			pagination: paginationConfig,
+			pagination: {
+				pageIndex: enablePagination?.pageIndex || 0,
+				pageSize: enablePagination?.pageSize || 0,
+			},
 			sorting,
 			rowSelection: selection?.rowSelection,
 			globalFilter: globalFilter?.filter,
@@ -225,7 +232,7 @@ export function Table<T>({
 		getRowCanExpand: () => !!expandLine,
 		getExpandedRowModel: getExpandedRowModel(),
 		manualPagination: true,
-		onPaginationChange: setPagination,
+		onPaginationChange: enablePagination?.setPagination,
 	});
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
