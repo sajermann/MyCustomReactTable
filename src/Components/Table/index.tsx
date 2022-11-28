@@ -48,6 +48,7 @@ type Props<T> = {
 		rowSelection: { [index: number]: boolean };
 		setRowSelection: OnChangeFn<RowSelectionState>;
 		disableSelectionRow?: (data: Row<T>) => boolean;
+		disableCheckbox?: boolean;
 	};
 
 	columns: ColumnDef<T, unknown>[];
@@ -126,7 +127,7 @@ export function Table<T>({
 	function buildColumns() {
 		const result: ColumnDef<T, unknown>[] = [];
 
-		if (selection) {
+		if (selection && !selection.disableCheckbox) {
 			const t = [
 				{
 					id: 'select',

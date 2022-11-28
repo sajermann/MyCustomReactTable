@@ -36,6 +36,9 @@
 		"DISABLED_VIRTUALIZATION": "Disabled Virtualization",
 		"NO_DATA": "No Data",
 		"PAGINATION_MODE": "Pagination Mode",
-		"PAGINATION": "Pagination"
+		"PAGINATION": "Pagination",
+		"FAVORITE_ROWS": "Favorite Rows",
+		"FAVORITE_ROW_MODE": "Favorite Rows Mode",
+		"FAVORITES": "Favorites"
 	}
 }

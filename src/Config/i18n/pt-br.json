@@ -36,6 +36,9 @@
 		"DISABLED_VIRTUALIZATION": "Desativar Virtualização",
 		"NO_DATA": "Sem Dados",
 		"PAGINATION_MODE": "Modo Paginação",
-		"PAGINATION": "Paginação"
+		"PAGINATION": "Paginação",
+		"FAVORITE_ROWS": "Linhas Favoritas",
+		"FAVORITE_ROW_MODE": "Modo de Linhas Favoritas",
+		"FAVORITES": "Favoritos"
 	}
 }

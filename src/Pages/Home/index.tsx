@@ -7,35 +7,56 @@ export default function Home() {
 
 	const navigate = useNavigate();
 
+	const LIST_OPTIONS = [
+		{
+			translate: 'EXPAND_LINE',
+			url: '/expanded-line',
+		},
+		{
+			translate: 'SELECTION',
+			url: '/selection',
+		},
+		{
+			translate: 'LOADING',
+			url: '/loading',
+		},
+		{
+			translate: 'SORT',
+			url: '/sort',
+		},
+		{
+			translate: 'FILTER',
+			url: '/filter',
+		},
+		{
+			translate: 'EDITABLE',
+			url: '/editable',
+		},
+		{
+			translate: 'VIRTUALIZED',
+			url: '/virtualized',
+		},
+		{
+			translate: 'PAGINATION',
+			url: '/pagination',
+		},
+		{
+			translate: 'FAVORITES',
+			url: '/favorites',
+		},
+	];
+
 	return (
 		<div className="p-4 max-w-7xl m-auto flex flex-col items-center justify-center gap-2">
 			<h1 className="text-lg font-bold">
 				{translate('WELCOME_TO_CUSTOM_TABLE')}
 			</h1>
 			<div className="flex gap-4 flex-wrap items-center justify-center">
-				<Button onClick={() => navigate('/expanded-line')}>
-					{translate('EXPAND_LINE')}
-				</Button>
-				<Button onClick={() => navigate('/selection')}>
-					{translate('SELECTION')}
-				</Button>
-
-				<Button onClick={() => navigate('/loading')}>
-					{translate('LOADING')}
-				</Button>
-				<Button onClick={() => navigate('/sort')}>{translate('SORT')}</Button>
-				<Button onClick={() => navigate('/filter')}>
-					{translate('FILTER')}
-				</Button>
-				<Button onClick={() => navigate('/editable')}>
-					{translate('EDITABLE')}
-				</Button>
-				<Button onClick={() => navigate('/virtualized')}>
-					{translate('VIRTUALIZED')}
-				</Button>
-				<Button onClick={() => navigate('/pagination')}>
-					{translate('PAGINATION')}
-				</Button>
+				{LIST_OPTIONS.map(item => (
+					<Button onClick={() => navigate(item.url)}>
+						{translate(item.translate)}
+					</Button>
+				))}
 			</div>
 		</div>
 	);
