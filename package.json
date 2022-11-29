@@ -6,7 +6,7 @@
     "start": "vite --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "vitest": "vitest watch --coverage",
+		"vitest": "vitest --coverage --ui --api.port=56789",
     "sonar": "npx sonar-scanner -D sonar.login=sqp_19463e3c6d93bf299348b46437d0c0c4646e1a0b"
   },
   "dependencies": {
@@ -62,6 +62,7 @@
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4",
     "vite": "^3.1.4",
-    "vitest": "^0.23.4"
+    "vitest": "^0.23.4",
+		"@vitest/ui": "^0.24.3"
   }
 }

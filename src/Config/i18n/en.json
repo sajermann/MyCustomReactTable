@@ -40,6 +40,7 @@
 		"FAVORITE_ROWS": "Favorite Rows",
 		"FAVORITE_ROW_MODE": "Favorite Rows Mode",
 		"FAVORITES": "Favorites",
-		"CREATED": "Created"
+		"CREATED": "Created",
+		"EDITABLE_ROW_MODE": "Editable Row Mode"
 	}
 }

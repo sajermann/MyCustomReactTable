@@ -253,7 +253,7 @@ export default function Editable() {
 
 	return (
 		<div className="p-4">
-			<h1>{translate('EXPAND_LINE_MODE')}</h1>
+			<h1>{translate('EDITABLE_ROW_MODE')}</h1>
 			<div>
 				<Table
 					isLoading={isLoading}
