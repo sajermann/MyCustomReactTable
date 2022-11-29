@@ -39,6 +39,7 @@
 		"PAGINATION": "Pagination",
 		"FAVORITE_ROWS": "Favorite Rows",
 		"FAVORITE_ROW_MODE": "Favorite Rows Mode",
-		"FAVORITES": "Favorites"
+		"FAVORITES": "Favorites",
+		"CREATED": "Created"
 	}
 }

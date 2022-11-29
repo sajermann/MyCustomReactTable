@@ -53,7 +53,7 @@ export default function Home() {
 			</h1>
 			<div className="flex gap-4 flex-wrap items-center justify-center">
 				{LIST_OPTIONS.map(item => (
-					<Button onClick={() => navigate(item.url)}>
+					<Button key={item.url} onClick={() => navigate(item.url)}>
 						{translate(item.translate)}
 					</Button>
 				))}

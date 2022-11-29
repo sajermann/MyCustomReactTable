@@ -4,7 +4,6 @@ import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
-import { Checkbox } from '../../Components/Checkbox';
 import { Icons } from '../../Components/Icons';
 
 export default function Favorites() {
@@ -64,7 +63,7 @@ export default function Favorites() {
 				align: 'center',
 				enableSorting: false,
 				cell: ({ row }: CellContext<TPerson, unknown>) => (
-					<div className="w-6">
+					<div className="w-full h-6 flex items-center justify-center">
 						{row.getIsSelected() ? (
 							<Icons.Star colorFill="#0054B6" colorStroke="#0054B6" />
 						) : (
