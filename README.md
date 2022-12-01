@@ -1,10 +1,8 @@
-# ViteBoilerplate
+# Custom React Table
 
-Esse Boilerplate tem como finalidade entregar os principais recursos necessários para se iniciar um projeto frontend com React e Typescript.
+Esse projeto foi criado para estudar e manter em portfólio a implementação de tabelas customizadas com várias possibilidades de configurações.
 
-Sabemos que cada caso é um caso, cada projeto demanda uma necessidade diferente, será necessário adicionar outras libs, ou até mesmo remover alguma que não está sendo utilizada, mas em um mundo perfeito, tentando abrangir a maior parte dos projetos, esse boilerplate que eu criei é a minha escolha.
-
-## Principais Recursos e Configurações Desse Boilerplate
+## Principais Recursos e Configurações Desse Projeto
 
 ### Vite
 Vite hoje é sem dúvidas a melhor escolha para se iniciar um projeto frontent, além de moderno, sua principal característica é a velocidade de compilação, o que leva ao desenvolvedor uma produtividade incrível, Vite utiliza por de baixo dos panos o Rollup, que na minha opinião possui uma configuração muito simples.
@@ -30,26 +28,40 @@ Vitest é uma alternativa ao Jest, além de ter sido criado pela equipe do Vite,
 ### Sonarqube
 Sonarqube é uma ferramenta de inspeção de qualidade de código, nesse projeto já está configurado para ser executado através do comando `npm run sonar` e colher as informações corretas, o desenvolvedor deve apenas fazer as alterações necessárias de acordo com o seu próprio Sonarqube.
 
-### Dark Mode
-Utilizando o recurso Dark Mode do Tailwind, já deixei configurado um hook para alteração do modo escuro na aplicação, para fazer a alteração nas classes o desenvolvedor deve utilizar o seletor `dark:`.
-
 ### i18n
-Internacionalização é fundamental em projetos de multiplas linguagens, utilizando a lib i18n eu já deixei configurado um hook para alteração da linguagem da aplicação, deixei como exemplo 2 linguagens completas sendo o `pt-BR` e o `en` e mais uma linguagem com apenas uma tradução que é a `de`.
+Internacionalização é fundamental em projetos de multiplas linguagens, utilizando a lib i18n eu já deixei configurado um hook para alteração da linguagem da aplicação, deixei como exemplo 2 linguagens completas sendo o `pt-BR` e o `en`.
+
+### TanStack Table v8
+Escolhi o React Table do TanStack pela simplicidade e disponibilidade de recursos avançados para gerenciamento da mesma. React Table é baseada em Hook, por isso fornece apenas a lógica por trás das tabelas, sendo assim a perfumaria é o desenvolvedor quem faz.
+
+## Implementações
+
+### Expandir Linha
+Permite ao usuário realizar uma ação e expandir alguma linha da tabela podendo renderizar o que desejar, nesse exemplo eu escolhi renderizar um componente de edição para alterar os dados da linha.
+
+### Seleção de Linha
+Permite ao usuário selecionar uma linha ou várias baseado na configuração, também é possível desativar a seleção baseado em alguma lógica.
+
+### Indicação de Carregamento
+Mostra ao usuário a indicação de quem está ocorrendo uma atualização de dados na tabela.
+
+### Classificação
+Ao clicar no header da coluna, a mesma será classificada de maneira asc ou desc.
+
+### Filtro - Em Construção
+
+### Editável
+Nesse exemplo é possível editar os dados da linha na própria tabela.
+
+### Virtualização
+Virtualização permite mostrar grandes quantidades de dados mantendo o máximo de desempenho possível.
+
+### Paginação - Controlada
+Para demonstrar a paginação controlada, eu escolhi a api do Rick and Morty.
+
+### Favoritos
+Baseado em seleção de linhas, demonstro que é possível mover a coluna de seleção de prioridade e também trocar os checkboxs de seleção por estrelas de favoritos.
 
 
 ## Demonstração
 
-**Aplicação com linguagem EN**
-![Aplicação com linguagem EN](https://lh3.googleusercontent.com/pw/AL9nZEXEJZkHBSTkbkTwkK7uqVyQLmJo_4tE7iDEjUppV1tZ9Wh_BzwkFkJWPkFFFrgTPDQvyTIa2bRUcm-qed1AVOA3OBqwm2Be5DjEUd0xYqwGfXfbTGZdY1eQrdNpUjOrSPnep0jNKl7k8aht05-kScsS=w687-h607-no?authuser=0)
-
-**Aplicação com linguagem PT-BR**
-![Aplicação com linguagem PT-BR](https://lh3.googleusercontent.com/pw/AL9nZEVelwcjNe40-MUB5ETLvbzCQ8UVFvkSAQYFLl43TnRySfy7VuAXoDMdIoNxpAzAt0gr8LU64tH9BZ0dM5N3yiluWW30mgnOFj-vQ7NlLL79b4HJRAj329sfzgBJV_B2DHUHKeV-x04qChwNU5r-0qy9=w686-h599-no?authuser=0)
-
-**Aplicação com Tema Claro**
-![Aplicação com Tema Claro](https://lh3.googleusercontent.com/pw/AL9nZEXAyrbBZFN2OLjhWh1EowBTukKZDhhRrs6GOs7JvITj7BRHBn7RO7fTKLvQo96snXDbD40XOPRMMgxEJeIRzIr5qjPJiu7bfcJyLlN0TX9n3hn5Ys2H8CIMW_rZ7PG_xjXnLo8nKAFG15A_4cCSrDIJ=w693-h619-no?authuser=0)
-
-**Vitest Coverage**
-![Vitest Coverage](https://lh3.googleusercontent.com/pw/AL9nZEUDS6zefrh0HC5Fhrg_mGfSiLYwmg_7YbplfzBcjPnnbRBVCb5lEtUqR-IqoDj6XMT9qO-BXSTlcWyfc8XKDM-jZKf9JcOHEOvXf6JoHWfsORU6-uHbmN5xHWa59BKCJJYJrUdKsfuT5h67zIDgd6ST=w802-h685-no?authuser=0)
-
-**Sonarqube**
-![Sonarqube](https://lh3.googleusercontent.com/pw/AL9nZEXrP0eon6XwURjNEnxpN0GJuk1RknnjUbCKLaHwaCsaj2rapnWuqQ0wRhWCMmQ1NZlyFqsUrcXj85ZWdJQ_4-Oc2uT_OTPMy-mI0fhlui-_zsdzPh7JEjaQoeHgBeGxmEbHFKyU08hBWIH4xO8gB0Kn=w1291-h931-no?authuser=0)
