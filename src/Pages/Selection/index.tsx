@@ -6,6 +6,7 @@ import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { Input } from '../../Components/Input';
 import { useColumns } from '../../Hooks/UseColumns';
+import { DebouncedInput } from '../../Components/DebouncedInput';
 
 export default function Selection() {
 	const { translate } = useTranslation();
@@ -15,6 +16,7 @@ export default function Selection() {
 		'single'
 	);
 	const [disableSelectionForId, setDisableSelectionForId] = useState('');
+	const [globalFilter, setGlobalFilter] = useState('');
 	const { columns } = useColumns();
 
 	useEffect(() => {
@@ -36,6 +38,13 @@ export default function Selection() {
 	return (
 		<div className="p-4">
 			<h1>{translate('SELECTION_ROW_MODE')}</h1>
+
+			<DebouncedInput
+				value={globalFilter ?? ''}
+				onChange={value => setGlobalFilter(String(value))}
+				className="p-2 font-lg shadow border border-block"
+				placeholder="Search all columns..."
+			/>
 
 			<div>
 				<div className="flex items-center gap-2">
@@ -80,6 +89,10 @@ export default function Selection() {
 						type: selectionType,
 						disableSelectionRow:
 							disableSelectionForId !== '' ? verifyForDisable : undefined,
+					}}
+					globalFilter={{
+						filter: globalFilter,
+						setFilter: setGlobalFilter,
 					}}
 				/>
 				{translate('SELECTED_ROWS')}: {JSON.stringify(selectedItems, null, 2)}

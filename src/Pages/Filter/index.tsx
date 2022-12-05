@@ -1,44 +1,11 @@
-import { InputHTMLAttributes, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { useColumns } from '../../Hooks/UseColumns';
-
-function DebouncedInput({
-	value: initialValue,
-	onChange,
-	debounce = 500,
-	...props
-}: {
-	value: string | number;
-	onChange: (value: string | number) => void;
-	debounce?: number;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
-	const [value, setValue] = useState(initialValue);
-
-	useEffect(() => {
-		setValue(initialValue);
-	}, [initialValue]);
-
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			onChange(value);
-		}, debounce);
-
-		return () => clearTimeout(timeout);
-	}, [value]);
-
-	return (
-		<input
-			type="search"
-			{...props}
-			value={value}
-			onChange={e => setValue(e.target.value)}
-		/>
-	);
-}
+import { DebouncedInput } from '../../Components/DebouncedInput';
 
 export default function Filter() {
 	const { translate } = useTranslation();

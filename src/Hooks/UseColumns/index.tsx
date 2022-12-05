@@ -51,13 +51,11 @@ export function useColumns() {
 				align: 'center',
 			},
 			{
+				accessorFn: row => formatDate(new Date(row.birthday)),
 				accessorKey: 'birthday',
 				header: translate('BIRTHDAY'),
 				minSize: 100,
 				size: 100,
-				cell: info => (
-					<div>{formatDate(new Date(info.getValue() as string))}</div>
-				),
 				align: 'center',
 			},
 			{

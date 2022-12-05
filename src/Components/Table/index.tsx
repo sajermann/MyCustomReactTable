@@ -193,6 +193,7 @@ export function Table<T>({
 	}
 
 	const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+		console.log({ row, columnId, value, addMeta });
 		// Rank the item
 		const itemRank = rankItem(row.getValue(columnId), value);
 
@@ -209,10 +210,10 @@ export function Table<T>({
 		data,
 		columns: buildColumns(),
 		columnResizeMode: 'onChange',
-		filterFns: {
-			fuzzy: fuzzyFilter,
-		},
-		globalFilterFn: fuzzyFilter,
+		// filterFns: {
+		// 	fuzzy: fuzzyFilter,
+		// },
+		// globalFilterFn: fuzzyFilter,
 		getFilteredRowModel: getFilteredRowModel(),
 		pageCount: enablePagination?.pageCount,
 		state: {
