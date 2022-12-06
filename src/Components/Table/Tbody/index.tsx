@@ -9,6 +9,7 @@ import {
 	Row,
 } from '@tanstack/react-table';
 import { useVirtualizer as useVirtual } from '@tanstack/react-virtual';
+
 import { useTranslation } from '../../../Hooks/UseTranslation';
 import { LoadingBar } from '../../LoadingBar';
 import styles from './index.module.css';

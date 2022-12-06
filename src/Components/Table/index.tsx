@@ -26,6 +26,7 @@ import {
 	sortingFns,
 	getFilteredRowModel,
 	PaginationState,
+	TableMeta,
 } from '@tanstack/react-table';
 import {
 	RankingInfo,
@@ -78,6 +79,8 @@ type Props<T> = {
 			}>
 		>;
 	};
+
+	meta?: TableMeta<T>;
 };
 
 type PropsTableInternal = {
@@ -95,6 +98,7 @@ export function Table<T>({
 	rowForUpdate,
 	disabledVirtualization,
 	enablePagination,
+	meta,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	// const [pagination, setPagination] = useState({
@@ -236,6 +240,7 @@ export function Table<T>({
 		getExpandedRowModel: getExpandedRowModel(),
 		manualPagination: true,
 		onPaginationChange: enablePagination?.setPagination,
+		meta,
 	});
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);

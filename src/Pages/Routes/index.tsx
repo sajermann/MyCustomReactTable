@@ -3,6 +3,7 @@ import Editable from '../Editable';
 import ExpandedLine from '../ExpandedLine';
 import Favorites from '../Favorites';
 import Filter from '../Filter';
+import FullEditable from '../FullEditable';
 import Home from '../Home';
 import Loading from '../Loading';
 import Pagination from '../Pagination';
@@ -22,6 +23,7 @@ export default function RoutesConfig() {
 			<Route path="/sort" element={<Sort />} />
 			<Route path="/filter" element={<Filter />} />
 			<Route path="/editable" element={<Editable />} />
+			<Route path="/full-editable" element={<FullEditable />} />
 			<Route path="/virtualized" element={<Virtualized />} />
 			<Route path="/pagination" element={<Pagination />} />
 			<Route path="/favorites" element={<Favorites />} />

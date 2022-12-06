@@ -33,6 +33,10 @@ export default function Home() {
 			url: '/editable',
 		},
 		{
+			translate: 'FULL_EDITABLE',
+			url: '/full-editable',
+		},
+		{
 			translate: 'VIRTUALIZED',
 			url: '/virtualized',
 		},

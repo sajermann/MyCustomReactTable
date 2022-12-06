@@ -41,6 +41,8 @@
 		"FAVORITE_ROW_MODE": "Favorite Rows Mode",
 		"FAVORITES": "Favorites",
 		"CREATED": "Created",
-		"EDITABLE_ROW_MODE": "Editable Row Mode"
+		"EDITABLE_ROW_MODE": "Editable Row Mode",
+		"FULL_EDITABLE_MODE": "Full Editable Mode",
+		"FULL_EDITABLE": "Full Editable"
 	}
 }

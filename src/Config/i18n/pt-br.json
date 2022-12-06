@@ -41,6 +41,8 @@
 		"FAVORITE_ROW_MODE": "Modo de Linhas Favoritas",
 		"FAVORITES": "Favoritos",
 		"CREATED": "Cadastrado",
-		"EDITABLE_ROW_MODE": "Modo de Edição de Linha"
+		"EDITABLE_ROW_MODE": "Modo de Edição de Linha",
+		"FULL_EDITABLE_MODE": "Modo de Edição Completa",
+		"FULL_EDITABLE": "Edição Completa"
 	}
 }
