@@ -81,6 +81,7 @@ type Props<T> = {
 	};
 
 	meta?: TableMeta<T>;
+	defaultColumn?: Partial<ColumnDef<T, unknown>>;
 };
 
 type PropsTableInternal = {
@@ -99,6 +100,7 @@ export function Table<T>({
 	disabledVirtualization,
 	enablePagination,
 	meta,
+	defaultColumn,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	// const [pagination, setPagination] = useState({
@@ -213,6 +215,7 @@ export function Table<T>({
 	const table = useReactTable({
 		data,
 		columns: buildColumns(),
+		defaultColumn,
 		columnResizeMode: 'onChange',
 		// filterFns: {
 		// 	fuzzy: fuzzyFilter,

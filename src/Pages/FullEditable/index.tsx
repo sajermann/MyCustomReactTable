@@ -1,37 +1,23 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { Input } from '../../Components/Input';
-import { Select } from '../../Components/Select';
-import { ROLES } from '../../Constants/Roles';
-import { Checkbox } from '../../Components/Checkbox';
+import { Datepicker } from '../../Components/Datepicker';
 
 export default function FullEditable() {
 	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
-	const onBlur = (
-		e: ChangeEvent<HTMLInputElement>,
-		rowIndex: number,
-		table: any
-	) => {
-		const { id, value } = e.target;
-		table.options.meta?.updateData(rowIndex, id, value);
-	};
-
-	function updateData(rowIndex, columnId, value) {
-		console.log(rowIndex, columnId, value);
-		// Skip age index reset until after next rerender
-		// skipAutoResetPageIndex()
+	function updateData(rowIndex: number, columnId: string, value: string) {
 		setData(old =>
 			old.map((row, index) => {
 				if (index === rowIndex) {
 					return {
-						...old[rowIndex]!,
+						...old[rowIndex],
 						[columnId]: value,
 					};
 				}
@@ -40,31 +26,34 @@ export default function FullEditable() {
 		);
 	}
 
-	function handleInput(e: ChangeEvent<HTMLInputElement>, rowIndex: number) {
-		const { id, value } = e.target;
-		setData(old =>
-			old.map((row, index) => {
-				if (index === rowIndex) {
-					return {
-						...old[rowIndex]!,
-						[id]: value,
-					};
-				}
-				return row;
-			})
-		);
-	}
+	const defaultColumn: Partial<ColumnDef<TPerson>> = {
+		cell: ({ getValue, row: { index }, column: { id }, table }) => {
+			const initialValue = getValue();
+			// We need to keep and update the state of the cell normally
+			const [value, setValue] = useState(initialValue);
 
-	function onChangeSelect(e: { id: number; name: string }) {
-		const newRole = e.name as 'Admin' | 'User' | 'Dev';
-		// setUpdateLine(prev => {
-		// 	if (!prev) return null;
-		// 	return {
-		// 		...prev,
-		// 		data: { ...prev?.data, role: newRole },
-		// 	};
-		// });
-	}
+			// When the input is blurred, we'll call our table meta's updateData function
+			const onBlur = () => {
+				console.log(index, id, value);
+				// @ts-expect-error dsafgf
+				table.options.meta?.updateData(index, id, value);
+			};
+
+			// If the initialValue is changed external, sync it up with our state
+			useEffect(() => {
+				setValue(initialValue);
+			}, [initialValue]);
+
+			return (
+				<Input
+					value={value as string}
+					onChange={e => setValue(e.target.value)}
+					onBlur={onBlur}
+					placeholder={id}
+				/>
+			);
+		},
+	};
 
 	const columns = useMemo<ColumnDef<TPerson>[]>(
 		() => [
@@ -101,17 +90,6 @@ export default function FullEditable() {
 				size: 100,
 				align: 'center',
 				enableSorting: true,
-				cell: info => (
-					<>
-						{console.log(info)}
-						<Input
-							type="text"
-							id="name"
-							onBlur={e => onBlur(e, info.row.index, info.table)}
-							defaultValue={info.getValue() as string}
-						/>
-					</>
-				),
 			},
 			{
 				accessorKey: 'lastName',
@@ -119,14 +97,6 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
-				cell: info => (
-					<Input
-						type="text"
-						id="lastName"
-						onChange={e => handleInput(e, info.row.index)}
-						value={info.getValue() as string}
-					/>
-				),
 			},
 			{
 				accessorKey: 'birthday',
@@ -134,15 +104,6 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
-				// cell: info => (
-				// 	<Datepicker
-				// 		id="birthday"
-				// 		name="birthday"
-				// 		customDefaultValue={new Date(updateLine?.data.birthday || '')}
-				// 		onChange={handleInput}
-				// 		value={info.getValue() as string}
-				// 	/>
-				// ),
 			},
 			{
 				accessorKey: 'email',
@@ -150,14 +111,6 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
-				cell: info => (
-					<Input
-						type="text"
-						id="email"
-						onChange={e => handleInput(e, info.row.index)}
-						value={info.getValue() as string}
-					/>
-				),
 			},
 			{
 				accessorKey: 'role',
@@ -165,15 +118,6 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
-				cell: info => (
-					<Select
-						defaultValue={ROLES.find(item => item.name === info.getValue())}
-						items={ROLES}
-						textProp="name"
-						onChange={onChangeSelect}
-						id="role"
-					/>
-				),
 			},
 			{
 				accessorKey: 'isActive',
@@ -181,21 +125,9 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
-				cell: info => (
-					<div className="w-full flex items-center justify-center">
-						<Checkbox
-							defaultChecked={info.getValue() as boolean}
-							id="isActive"
-							containerProps={{ className: 'flex items-center' }}
-							onCheckedChange={e =>
-								handleInput(e as ChangeEvent<HTMLInputElement>)
-							}
-						/>
-					</div>
-				),
 			},
 		],
-		[translate]
+		[]
 	);
 
 	async function load() {
@@ -211,14 +143,17 @@ export default function FullEditable() {
 	return (
 		<div className="p-4">
 			<h1>{translate('FULL_EDITABLE_MODE')}</h1>
+			{JSON.stringify(data, null, 2)}
 			<div>
 				<Table
 					isLoading={isLoading}
 					columns={[...columns]}
 					data={data}
+					defaultColumn={defaultColumn}
 					meta={{
 						updateData,
 					}}
+					disabledVirtualization
 				/>
 			</div>
 		</div>
