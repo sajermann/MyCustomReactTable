@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ColumnDef } from '@tanstack/react-table';
+import { CellContext, ColumnDef } from '@tanstack/react-table';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { Input } from '../../Components/Input';
-import { Datepicker } from '../../Components/Datepicker';
 
 export default function FullEditable() {
 	const { translate } = useTranslation();
@@ -26,34 +25,32 @@ export default function FullEditable() {
 		);
 	}
 
-	const defaultColumn: Partial<ColumnDef<TPerson>> = {
-		cell: ({ getValue, row: { index }, column: { id }, table }) => {
-			const initialValue = getValue();
-			// We need to keep and update the state of the cell normally
-			const [value, setValue] = useState(initialValue);
+	function EditableCell({
+		getValue,
+		row: { index },
+		column: { id },
+		table,
+	}: CellContext<TPerson, unknown>) {
+		const initialValue = getValue();
+		const [value, setValue] = useState(initialValue);
 
-			// When the input is blurred, we'll call our table meta's updateData function
-			const onBlur = () => {
-				console.log(index, id, value);
-				// @ts-expect-error dsafgf
-				table.options.meta?.updateData(index, id, value);
-			};
+		const onBlur = () => {
+			// @ts-expect-error dsafgf
+			updateData(index, id, value);
+		};
 
-			// If the initialValue is changed external, sync it up with our state
-			useEffect(() => {
-				setValue(initialValue);
-			}, [initialValue]);
+		useEffect(() => {
+			setValue(initialValue);
+		}, [initialValue]);
 
-			return (
-				<Input
-					value={value as string}
-					onChange={e => setValue(e.target.value)}
-					onBlur={onBlur}
-					placeholder={id}
-				/>
-			);
-		},
-	};
+		return (
+			<input
+				value={value as string}
+				onChange={e => setValue(e.target.value)}
+				onBlur={onBlur}
+			/>
+		);
+	}
 
 	const columns = useMemo<ColumnDef<TPerson>[]>(
 		() => [
@@ -149,7 +146,9 @@ export default function FullEditable() {
 					isLoading={isLoading}
 					columns={[...columns]}
 					data={data}
-					defaultColumn={defaultColumn}
+					defaultColumn={{
+						cell: EditableCell,
+					}}
 					meta={{
 						updateData,
 					}}

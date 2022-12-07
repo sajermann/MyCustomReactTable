@@ -216,6 +216,7 @@ export function Table<T>({
 		data,
 		columns: buildColumns(),
 		defaultColumn,
+		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: 'onChange',
 		// filterFns: {
 		// 	fuzzy: fuzzyFilter,
@@ -237,7 +238,7 @@ export function Table<T>({
 		enableRowSelection: selection !== undefined,
 		enableMultiRowSelection: selection?.type === 'multi',
 		onSortingChange: setSorting,
-		getCoreRowModel: getCoreRowModel(),
+
 		getSortedRowModel: getSortedRowModel(),
 		getRowCanExpand: () => !!expandLine,
 		getExpandedRowModel: getExpandedRowModel(),
