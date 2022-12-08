@@ -9,39 +9,6 @@ import { makeData } from '../../Utils/MakeData';
 import { Datepicker } from '../../Components/Datepicker';
 import { Input } from '../../Components/Input';
 
-declare module '@tanstack/react-table' {
-	interface TableMeta<TData extends RowData> {
-		updateData: (rowIndex: number, columnId: string, value: unknown) => void;
-	}
-}
-
-// Give our default column cell renderer editing superpowers!
-const defaultColumn: Partial<ColumnDef<TPerson>> = {
-	cell: ({ getValue, row: { index }, column: { id }, table }) => {
-		const initialValue = getValue();
-		// We need to keep and update the state of the cell normally
-		const [value, setValue] = React.useState(initialValue);
-
-		// When the input is blurred, we'll call our table meta's updateData function
-		const onBlur = () => {
-			table.options.meta?.updateData(index, id, value);
-		};
-
-		// If the initialValue is changed external, sync it up with our state
-		React.useEffect(() => {
-			setValue(initialValue);
-		}, [initialValue]);
-
-		return (
-			<input
-				value={value as string}
-				onChange={e => setValue(e.target.value)}
-				onBlur={onBlur}
-			/>
-		);
-	},
-};
-
 function Filter({ column, table }: { column: Column<any, any>; table: any }) {
 	const firstValue = table
 		.getPreFilteredRowModel()
@@ -222,24 +189,7 @@ export default function FullEditable() {
 			<Table
 				columns={columns}
 				data={data}
-				fullEditable={{ defaultColumn }}
-				meta={{
-					updateData: (rowIndex, columnId, value) => {
-						// Skip age index reset until after next rerender
-
-						setData(old =>
-							old.map((row, index) => {
-								if (index === rowIndex) {
-									return {
-										...old[rowIndex]!,
-										[columnId]: value,
-									};
-								}
-								return row;
-							})
-						);
-					},
-				}}
+				fullEditable={{ defaultColumn: undefined }}
 				disabledVirtualization
 			/>
 			{JSON.stringify(data, null, 2)}
