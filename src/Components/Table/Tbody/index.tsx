@@ -32,6 +32,9 @@ type Props<T> = {
 	};
 	rowForUpdate?: { row: number; data: T } | null;
 	disabledVirtualization?: boolean;
+	fullEditable?: {
+		defaultColumn: Partial<ColumnDef<T, unknown>>;
+	};
 };
 
 export function Tbody<T>({
@@ -44,6 +47,7 @@ export function Tbody<T>({
 	expandLine,
 	rowForUpdate,
 	disabledVirtualization,
+	fullEditable,
 }: Props<T>) {
 	const { translate } = useTranslation();
 	const { rows } = table.getRowModel();
@@ -132,6 +136,59 @@ export function Tbody<T>({
 		return null;
 	}
 
+	function buildRowsNoVirtualization() {
+		if (fullEditable) {
+			return table.getRowModel().rows.map(row => (
+				<tr key={row.id}>
+					{row.getVisibleCells().map(cell => (
+						<td key={cell.id}>
+							{flexRender(cell.column.columnDef.cell, cell.getContext())}
+						</td>
+					))}
+				</tr>
+			));
+		}
+
+		return table.getRowModel().rows.map(row => (
+			<Fragment key={row.id}>
+				<tr
+					className={verifyClassesRow(row, row.index)}
+					onClick={() => {
+						if (!selection) {
+							return;
+						}
+						if (selection?.disableSelectionRow) {
+							const result = selection.disableSelectionRow(row);
+							if (!result) {
+								row.toggleSelected();
+							}
+						} else {
+							row.toggleSelected();
+						}
+					}}
+				>
+					{row.getVisibleCells().map(cell => (
+						<td
+							key={cell.id}
+							className={styles.td}
+							style={{
+								// @ts-expect-error align exists
+								textAlign: cell.column.columnDef.align,
+								borderRight: cell.column.getIsResizing()
+									? '0.1px solid'
+									: 'none',
+							}}
+						>
+							{flexRender(cell.column.columnDef.cell, cell.getContext())}
+						</td>
+					))}
+				</tr>
+
+				{buildExpandLine(row)}
+			</Fragment>
+		));
+	}
+
 	return (
 		<tbody style={{ opacity: isLoading ? 0.5 : 1 }} className={styles.tbody}>
 			{buildNoData()}
@@ -161,44 +218,7 @@ export function Tbody<T>({
 			)}
 
 			{disabledVirtualization ? (
-				table.getRowModel().rows.map(row => (
-					<Fragment key={row.id}>
-						<tr
-							className={verifyClassesRow(row, row.index)}
-							onClick={() => {
-								if (!selection) {
-									return;
-								}
-								if (selection?.disableSelectionRow) {
-									const result = selection.disableSelectionRow(row);
-									if (!result) {
-										row.toggleSelected();
-									}
-								} else {
-									row.toggleSelected();
-								}
-							}}
-						>
-							{row.getVisibleCells().map(cell => (
-								<td
-									key={cell.id}
-									className={styles.td}
-									style={{
-										// @ts-expect-error align exists
-										textAlign: cell.column.columnDef.align,
-										borderRight: cell.column.getIsResizing()
-											? '0.1px solid'
-											: 'none',
-									}}
-								>
-									{flexRender(cell.column.columnDef.cell, cell.getContext())}
-								</td>
-							))}
-						</tr>
-
-						{buildExpandLine(row)}
-					</Fragment>
-				))
+				buildRowsNoVirtualization()
 			) : (
 				<>
 					{paddingTop > 0 && (

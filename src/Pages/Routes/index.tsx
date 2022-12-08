@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import Editable from '../Editable';
-import { EditableClear } from '../EditableClear';
 import ExpandedLine from '../ExpandedLine';
 import Favorites from '../Favorites';
 import Filter from '../Filter';
@@ -28,7 +27,6 @@ export default function RoutesConfig() {
 			<Route path="/virtualized" element={<Virtualized />} />
 			<Route path="/pagination" element={<Pagination />} />
 			<Route path="/favorites" element={<Favorites />} />
-			<Route path="/editable-clear" element={<EditableClear />} />
 		</Routes>
 	);
 }

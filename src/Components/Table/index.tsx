@@ -1,18 +1,11 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
-	Dispatch,
-	SetStateAction,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {
+	flexRender,
 	CellContext,
 	ColumnDef,
-	FilterFn,
 	getCoreRowModel,
 	getExpandedRowModel,
 	getSortedRowModel,
@@ -20,19 +13,11 @@ import {
 	OnChangeFn,
 	Row,
 	RowSelectionState,
-	SortingFn,
 	SortingState,
 	useReactTable,
-	sortingFns,
 	getFilteredRowModel,
-	PaginationState,
 	TableMeta,
 } from '@tanstack/react-table';
-import {
-	RankingInfo,
-	rankItem,
-	compareItems,
-} from '@tanstack/match-sorter-utils';
 import { Checkbox } from '../Checkbox';
 
 import styles from './index.module.css';
@@ -79,9 +64,10 @@ type Props<T> = {
 			}>
 		>;
 	};
-
+	fullEditable?: {
+		defaultColumn: Partial<ColumnDef<T, unknown>>;
+	};
 	meta?: TableMeta<T>;
-	defaultColumn?: Partial<ColumnDef<T, unknown>>;
 };
 
 type PropsTableInternal = {
@@ -100,7 +86,7 @@ export function Table<T>({
 	disabledVirtualization,
 	enablePagination,
 	meta,
-	defaultColumn,
+	fullEditable,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	// const [pagination, setPagination] = useState({
@@ -198,30 +184,12 @@ export function Table<T>({
 		return result.flat();
 	}
 
-	const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-		console.log({ row, columnId, value, addMeta });
-		// Rank the item
-		const itemRank = rankItem(row.getValue(columnId), value);
-
-		// Store the itemRank info
-		addMeta({
-			itemRank,
-		});
-
-		// Return if the item should be filtered in/out
-		return itemRank.passed;
-	};
-
 	const table = useReactTable({
 		data,
 		columns: buildColumns(),
-		defaultColumn,
+		defaultColumn: fullEditable?.defaultColumn,
 		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: 'onChange',
-		// filterFns: {
-		// 	fuzzy: fuzzyFilter,
-		// },
-		// globalFilterFn: fuzzyFilter,
 		getFilteredRowModel: getFilteredRowModel(),
 		pageCount: enablePagination?.pageCount,
 		state: {
@@ -249,6 +217,43 @@ export function Table<T>({
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
 
+	// if (fullEditable) {
+	// 	return (
+	// 		<table>
+	// 			<thead>
+	// 				{table.getHeaderGroups().map(headerGroup => (
+	// 					<tr key={headerGroup.id}>
+	// 						{headerGroup.headers.map(header => (
+	// 							<th key={header.id} colSpan={header.colSpan}>
+	// 								{header.isPlaceholder ? null : (
+	// 									<div>
+	// 										{flexRender(
+	// 											header.column.columnDef.header,
+	// 											header.getContext()
+	// 										)}
+	// 										{header.column.getCanFilter() ? <div>s</div> : null}
+	// 									</div>
+	// 								)}
+	// 							</th>
+	// 						))}
+	// 					</tr>
+	// 				))}
+	// 			</thead>
+	// 			<tbody>
+	// 				{table.getRowModel().rows.map(row => (
+	// 					<tr key={row.id}>
+	// 						{row.getVisibleCells().map(cell => (
+	// 							<td key={cell.id}>
+	// 								{flexRender(cell.column.columnDef.cell, cell.getContext())}
+	// 							</td>
+	// 						))}
+	// 					</tr>
+	// 				))}
+	// 			</tbody>
+	// 		</table>
+	// 	);
+	// }
+
 	return (
 		<div className="p-2">
 			<div
@@ -269,6 +274,7 @@ export function Table<T>({
 						selection={selection}
 						rowForUpdate={rowForUpdate}
 						disabledVirtualization={disabledVirtualization}
+						fullEditable={fullEditable}
 					/>
 				</table>
 				{enablePagination && <Pagination table={table} />}
