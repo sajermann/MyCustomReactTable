@@ -1,17 +1,3 @@
-.customContainer {
-	max-height: 80vh;
-	max-width: 100%;
-	overflow: auto;
-}
-
-.table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	font-family: arial, sans-serif;
-	table-layout: fixed;
-	width: 100%;
-}
-
 .tbody .tr {
 	height: 40px;
 }
@@ -55,17 +41,6 @@
 	touch-action: none;
 }
 
-.resizer.isResizing {
-	background: blue;
+*:hover > .resizer {
 	opacity: 1;
-}
-
-@media (hover: hover) {
-	.resizer {
-		opacity: 0;
-	}
-
-	*:hover > .resizer {
-		opacity: 1;
-	}
 }

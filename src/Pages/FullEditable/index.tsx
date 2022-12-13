@@ -1,58 +1,30 @@
 /* eslint-disable react/button-has-type */
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
-import { Column, ColumnDef, RowData } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { Table } from '../../Components/Table';
 import { TPerson } from '../../Types/TPerson';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { makeData } from '../../Utils/MakeData';
 import { Datepicker } from '../../Components/Datepicker';
 import { Input } from '../../Components/Input';
+import { SelectNew } from '../../Components/SelectNew';
+import { Checkbox } from '../../Components/Checkbox';
 
-function Filter({ column, table }: { column: Column<any, any>; table: any }) {
-	const firstValue = table
-		.getPreFilteredRowModel()
-		.flatRows[0]?.getValue(column.id);
-
-	const columnFilterValue = column.getFilterValue();
-
-	return typeof firstValue === 'number' ? (
-		<div className="flex space-x-2">
-			<input
-				type="number"
-				value={(columnFilterValue as [number, number])?.[0] ?? ''}
-				onChange={e =>
-					column.setFilterValue((old: [number, number]) => [
-						e.target.value,
-						old?.[1],
-					])
-				}
-				placeholder="Min"
-				className="w-24 border shadow rounded"
-			/>
-			<input
-				type="number"
-				value={(columnFilterValue as [number, number])?.[1] ?? ''}
-				onChange={e =>
-					column.setFilterValue((old: [number, number]) => [
-						old?.[0],
-						e.target.value,
-					])
-				}
-				placeholder="Max"
-				className="w-24 border shadow rounded"
-			/>
-		</div>
-	) : (
-		<input
-			type="text"
-			value={(columnFilterValue ?? '') as string}
-			onChange={e => column.setFilterValue(e.target.value)}
-			placeholder="Search..."
-			className="w-36 border shadow rounded"
-		/>
-	);
-}
+const DEFAULT_OPTIONS = [
+	{
+		value: 'Admin',
+		label: 'Admin',
+	},
+	{
+		value: 'User',
+		label: 'User',
+	},
+	{
+		value: 'Dev',
+		label: 'Dev',
+	},
+];
 
 export default function FullEditable() {
 	const { translate } = useTranslation();
@@ -140,12 +112,12 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
-				cell: row => (
+				cell: info => (
 					<Datepicker
 						id="birthday"
 						name="birthday"
-						// customDefaultValue={new Date(updateLine?.data.birthday || '')}
-						onChange={e => handleInput(e, row.index)}
+						customDefaultValue={new Date(info.getValue() as string)}
+						onChange={e => handleInput(e, info.row.index)}
 					/>
 				),
 			},
@@ -162,6 +134,19 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
+				cell: info => (
+					<SelectNew
+						defaultValue={
+							DEFAULT_OPTIONS.find(item => item.value === info.getValue())
+								?.value
+						}
+						options={DEFAULT_OPTIONS}
+						onChange={e =>
+							handleInput(e as ChangeEvent<HTMLInputElement>, info.row.index)
+						}
+						id="role"
+					/>
+				),
 			},
 			{
 				accessorKey: 'isActive',
@@ -169,6 +154,18 @@ export default function FullEditable() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
+				cell: info => (
+					<div className="w-full flex items-center justify-center">
+						<Checkbox
+							defaultChecked={info.getValue() as boolean}
+							id="isActive"
+							containerProps={{ className: 'flex items-center' }}
+							onCheckedChange={e =>
+								handleInput(e as ChangeEvent<HTMLInputElement>, info.row.index)
+							}
+						/>
+					</div>
+				),
 			},
 		],
 		[]
@@ -185,14 +182,10 @@ export default function FullEditable() {
 	}, []);
 
 	return (
-		<>
-			<Table
-				columns={columns}
-				data={data}
-				fullEditable={{ defaultColumn: undefined }}
-				disabledVirtualization
-			/>
+		<div className="p-4">
+			<h1>{translate('FULL_EDITABLE_MODE')}</h1>
+			<Table isLoading={isLoading} columns={columns} data={data} />
 			{JSON.stringify(data, null, 2)}
-		</>
+		</div>
 	);
 }

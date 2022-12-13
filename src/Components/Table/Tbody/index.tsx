@@ -32,9 +32,7 @@ type Props<T> = {
 	};
 	rowForUpdate?: { row: number; data: T } | null;
 	disabledVirtualization?: boolean;
-	fullEditable?: {
-		defaultColumn: Partial<ColumnDef<T, unknown>>;
-	};
+	fullEditable?: boolean;
 };
 
 export function Tbody<T>({
@@ -139,9 +137,9 @@ export function Tbody<T>({
 	function buildRowsNoVirtualization() {
 		if (fullEditable) {
 			return table.getRowModel().rows.map(row => (
-				<tr key={row.id}>
+				<tr key={row.id} className={verifyClassesRow(row, row.index)}>
 					{row.getVisibleCells().map(cell => (
-						<td key={cell.id}>
+						<td key={cell.id} className={styles.td}>
 							{flexRender(cell.column.columnDef.cell, cell.getContext())}
 						</td>
 					))}

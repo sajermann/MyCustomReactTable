@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
-	flexRender,
 	CellContext,
 	ColumnDef,
 	getCoreRowModel,
@@ -64,9 +63,7 @@ type Props<T> = {
 			}>
 		>;
 	};
-	fullEditable?: {
-		defaultColumn: Partial<ColumnDef<T, unknown>>;
-	};
+	fullEditable?: boolean;
 	meta?: TableMeta<T>;
 };
 
@@ -187,7 +184,6 @@ export function Table<T>({
 	const table = useReactTable({
 		data,
 		columns: buildColumns(),
-		defaultColumn: fullEditable?.defaultColumn,
 		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: 'onChange',
 		getFilteredRowModel: getFilteredRowModel(),
@@ -217,68 +213,39 @@ export function Table<T>({
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
 
-	// if (fullEditable) {
-	// 	return (
-	// 		<table>
-	// 			<thead>
-	// 				{table.getHeaderGroups().map(headerGroup => (
-	// 					<tr key={headerGroup.id}>
-	// 						{headerGroup.headers.map(header => (
-	// 							<th key={header.id} colSpan={header.colSpan}>
-	// 								{header.isPlaceholder ? null : (
-	// 									<div>
-	// 										{flexRender(
-	// 											header.column.columnDef.header,
-	// 											header.getContext()
-	// 										)}
-	// 										{header.column.getCanFilter() ? <div>s</div> : null}
-	// 									</div>
-	// 								)}
-	// 							</th>
-	// 						))}
-	// 					</tr>
-	// 				))}
-	// 			</thead>
-	// 			<tbody>
-	// 				{table.getRowModel().rows.map(row => (
-	// 					<tr key={row.id}>
-	// 						{row.getVisibleCells().map(cell => (
-	// 							<td key={cell.id}>
-	// 								{flexRender(cell.column.columnDef.cell, cell.getContext())}
-	// 							</td>
-	// 						))}
-	// 					</tr>
-	// 				))}
-	// 			</tbody>
-	// 		</table>
-	// 	);
-	// }
+	function buildClass() {
+		const classes = [styles.customContainer];
+		classes.push('scrollbar-thin');
+		classes.push('scrollbar-thumb-gray-500');
+		classes.push('scrollbar-track-gray-300');
+		classes.push('scrollbar-thumb-rounded-full');
+		classes.push('scrollbar-track-rounded-full');
+		return classes.join(' ');
+	}
 
 	return (
-		<div className="p-2">
-			<div
-				ref={tableContainerRef}
-				className={`${styles.customContainer} scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 scrollbar-thumb-rounded-full scrollbar-track-rounded-full`}
-				style={{ overflow: isLoading ? 'hidden' : 'auto' }}
-			>
-				<table className={styles.table}>
-					<Thead table={table} />
+		<div
+			ref={tableContainerRef}
+			className={buildClass()}
+			style={{ overflow: isLoading ? 'hidden' : 'auto' }}
+		>
+			<table className={styles.table}>
+				<Thead table={table} />
 
-					<Tbody
-						table={table}
-						tableContainerRef={tableContainerRef}
-						data={data}
-						columns={columns}
-						isLoading={isLoading}
-						expandLine={expandLine}
-						selection={selection}
-						rowForUpdate={rowForUpdate}
-						disabledVirtualization={disabledVirtualization}
-						fullEditable={fullEditable}
-					/>
-				</table>
-				{enablePagination && <Pagination table={table} />}
-			</div>
+				<Tbody
+					table={table}
+					tableContainerRef={tableContainerRef}
+					data={data}
+					columns={columns}
+					isLoading={isLoading}
+					expandLine={expandLine}
+					selection={selection}
+					rowForUpdate={rowForUpdate}
+					disabledVirtualization={disabledVirtualization}
+					fullEditable={fullEditable}
+				/>
+			</table>
+			{enablePagination && <Pagination table={table} />}
 		</div>
 	);
 }

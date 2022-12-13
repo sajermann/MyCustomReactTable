@@ -6,7 +6,7 @@
     "start": "vite --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
-		"vitest": "vitest --coverage --ui --api.port=56789",
+    "vitest": "vitest --coverage --ui --api.port=56789",
     "sonar": "npx sonar-scanner -D sonar.login=sqp_19463e3c6d93bf299348b46437d0c0c4646e1a0b"
   },
   "dependencies": {
@@ -29,7 +29,8 @@
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
     "react-i18next": "^11.18.6",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "react-select": "^5.7.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -43,6 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@vitejs/plugin-react": "^2.1.0",
     "@vitest/coverage-c8": "^0.23.4",
+    "@vitest/ui": "^0.24.3",
     "autoprefixer": "^10.4.12",
     "eslint": "^8.24.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -62,7 +64,6 @@
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4",
     "vite": "^3.1.4",
-    "vitest": "^0.23.4",
-		"@vitest/ui": "^0.24.3"
+    "vitest": "^0.23.4"
   }
 }
