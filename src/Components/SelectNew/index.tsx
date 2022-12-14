@@ -8,7 +8,7 @@ type Props = {
 	id?: string;
 	label?: string;
 	placeholder?: string;
-	value?: string;
+	value?: unknown;
 	defaultValue?: string;
 	options: OptionsOrGroups<unknown, any>;
 	onChange: (data: { target: { id?: string; value: string } }) => void;
@@ -48,6 +48,7 @@ export function SelectNew({
 			)}
 
 			<ReactSelect
+				menuPosition="fixed"
 				menuPortalTarget={document.body}
 				loadingMessage={() => 'Carregando...'}
 				noOptionsMessage={() => 'Não há dados'}

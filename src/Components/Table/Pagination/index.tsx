@@ -5,6 +5,7 @@ import { Button } from '~/Components/Button';
 
 import { Icons } from '~/Components/Icons';
 import { Input } from '~/Components/Input';
+import { SelectNew } from '~/Components/SelectNew';
 
 type Props<T> = {
 	table: Table<T>;
@@ -14,15 +15,21 @@ type Props<T> = {
 	propsButtonNextPage?: Record<string, unknown>;
 	propsButtonLastPage?: Record<string, unknown>;
 	propsInput?: Record<string, unknown>;
+	disabledPageSize?: boolean;
 };
 
-type Propss = {
+type PropsButtonPagination = {
 	children: React.ReactNode;
 	onClick: () => void;
 	disabled?: boolean;
 };
 
-function ButtonPagination({ children, onClick, disabled, ...rest }: Propss) {
+function ButtonPagination({
+	children,
+	onClick,
+	disabled,
+	...rest
+}: PropsButtonPagination) {
 	return (
 		<Button
 			style={{ width: 34, maxWidth: 34, minWidth: 34 }}
@@ -35,6 +42,33 @@ function ButtonPagination({ children, onClick, disabled, ...rest }: Propss) {
 	);
 }
 
+const DEFAULT_OPTIONS = [
+	{
+		value: 10,
+		label: '10',
+	},
+	{
+		value: 20,
+		label: '20',
+	},
+	{
+		value: 30,
+		label: '30',
+	},
+	{
+		value: 40,
+		label: '40',
+	},
+	{
+		value: 50,
+		label: '50',
+	},
+	{
+		value: 100,
+		label: '100',
+	},
+];
+
 export function Pagination<T>({
 	table,
 	disabledActions,
@@ -43,6 +77,7 @@ export function Pagination<T>({
 	propsButtonNextPage,
 	propsButtonLastPage,
 	propsInput,
+	disabledPageSize,
 }: Props<T>) {
 	return (
 		<div>
@@ -96,8 +131,30 @@ export function Pagination<T>({
 						/>
 					</div>
 				</span>
-
-				<div>| {table.getRowModel().rows.length} Linhas</div>
+				{disabledPageSize && (
+					<div>| {table.getRowModel().rows.length} Linhas</div>
+				)}
+				{!disabledPageSize && (
+					<>
+						<div>Linhas</div>
+						<div>
+							<SelectNew
+								isSearchable={false}
+								isDisabled={disabledActions}
+								value={
+									DEFAULT_OPTIONS.find(
+										item => item.value === table.getState().pagination.pageSize
+									)?.value
+								}
+								options={DEFAULT_OPTIONS}
+								onChange={e => {
+									table.setPageSize(Number(e.target.value));
+								}}
+								id="isActive"
+							/>
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

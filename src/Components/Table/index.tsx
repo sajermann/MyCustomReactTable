@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
 	CellContext,
 	ColumnDef,
@@ -9,14 +9,14 @@ import {
 	getExpandedRowModel,
 	getSortedRowModel,
 	HeaderContext,
-	OnChangeFn,
 	Row,
-	RowSelectionState,
 	SortingState,
 	useReactTable,
 	getFilteredRowModel,
 	TableMeta,
 } from '@tanstack/react-table';
+import { TPagination } from '~/Types/TPagination';
+import { TSelection } from '~/Types/TSelection';
 import { Checkbox } from '../Checkbox';
 
 import styles from './index.module.css';
@@ -25,17 +25,8 @@ import { Thead } from './Thead';
 import { Tbody } from './Tbody';
 import { Pagination } from './Pagination';
 
-// Page Count = Quantity Pages
-// Page Size = Quantity Items per Page
-
 type Props<T> = {
-	selection?: {
-		type: 'multi' | 'single';
-		rowSelection: { [index: number]: boolean };
-		setRowSelection: OnChangeFn<RowSelectionState>;
-		disableSelectionRow?: (data: Row<T>) => boolean;
-		disableCheckbox?: boolean;
-	};
+	selection?: TSelection<T>;
 
 	columns: ColumnDef<T, unknown>[];
 	data: T[];
@@ -51,18 +42,7 @@ type Props<T> = {
 
 	rowForUpdate?: { row: number; data: T } | null;
 	disabledVirtualization?: boolean;
-	pagination?: {
-		pageCount: number;
-		pageIndex: number;
-		pageSize: number;
-		setPagination: Dispatch<
-			SetStateAction<{
-				pageIndex: number;
-				pageSize: number;
-			}>
-		>;
-		disabledActions?: boolean;
-	};
+	pagination?: TPagination;
 	fullEditable?: boolean;
 	meta?: TableMeta<T>;
 };
@@ -251,6 +231,7 @@ export function Table<T>({
 				<Pagination
 					table={table}
 					disabledActions={pagination.disabledActions}
+					disabledPageSize={pagination.disabledPageSize}
 				/>
 			)}
 		</>

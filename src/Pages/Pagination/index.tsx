@@ -22,7 +22,7 @@ export default function Pagination() {
 	const { columns } = useColumns();
 
 	async function load(query: string) {
-		// if (filter.indexOf('pageIndex') === -1) return [];
+		if (query === '') return [];
 		console.log('Backend...', { query });
 		await delay(3000);
 		const result = makeData.personWithPagination({
@@ -62,6 +62,7 @@ export default function Pagination() {
 					pageIndex: pagination.pageIndex,
 					pageSize: pagination.pageSize,
 					setPagination,
+					disabledActions: isFetching,
 				}}
 				disabledVirtualization
 			/>
