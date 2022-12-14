@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Footer } from '~/Components/Footer';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { Button } from '../../Components/Button';
 
@@ -51,17 +52,20 @@ export default function Home() {
 	];
 
 	return (
-		<div className="p-4 max-w-7xl m-auto flex flex-col items-center justify-center gap-2">
-			<h1 className="text-lg font-bold">
-				{translate('WELCOME_TO_CUSTOM_TABLE')}
-			</h1>
-			<div className="flex gap-4 flex-wrap items-center justify-center">
-				{LIST_OPTIONS.map(item => (
-					<Button key={item.url} onClick={() => navigate(item.url)}>
-						{translate(item.translate)}
-					</Button>
-				))}
+		<>
+			<div className="p-4 max-w-7xl m-auto flex flex-col items-center justify-center gap-2">
+				<h1 className="text-lg font-bold">
+					{translate('WELCOME_TO_CUSTOM_TABLE')}
+				</h1>
+				<div className="flex gap-4 flex-wrap items-center justify-center">
+					{LIST_OPTIONS.map(item => (
+						<Button key={item.url} onClick={() => navigate(item.url)}>
+							{translate(item.translate)}
+						</Button>
+					))}
+				</div>
 			</div>
-		</div>
+			<Footer />
+		</>
 	);
 }

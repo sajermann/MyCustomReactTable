@@ -54,4 +54,14 @@ describe('Components/Icons', () => {
 		);
 		expect(getByTestId('IconArrowPairRight')).toBeInTheDocument();
 	});
+	it(`should render icon Linkedin`, async () => {
+		const { getByTestId } = render(
+			<Icons.Linkedin data-testid="IconLinkedin" />
+		);
+		expect(getByTestId('IconLinkedin')).toBeInTheDocument();
+	});
+	it(`should render icon Github`, async () => {
+		const { getByTestId } = render(<Icons.Github data-testid="IconGithub" />);
+		expect(getByTestId('IconGithub')).toBeInTheDocument();
+	});
 });
