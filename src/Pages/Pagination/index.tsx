@@ -21,9 +21,9 @@ export default function Pagination() {
 	const { translate } = useTranslation();
 	const { columns } = useColumns();
 
-	async function load(filter: string) {
+	async function load(query: string) {
 		// if (filter.indexOf('pageIndex') === -1) return [];
-		console.log('Backend...', { filter });
+		console.log('Backend...', { query });
 		await delay(3000);
 		const result = makeData.personWithPagination({
 			pageSize: pagination.pageSize,

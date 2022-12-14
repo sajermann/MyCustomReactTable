@@ -6,14 +6,14 @@ import { objectToQuery } from '../../Utils/ObjectToQuery';
 export function usePagination() {
 	const [backQuery, setBackQuery] = useState('');
 	const [filterQuery, setFilterQuery] = useState('');
-	const [paginationQuery, setPaginationQuery] = useState('');
+	// const [paginationQuery, setPaginationQuery] = useState('');
 	const [pageCount, setPageCount] = useState(0);
 	const [pagination, setPagination] = useState(DEFAULT_PAG);
 
 	function resetPagination() {
 		console.log('Reset...', { filterQuery });
 		setPagination({ ...DEFAULT_PAG });
-		setPaginationQuery(objectToQuery({ ...DEFAULT_PAG }));
+		// setPaginationQuery(objectToQuery({ ...DEFAULT_PAG }));
 	}
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ export function usePagination() {
 
 	function mountQueryPagination() {
 		const queryPag = objectToQuery({ ...pagination });
-		setPaginationQuery(queryPag);
+		// setPaginationQuery(queryPag);
 		setBackQuery(`${filterQuery}&${queryPag}`);
 	}
 
@@ -33,8 +33,8 @@ export function usePagination() {
 	return {
 		pagination,
 		setPagination,
-		paginationQuery,
-		setPaginationQuery,
+		// paginationQuery,
+		// setPaginationQuery,
 		pageCount,
 		setPageCount,
 		backQuery,
