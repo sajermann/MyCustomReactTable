@@ -135,17 +135,17 @@ export function Tbody<T>({
 	}
 
 	function buildRowsNoVirtualization() {
-		if (fullEditable) {
-			return table.getRowModel().rows.map(row => (
-				<tr key={row.id} className={verifyClassesRow(row, row.index)}>
-					{row.getVisibleCells().map(cell => (
-						<td key={cell.id} className={styles.td}>
-							{flexRender(cell.column.columnDef.cell, cell.getContext())}
-						</td>
-					))}
-				</tr>
-			));
-		}
+		// if (fullEditable) {
+		// 	return table.getRowModel().rows.map(row => (
+		// 		<tr key={row.id} className={verifyClassesRow(row, row.index)}>
+		// 			{row.getVisibleCells().map(cell => (
+		// 				<td key={cell.id} className={styles.td}>
+		// 					{flexRender(cell.column.columnDef.cell, cell.getContext())}
+		// 				</td>
+		// 			))}
+		// 		</tr>
+		// 	));
+		// }
 
 		return table.getRowModel().rows.map(row => (
 			<Fragment key={row.id}>

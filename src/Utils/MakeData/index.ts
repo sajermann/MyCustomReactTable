@@ -51,17 +51,12 @@ function person(...lens: number[]) {
 }
 
 type Props = {
-	pageIndex: number;
 	pageSize: number;
 };
 
-function personWithPagination({ pageIndex, pageSize }: Props) {
+function personWithPagination({ pageSize }: Props) {
 	return {
-		info: {
-			pageIndex,
-			pageSize,
-			pageCount: 20,
-		},
+		pageCount: faker.datatype.number({ min: 1, max: 100 }),
 		data: person(pageSize),
 	};
 }

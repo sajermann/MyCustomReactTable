@@ -49,9 +49,6 @@ export function SelectNew({
 
 			<ReactSelect
 				menuPortalTarget={document.body}
-				// menuPosition="fixed"
-				// styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-				// menuIsOpen
 				loadingMessage={() => 'Carregando...'}
 				noOptionsMessage={() => 'Não há dados'}
 				key={`react-select-${value}-${label}`}

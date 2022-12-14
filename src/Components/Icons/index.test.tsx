@@ -30,4 +30,28 @@ describe('Components/Icons', () => {
 		const { getByTestId } = render(<Icons.Xml data-testid="IconXml" />);
 		expect(getByTestId('IconXml')).toBeInTheDocument();
 	});
+	it(`should render icon ArrowSingleLeft`, async () => {
+		const { getByTestId } = render(
+			<Icons.ArrowSingleLeft data-testid="IconArrowSingleLeft" />
+		);
+		expect(getByTestId('IconArrowSingleLeft')).toBeInTheDocument();
+	});
+	it(`should render icon ArrowSingleRight`, async () => {
+		const { getByTestId } = render(
+			<Icons.ArrowSingleRight data-testid="IconArrowSingleRight" />
+		);
+		expect(getByTestId('IconArrowSingleRight')).toBeInTheDocument();
+	});
+	it(`should render icon ArrowPairLeft`, async () => {
+		const { getByTestId } = render(
+			<Icons.ArrowPairLeft data-testid="IconArrowPairLeft" />
+		);
+		expect(getByTestId('IconArrowPairLeft')).toBeInTheDocument();
+	});
+	it(`should render icon ArrowPairRight`, async () => {
+		const { getByTestId } = render(
+			<Icons.ArrowPairRight data-testid="IconArrowPairRight" />
+		);
+		expect(getByTestId('IconArrowPairRight')).toBeInTheDocument();
+	});
 });

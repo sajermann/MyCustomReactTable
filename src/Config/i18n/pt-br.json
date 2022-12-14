@@ -43,6 +43,12 @@
 		"CREATED": "Cadastrado",
 		"EDITABLE_ROW_MODE": "Modo de Edição de Linha",
 		"FULL_EDITABLE_MODE": "Modo de Edição Completa",
-		"FULL_EDITABLE": "Edição Completa"
+		"FULL_EDITABLE": "Edição Completa",
+		"IS_ACTIVE": "Está Ativo",
+		"YES": "Sim",
+		"NO": "Não",
+		"CLEAR": "Limpar",
+		"NOTE": "Obs",
+		"NOTE_PAGINATION_MODE": "O filtro não influência nos dados finais devido aos mesmos estarem sendo gerados pelo Faker, porém seu comportamento é fundamental na geração da query do backend com paginação, observe a seguir como fica a query do backend completa:"
 	}
 }

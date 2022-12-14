@@ -393,6 +393,114 @@ function Star({ width, height, colorFill, colorStroke, ...rest }: PropsStar) {
 	);
 }
 
+function ArrowSingleLeft({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect width="256" height="256" fill="none" />
+			<polyline
+				points="160 208 80 128 160 48"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
+function ArrowSingleRight({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect width="256" height="256" fill="none" />
+			<polyline
+				points="96 48 176 128 96 208"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
+function ArrowPairLeft({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect width="256" height="256" fill="none" />
+			<polyline
+				points="200 208 120 128 200 48"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<polyline
+				points="120 208 40 128 120 48"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
+function ArrowPairRight({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect width="256" height="256" fill="none" />
+			<polyline
+				points="56 48 136 128 56 208"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<polyline
+				points="136 48 216 128 136 208"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
 export const Icons = {
 	Download,
 	Upload,
@@ -411,4 +519,8 @@ export const Icons = {
 	Xml,
 	Indeterminate,
 	Star,
+	ArrowSingleLeft,
+	ArrowSingleRight,
+	ArrowPairLeft,
+	ArrowPairRight,
 };

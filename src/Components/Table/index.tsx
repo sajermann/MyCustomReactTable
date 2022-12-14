@@ -51,8 +51,7 @@ type Props<T> = {
 
 	rowForUpdate?: { row: number; data: T } | null;
 	disabledVirtualization?: boolean;
-
-	enablePagination?: {
+	pagination?: {
 		pageCount: number;
 		pageIndex: number;
 		pageSize: number;
@@ -62,6 +61,7 @@ type Props<T> = {
 				pageSize: number;
 			}>
 		>;
+		disabledActions?: boolean;
 	};
 	fullEditable?: boolean;
 	meta?: TableMeta<T>;
@@ -81,7 +81,7 @@ export function Table<T>({
 	globalFilter,
 	rowForUpdate,
 	disabledVirtualization,
-	enablePagination,
+	pagination,
 	meta,
 	fullEditable,
 }: Props<T>) {
@@ -187,11 +187,11 @@ export function Table<T>({
 		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: 'onChange',
 		getFilteredRowModel: getFilteredRowModel(),
-		pageCount: enablePagination?.pageCount,
+		pageCount: pagination?.pageCount,
 		state: {
 			pagination: {
-				pageIndex: enablePagination?.pageIndex || 0,
-				pageSize: enablePagination?.pageSize || 0,
+				pageIndex: pagination?.pageIndex || 0,
+				pageSize: pagination?.pageSize || 0,
 			},
 			sorting,
 			rowSelection: selection?.rowSelection,
@@ -207,7 +207,7 @@ export function Table<T>({
 		getRowCanExpand: () => !!expandLine,
 		getExpandedRowModel: getExpandedRowModel(),
 		manualPagination: true,
-		onPaginationChange: enablePagination?.setPagination,
+		onPaginationChange: pagination?.setPagination,
 		meta,
 	});
 
@@ -224,28 +224,35 @@ export function Table<T>({
 	}
 
 	return (
-		<div
-			ref={tableContainerRef}
-			className={buildClass()}
-			style={{ overflow: isLoading ? 'hidden' : 'auto' }}
-		>
-			<table className={styles.table}>
-				<Thead table={table} />
+		<>
+			<div
+				ref={tableContainerRef}
+				className={buildClass()}
+				style={{ overflow: isLoading ? 'hidden' : 'auto' }}
+			>
+				<table className={styles.table}>
+					<Thead table={table} />
 
-				<Tbody
+					<Tbody
+						table={table}
+						tableContainerRef={tableContainerRef}
+						data={data}
+						columns={columns}
+						isLoading={isLoading}
+						expandLine={expandLine}
+						selection={selection}
+						rowForUpdate={rowForUpdate}
+						disabledVirtualization={disabledVirtualization}
+						fullEditable={fullEditable}
+					/>
+				</table>
+			</div>
+			{pagination && (
+				<Pagination
 					table={table}
-					tableContainerRef={tableContainerRef}
-					data={data}
-					columns={columns}
-					isLoading={isLoading}
-					expandLine={expandLine}
-					selection={selection}
-					rowForUpdate={rowForUpdate}
-					disabledVirtualization={disabledVirtualization}
-					fullEditable={fullEditable}
+					disabledActions={pagination.disabledActions}
 				/>
-			</table>
-			{enablePagination && <Pagination table={table} />}
-		</div>
+			)}
+		</>
 	);
 }
