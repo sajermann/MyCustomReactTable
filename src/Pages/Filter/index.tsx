@@ -76,6 +76,9 @@ export default function Filter() {
 				align: 'left',
 				cell: info => info.getValue(),
 				enableGlobalFilter: false,
+				filterElement: (column: Column<any, any>, table: any) => (
+					<FilterCustom column={column} table={table} />
+				),
 			},
 		],
 		[translate]

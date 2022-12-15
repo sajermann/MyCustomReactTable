@@ -41,6 +41,20 @@ export function Thead<T>({ table }: Props<T>) {
 											desc: ' 🔽',
 										}[header.column.getIsSorted() as string] ?? null}
 									</div>
+
+									{/* Filter */}
+									{header.column.getCanFilter() &&
+									// @ts-expect-error filterElement exists
+									header.getContext().column.columnDef.filterElement
+										? header
+												.getContext()
+												// @ts-expect-error filterElement exists
+												.column.columnDef.filterElement(
+													header.getContext().column,
+													table
+												)
+										: null}
+
 									{/* SizingMode */}
 									{header.column.getCanResize() && (
 										<div
