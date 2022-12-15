@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { formatDate } from '@sajermann/utils/FormatDate';
 import { Button } from '@sajermann/ui-react';
 import { FloppyDiskBack, Pen, XCircle } from 'phosphor-react';
+import { useColumns } from '~/Hooks/UseColumns';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
@@ -22,6 +23,8 @@ export default function Editable() {
 		row: number;
 		data: TPerson;
 	}>(null);
+
+	const { columns } = useColumns();
 
 	function handleInput(e: ChangeEvent<HTMLInputElement>) {
 		const { id, value } = e.target;
@@ -51,7 +54,7 @@ export default function Editable() {
 		setUpdateLine(null);
 	}
 
-	const columns = useMemo<ColumnDef<TPerson>[]>(
+	const columnsInternal = useMemo<ColumnDef<TPerson>[]>(
 		() => [
 			{
 				accessorKey: 'id_action',
@@ -100,32 +103,8 @@ export default function Editable() {
 					</div>
 				),
 			},
-			{
-				accessorKey: 'id',
-				header: 'ID',
-				minSize: 100,
-				size: 100,
-				align: 'center',
-			},
-			{
-				accessorKey: 'avatar',
-				header: 'Avatar',
-				minSize: 60,
-				size: 60,
-				align: 'left',
-				cell: ({ getValue }) => (
-					<div className="w-14 h-14 flex items-center justify-center">
-						<img
-							className="w-full rounded-full"
-							src={getValue() as string}
-							alt=""
-						/>
-					</div>
-				),
-				enableResizing: false,
-				enableSorting: false,
-				enableGlobalFilter: false,
-			},
+			columns[0],
+			columns[1],
 			{
 				accessorKey: 'name',
 				header: translate('NAME'),
@@ -253,15 +232,12 @@ export default function Editable() {
 
 	return (
 		<div className="p-4">
-			<h1>{translate('EDITABLE_ROW_MODE')}</h1>
-			<div>
-				<Table
-					isLoading={isLoading}
-					columns={[...columns]}
-					data={data}
-					rowForUpdate={updateLine}
-				/>
-			</div>
+			<Table
+				isLoading={isLoading}
+				columns={[...columnsInternal]}
+				data={data}
+				rowForUpdate={updateLine}
+			/>
 		</div>
 	);
 }

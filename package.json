@@ -1,5 +1,5 @@
 {
-  "name": "vite-boilerplate",
+  "name": "my-custom-table",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "vitest": "vitest --coverage --ui --api.port=56789",
-    "sonar": "npx sonar-scanner -D sonar.login=sqp_19463e3c6d93bf299348b46437d0c0c4646e1a0b"
+    "sonar": "npx sonar-scanner -D sonar.login=sqp_fa0efce6c42bfaf80a2ce4af6da98a82935703be"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.1",

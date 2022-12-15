@@ -49,6 +49,8 @@
 		"NO": "Não",
 		"CLEAR": "Limpar",
 		"NOTE": "Obs",
-		"NOTE_PAGINATION_MODE": "O filtro não influência nos dados finais devido aos mesmos estarem sendo gerados pelo Faker, porém seu comportamento é fundamental na geração da query do backend com paginação, observe a seguir como fica a query do backend completa:"
+		"NOTE_PAGINATION_MODE": "O filtro não influência nos dados finais devido aos mesmos estarem sendo gerados pelo Faker, porém seu comportamento é fundamental na geração da query do backend com paginação, observe a seguir como fica a query do backend completa:",
+		"HOME": "Home",
+		"EXPANDED_LINE": "Expandir Linha"
 	}
 }

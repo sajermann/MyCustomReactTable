@@ -41,7 +41,6 @@ export default function Pagination() {
 
 	return (
 		<div className="p-4 flex flex-col gap-2">
-			<h1>{translate('PAGINATION_MODE')}</h1>
 			<div>
 				<strong>{translate('NOTE')}: </strong>
 				<span>{translate('NOTE_PAGINATION_MODE')} </span>

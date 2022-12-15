@@ -37,8 +37,6 @@ export default function Selection() {
 
 	return (
 		<div className="p-4">
-			<h1>{translate('SELECTION_ROW_MODE')}</h1>
-
 			<DebouncedInput
 				value={globalFilter ?? ''}
 				onChange={value => setGlobalFilter(String(value))}

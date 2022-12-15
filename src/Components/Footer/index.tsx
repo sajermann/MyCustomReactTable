@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
 import { Icons } from '../Icons';
-import { SelectLanguage } from '../SelectLanguage';
 
 type Props = {
 	children: React.ReactNode;

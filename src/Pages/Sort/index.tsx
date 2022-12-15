@@ -33,7 +33,6 @@ export default function Sort() {
 
 	return (
 		<div className="p-4">
-			<h1>{translate('SORT_MODE')}</h1>
 			{translate('FRIENDS_IS_ARRAY_OF_OBJECT')}
 
 			<Table columns={[...columns, ...columns2]} data={data} />

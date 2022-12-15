@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { UpdateRowExpanded } from '../../Components/UpdateRowExpanded';
 import { useColumns } from '../../Hooks/UseColumns';
 
 export default function ExpandedLine() {
-	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const { columns } = useColumns();
@@ -31,20 +29,17 @@ export default function ExpandedLine() {
 
 	return (
 		<div className="p-4">
-			<h1>{translate('EXPAND_LINE_MODE')}</h1>
-			<div>
-				<Table
-					isLoading={isLoading}
-					columns={columns}
-					data={data}
-					expandLine={{
-						render: row => (
-							<UpdateRowExpanded row={row} onSave={handleSaveUpdate} />
-						),
-					}}
-					disabledVirtualization
-				/>
-			</div>
+			<Table
+				isLoading={isLoading}
+				columns={columns}
+				data={data}
+				expandLine={{
+					render: row => (
+						<UpdateRowExpanded row={row} onSave={handleSaveUpdate} />
+					),
+				}}
+				disabledVirtualization
+			/>
 		</div>
 	);
 }

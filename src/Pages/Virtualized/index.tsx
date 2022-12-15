@@ -25,7 +25,6 @@ export default function Virtualized() {
 
 	return (
 		<div className="p-4 flex flex-col gap-4">
-			<h1>{translate('VIRTUALIZED_MODE')}</h1>
 			<Button onClick={() => setVirtualized(prev => !prev)} className="w-44">
 				{translate(
 					virtualized ? 'DISABLED_VIRTUALIZATION' : 'ACTIVE_VIRTUALIZATION'

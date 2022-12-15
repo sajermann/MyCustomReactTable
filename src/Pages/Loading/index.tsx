@@ -29,7 +29,6 @@ export default function Loading() {
 
 	return (
 		<div className="p-4">
-			<h1>{translate('LOADING_MODE')}</h1>
 			<div className="flex gap-2">
 				<Button onClick={() => handleLoading(true)}>
 					{translate('LOADING_WITH_DATA')}

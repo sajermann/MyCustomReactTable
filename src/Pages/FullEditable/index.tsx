@@ -183,7 +183,6 @@ export default function FullEditable() {
 
 	return (
 		<div className="p-4">
-			<h1>{translate('FULL_EDITABLE_MODE')}</h1>
 			<Table isLoading={isLoading} columns={columns} data={data} />
 			{JSON.stringify(data, null, 2)}
 		</div>

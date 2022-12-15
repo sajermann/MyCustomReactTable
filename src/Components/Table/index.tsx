@@ -66,19 +66,6 @@ export function Table<T>({
 	fullEditable,
 }: Props<T>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
-	// const [pagination, setPagination] = useState({
-	// 	pageIndex: 0,
-	// 	pageSize: 50,
-	// });
-
-	// const paginationConfig = {
-	// 	pageIndex: pagination.pageIndex || 0,
-	// 	pageSize: pagination.pageSize || 0,
-	// };
-
-	// useEffect(() => {
-	// 	enablePagination?.onChange(pagination);
-	// }, [pagination]);
 
 	const { translate } = useTranslation();
 
