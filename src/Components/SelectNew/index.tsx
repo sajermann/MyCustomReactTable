@@ -11,7 +11,10 @@ type Props = {
 	value?: unknown;
 	defaultValue?: string;
 	options: OptionsOrGroups<unknown, any>;
-	onChange: (data: { target: { id?: string; value: string } }) => void;
+	onChange?: (data: { target: { id?: string; value: string } }) => void;
+	isMulti?: {
+		onChange: (data: { target: { id?: string; value: string[] } }) => void;
+	};
 };
 
 export function SelectNew({
@@ -26,13 +29,21 @@ export function SelectNew({
 	value,
 	defaultValue,
 	onChange,
+	isMulti,
 	...rest
 }: Props) {
 	function handleOnChange(e: unknown) {
-		if (!e) {
+		if (!e && onChange) {
 			onChange({ target: { value: '', id } });
 			return;
 		}
+
+		if (isMulti) {
+			const dataArray = e as { value: string }[];
+			const onlyValue = dataArray.map(item => item.value);
+			isMulti.onChange({ target: { value: onlyValue, id } });
+		}
+
 		const { value: valueNow } = e as { value: string };
 		if (onChange) {
 			onChange({ target: { value: valueNow, id } });
@@ -48,6 +59,7 @@ export function SelectNew({
 			)}
 
 			<ReactSelect
+				isMulti={!!isMulti}
 				menuPosition="fixed"
 				menuPortalTarget={document.body}
 				loadingMessage={() => 'Carregando...'}

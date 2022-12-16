@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Column, ColumnDef } from '@tanstack/react-table';
+import { SelectNew } from '~/Components/SelectNew';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
@@ -19,6 +20,9 @@ function FilterCustom({
 		.flatRows[0]?.getValue(column.id);
 
 	const columnFilterValue = column.getFilterValue();
+	console.log({ columnFilterValue });
+
+	// column.setFilterValue(['t', 'rr']);
 
 	return typeof firstValue === 'number' ? (
 		<div className="flex space-x-2">
@@ -63,10 +67,48 @@ export default function Filter() {
 	const [data, setData] = useState<TPerson[]>([]);
 	const [globalFilter, setGlobalFilter] = useState('');
 
+	function getNames() {
+		return data.map(item => ({ value: item.name, label: item.name }));
+	}
+
 	const { columns } = useColumns();
 
 	const columns2 = useMemo<ColumnDef<TPerson>[]>(
 		() => [
+			columns[0],
+			columns[1],
+			{
+				accessorKey: 'name',
+				header: translate('NAME'),
+				minSize: 100,
+				size: 100,
+				align: 'center',
+				enableSorting: true,
+				filterElement: (column: Column<any, any>, table: any) => (
+					<SelectNew
+						options={getNames()}
+						isMulti={{
+							onChange: e => {
+								column.setFilterValue(e.target.value);
+							},
+						}}
+						id="role"
+					/>
+				),
+				filterFn: (row, columnId, valueFilter) => {
+					if (
+						valueFilter.length === 0 ||
+						valueFilter.includes(row.getValue(columnId))
+					) {
+						return true;
+					}
+					return false;
+				},
+			},
+			columns[3],
+			columns[4],
+			columns[5],
+			columns[6],
 			{
 				accessorKey: 'friends',
 				accessorFn: e => e.friends.map(item => item.name).join(' | '),
@@ -76,9 +118,6 @@ export default function Filter() {
 				align: 'left',
 				cell: info => info.getValue(),
 				enableGlobalFilter: false,
-				filterElement: (column: Column<any, any>, table: any) => (
-					<FilterCustom column={column} table={table} />
-				),
 			},
 		],
 		[translate]
@@ -100,7 +139,7 @@ export default function Filter() {
 				placeholder="Search all columns..."
 			/>
 			<Table
-				columns={[...columns, ...columns2]}
+				columns={[...columns2]}
 				data={data}
 				globalFilter={{
 					filter: globalFilter,
