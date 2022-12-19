@@ -1,4 +1,5 @@
 import Editable from '~/Pages/Editable';
+import Ellipsis from '~/Pages/Ellipsis';
 import ExpandedLine from '~/Pages/ExpandedLine';
 import Favorites from '~/Pages/Favorites';
 import Filter from '~/Pages/Filter';
@@ -48,6 +49,11 @@ export function useRoutesConfig() {
 			path: '/favorites',
 			element: <Favorites />,
 			title: translate('FAVORITES'),
+		},
+		{
+			path: '/ellipsis',
+			element: <Ellipsis />,
+			title: translate('ELLIPSIS'),
 		},
 	];
 

@@ -49,6 +49,10 @@ export default function Home() {
 			translate: 'FAVORITES',
 			url: '/favorites',
 		},
+		{
+			translate: 'ELLIPSIS',
+			url: '/ellipsis',
+		},
 	];
 
 	return (
