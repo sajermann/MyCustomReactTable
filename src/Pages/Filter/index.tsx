@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Column, ColumnDef } from '@tanstack/react-table';
 import { SelectNew } from '~/Components/SelectNew';
-import { Modal } from '~/Components/Modal';
 import { Input } from '~/Components/Input';
 import { Button } from '~/Components/Button';
 import { Popover } from '~/Components/Popover';
@@ -25,9 +24,6 @@ function FilterCustom({
 		.flatRows[0]?.getValue(column.id);
 
 	const columnFilterValue = column.getFilterValue();
-	console.log({ columnFilterValue });
-
-	// column.setFilterValue(['t', 'rr']);
 
 	return typeof firstValue === 'number' ? (
 		<div className="flex space-x-2">
@@ -80,6 +76,19 @@ function FilterId({ column }: Props) {
 		{ value: 'bigger', label: translate('BIGGER_THAN') },
 		{ value: 'smaller', label: translate('SMALLER_THAN') },
 	];
+
+	function verifyFillFilter() {
+		const filterValueTemp = column.getFilterValue() as string[];
+		if (
+			!filterValueTemp ||
+			filterValueTemp[0] === '' ||
+			filterValueTemp[1] === ''
+		) {
+			return false;
+		}
+		return true;
+	}
+
 	return (
 		<Popover
 			isOpen={isOpen}
@@ -90,7 +99,7 @@ function FilterId({ column }: Props) {
 					type="button"
 					onClick={() => setIsOpen(true)}
 				>
-					<Icons.Funnel />
+					<Icons.Funnel fullFill={verifyFillFilter()} />
 				</button>
 			}
 		>
@@ -173,6 +182,14 @@ function FilterName({ column, data }: Props2) {
 		return data.map(item => ({ value: item.name, label: item.name }));
 	}
 
+	function verifyFillFilter() {
+		const filterValueTemp = column.getFilterValue();
+		if (!filterValueTemp || (filterValueTemp as string[]).length === 0) {
+			return false;
+		}
+		return true;
+	}
+
 	return (
 		<Popover
 			isOpen={isOpen}
@@ -183,7 +200,7 @@ function FilterName({ column, data }: Props2) {
 					type="button"
 					onClick={() => setIsOpen(true)}
 				>
-					<Icons.Funnel />
+					<Icons.Funnel fullFill={verifyFillFilter()} />
 				</button>
 			}
 		>
@@ -195,7 +212,6 @@ function FilterName({ column, data }: Props2) {
 					options={getNames()}
 					isMulti={{
 						onChange: e => {
-							console.log(e.target.value);
 							setFilterValue(e.target.value);
 						},
 						value: filterValue,
@@ -251,10 +267,6 @@ export default function Filter() {
 	const [data, setData] = useState<TPerson[]>([]);
 	const [globalFilter, setGlobalFilter] = useState('');
 
-	function getNames() {
-		return data.map(item => ({ value: item.name, label: item.name }));
-	}
-
 	const { columns } = useColumns();
 
 	const columns2 = useMemo<ColumnDef<TPerson>[]>(
@@ -301,17 +313,6 @@ export default function Filter() {
 				align: 'center',
 				enableSorting: true,
 				filterElement: (column: Column<any, any>, table: any) => (
-					// <SelectNew
-					// 	menuPosition="fixed"
-					// 	menuPortalTarget={document.body}
-					// 	options={getNames()}
-					// 	isMulti={{
-					// 		onChange: e => {
-					// 			column.setFilterValue(e.target.value);
-					// 		},
-					// 	}}
-					// 	id="role"
-					// />
 					<FilterName column={column} data={data} />
 				),
 				filterFn: (row, columnId, valueFilter) => {
@@ -346,11 +347,10 @@ export default function Filter() {
 		setData(makeData.person(5));
 	}, []);
 
-	console.log({ data });
-
 	return (
 		<div className="p-4 flex flex-col gap-4">
 			<strong>{translate('UNDER_CONSTRUCTION')}</strong>
+
 			<DebouncedInput
 				value={globalFilter ?? ''}
 				onChange={value => setGlobalFilter(String(value))}

@@ -39,6 +39,7 @@ export function SelectNew({
 	...rest
 }: Props) {
 	function handleOnChange(e: unknown) {
+		console.log({ e });
 		if (!e && onChange) {
 			onChange({ target: { value: '', id } });
 			return;
@@ -57,9 +58,16 @@ export function SelectNew({
 	}
 
 	function getValue() {
-		if (isMulti) {
-			console.log(isMulti.value);
-			return options.find(item => item.value === isMulti.value);
+		if (isMulti && isMulti.value) {
+			const optionsTemp: { value: string; label: string }[] = [];
+			for (const valueTemp of isMulti.value) {
+				const result = options.find(opt => opt.value === valueTemp);
+				if (result) {
+					optionsTemp.push(result);
+				}
+			}
+
+			return optionsTemp;
 		}
 		return options.find(item => item.value === value);
 	}

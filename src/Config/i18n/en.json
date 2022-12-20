@@ -58,6 +58,7 @@
 		"FILTER_TYPE": "Filter Type",
 		"EQUAL": "Equal",
 		"BIGGER_THAN": "Bigger Than",
-		"SMALLER_THAN": "Smaller Than"
+		"SMALLER_THAN": "Smaller Than",
+		"FILTER_NAMES": "Filter Names"
 	}
 }
