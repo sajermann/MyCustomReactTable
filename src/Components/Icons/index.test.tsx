@@ -64,4 +64,18 @@ describe('Components/Icons', () => {
 		const { getByTestId } = render(<Icons.Github data-testid="IconGithub" />);
 		expect(getByTestId('IconGithub')).toBeInTheDocument();
 	});
+	it(`should render icon Funnel`, async () => {
+		const { getByTestId } = render(<Icons.Funnel data-testid="IconFunnel" />);
+		expect(getByTestId('IconFunnel')).toBeInTheDocument();
+	});
+
+	it(`should render icon Trash`, async () => {
+		const { getByTestId } = render(<Icons.Trash data-testid="IconTrash" />);
+		expect(getByTestId('IconTrash')).toBeInTheDocument();
+	});
+
+	it(`should render icon Save`, async () => {
+		const { getByTestId } = render(<Icons.Save data-testid="IconSave" />);
+		expect(getByTestId('IconSave')).toBeInTheDocument();
+	});
 });

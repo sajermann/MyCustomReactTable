@@ -14,6 +14,7 @@ import { useTranslation } from '../../../Hooks/UseTranslation';
 import { LoadingBar } from '../../LoadingBar';
 import styles from './index.module.css';
 import { log } from '../../../Utils/Log';
+import { Td } from '../Td';
 
 type Props<T> = {
 	table: Table<any>;
@@ -121,13 +122,14 @@ export function Tbody<T>({
 		if (data.length === 0 && !isLoading) {
 			return (
 				<tr className={styles.tr}>
-					<td
-						colSpan={countColSpan()}
-						className={styles.td}
-						style={{ textAlign: 'center' }}
+					<Td
+						{...{
+							colSpan: countColSpan(),
+							style: { textAlign: 'center' },
+						}}
 					>
 						{translate('NO_DATA')}
-					</td>
+					</Td>
 				</tr>
 			);
 		}
@@ -154,19 +156,21 @@ export function Tbody<T>({
 					}}
 				>
 					{row.getVisibleCells().map(cell => (
-						<td
+						<Td
 							key={cell.id}
-							className={styles.td}
-							style={{
-								// @ts-expect-error align exists
-								textAlign: cell.column.columnDef.align,
-								borderRight: cell.column.getIsResizing()
-									? '0.1px solid'
-									: 'none',
+							{...{
+								style: {
+									// @ts-expect-error align exists
+									textAlign: cell.column.columnDef.align,
+									borderRight: cell.column.getIsResizing()
+										? '0.1px solid'
+										: 'none',
+								},
 							}}
+							title={cell.getContext().getValue() as string}
 						>
 							{flexRender(cell.column.columnDef.cell, cell.getContext())}
-						</td>
+						</Td>
 					))}
 				</tr>
 
@@ -193,13 +197,14 @@ export function Tbody<T>({
 
 			{data.length === 0 && isLoading && (
 				<tr className={styles.tr}>
-					<td
-						colSpan={countColSpan()}
-						className={styles.td}
-						style={{ textAlign: 'center' }}
+					<Td
+						{...{
+							colSpan: countColSpan(),
+							style: { textAlign: 'center' },
+						}}
 					>
 						{translate('LOADING...')}
-					</td>
+					</Td>
 				</tr>
 			)}
 
@@ -234,16 +239,19 @@ export function Tbody<T>({
 									}}
 								>
 									{row.getVisibleCells().map(cell => (
-										<td
-											className={styles.td}
-											key={cell.id}
-											style={{
-												// @ts-expect-error align exists
-												textAlign: cell.column.columnDef.align,
-												borderRight: cell.column.getIsResizing()
-													? '0.1px solid'
-													: 'none',
+										<Td
+											{...{
+												className: styles.td,
+												style: {
+													// @ts-expect-error align exists
+													textAlign: cell.column.columnDef.align,
+													borderRight: cell.column.getIsResizing()
+														? '0.1px solid'
+														: 'none',
+												},
 											}}
+											title={cell.getContext().getValue() as string}
+											key={cell.id}
 										>
 											{rowForUpdate?.row === cell.row.index &&
 											// @ts-expect-error align cellEdit
@@ -254,7 +262,7 @@ export function Tbody<T>({
 														cell.column.columnDef.cell,
 														cell.getContext()
 												  )}
-										</td>
+										</Td>
 									))}
 								</tr>
 

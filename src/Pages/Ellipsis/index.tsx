@@ -33,6 +33,7 @@ export default function Ellipsis() {
 
 	return (
 		<div className="p-4">
+			{translate('DISPLAY_TITLE_ONLY_HOVER_ON_ELLIPSIS')}
 			<Table columns={[...columns2, ...columns]} data={data} />
 		</div>
 	);

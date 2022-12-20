@@ -14,7 +14,11 @@ type Props = {
 	onChange?: (data: { target: { id?: string; value: string } }) => void;
 	isMulti?: {
 		onChange: (data: { target: { id?: string; value: string[] } }) => void;
+		value?: string[];
 	};
+
+	menuPosition?: 'fixed' | 'absolute';
+	menuPortalTarget?: HTMLElement | null;
 };
 
 export function SelectNew({
@@ -30,6 +34,8 @@ export function SelectNew({
 	defaultValue,
 	onChange,
 	isMulti,
+	menuPosition,
+	menuPortalTarget,
 	...rest
 }: Props) {
 	function handleOnChange(e: unknown) {
@@ -50,6 +56,14 @@ export function SelectNew({
 		}
 	}
 
+	function getValue() {
+		if (isMulti) {
+			console.log(isMulti.value);
+			return options.find(item => item.value === isMulti.value);
+		}
+		return options.find(item => item.value === value);
+	}
+
 	return (
 		<div {...rest}>
 			{label && (
@@ -60,8 +74,8 @@ export function SelectNew({
 
 			<ReactSelect
 				isMulti={!!isMulti}
-				menuPosition="fixed"
-				menuPortalTarget={document.body}
+				menuPosition={menuPosition}
+				menuPortalTarget={menuPortalTarget}
 				loadingMessage={() => 'Carregando...'}
 				noOptionsMessage={() => 'Não há dados'}
 				key={`react-select-${value}-${label}`}
@@ -76,7 +90,7 @@ export function SelectNew({
 				options={options}
 				placeholder={placeholder}
 				onChange={handleOnChange}
-				value={options.find(item => item.value === value)}
+				value={getValue()}
 			/>
 		</div>
 	);

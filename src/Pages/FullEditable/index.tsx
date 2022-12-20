@@ -136,6 +136,8 @@ export default function FullEditable() {
 				align: 'center',
 				cell: info => (
 					<SelectNew
+						menuPosition="fixed"
+						menuPortalTarget={document.body}
 						defaultValue={
 							DEFAULT_OPTIONS.find(item => item.value === info.getValue())
 								?.value

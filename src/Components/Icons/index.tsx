@@ -614,6 +614,131 @@ function Github({ width, height, color, ...rest }: Props) {
 	);
 }
 
+function Funnel({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+		>
+			<rect width="256" height="256" fill="none" />
+			<path
+				d="M42.1,48H213.9a8,8,0,0,1,5.9,13.4l-65.7,72.3a7.8,7.8,0,0,0-2.1,5.4v56.6a7.9,7.9,0,0,1-3.6,6.7l-32,21.3a8,8,0,0,1-12.4-6.6v-78a7.8,7.8,0,0,0-2.1-5.4L36.2,61.4A8,8,0,0,1,42.1,48Z"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
+function Trash({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+		>
+			<rect width="256" height="256" fill="none" />
+			<line
+				x1="216"
+				y1="56"
+				x2="40"
+				y2="56"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<line
+				x1="104"
+				y1="104"
+				x2="104"
+				y2="168"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<line
+				x1="152"
+				y1="104"
+				x2="152"
+				y2="168"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<path
+				d="M200,56V208a8,8,0,0,1-8,8H64a8,8,0,0,1-8-8V56"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<path
+				d="M168,56V40a16,16,0,0,0-16-16H104A16,16,0,0,0,88,40V56"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
+function Save({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+		>
+			<rect width="256" height="256" fill="none" />
+			<path
+				d="M40,91.3V208a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V48a8,8,0,0,0-8-8H91.3a7.9,7.9,0,0,0-5.6,2.3L42.3,85.7A7.9,7.9,0,0,0,40,91.3Z"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<circle
+				cx="128"
+				cy="148"
+				r="28"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<polyline
+				points="96 80 160 80 160 40"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
 export const Icons = {
 	Download,
 	Upload,
@@ -638,4 +763,7 @@ export const Icons = {
 	ArrowPairRight,
 	Linkedin,
 	Github,
+	Funnel,
+	Trash,
+	Save,
 };

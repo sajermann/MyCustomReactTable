@@ -24,37 +24,38 @@ export function Thead<T>({ table }: Props<T>) {
 						>
 							{header.isPlaceholder ? null : (
 								<>
-									<div
-										{...{
-											className: header.column.getCanSort()
-												? 'cursor-pointer select-none'
-												: '',
-											onClick: header.column.getToggleSortingHandler(),
-										}}
-									>
-										{flexRender(
-											header.column.columnDef.header,
-											header.getContext()
-										)}
-										{{
-											asc: ' 🔼',
-											desc: ' 🔽',
-										}[header.column.getIsSorted() as string] ?? null}
+									<div className="flex justify-center items-center gap-1">
+										<div
+											{...{
+												className: header.column.getCanSort()
+													? 'cursor-pointer select-none'
+													: '',
+												onClick: header.column.getToggleSortingHandler(),
+											}}
+										>
+											{flexRender(
+												header.column.columnDef.header,
+												header.getContext()
+											)}
+											{{
+												asc: ' 🔼',
+												desc: ' 🔽',
+											}[header.column.getIsSorted() as string] ?? null}
+										</div>
+
+										{/* Filter */}
+										{header.column.getCanFilter() &&
+										// @ts-expect-error filterElement exists
+										header.getContext().column.columnDef.filterElement
+											? header
+													.getContext()
+													// @ts-expect-error filterElement exists
+													.column.columnDef.filterElement(
+														header.getContext().column,
+														table
+													)
+											: null}
 									</div>
-
-									{/* Filter */}
-									{header.column.getCanFilter() &&
-									// @ts-expect-error filterElement exists
-									header.getContext().column.columnDef.filterElement
-										? header
-												.getContext()
-												// @ts-expect-error filterElement exists
-												.column.columnDef.filterElement(
-													header.getContext().column,
-													table
-												)
-										: null}
-
 									{/* SizingMode */}
 									{header.column.getCanResize() && (
 										<div
