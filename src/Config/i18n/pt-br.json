@@ -60,6 +60,9 @@
 		"BIGGER_THAN": "Maior que",
 		"SMALLER_THAN": "Menor que",
 		"FILTER_NAMES": "Filtrar Nomes",
-		"PRINT": "Imprimir"
+		"PRINT": "Imprimir",
+		"CONFIGURE_SUPER_FILTER": "Configurar Super Filtro",
+		"ID": "Id",
+		"DIFFERENT": "Diferente"
 	}
 }
