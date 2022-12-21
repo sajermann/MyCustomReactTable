@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from 'react';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { objectToQuery } from '../../Utils/ObjectToQuery';
-import { Button } from '../Button';
-import { Input } from '../Input';
-import { SelectNew } from '../SelectNew';
+import { useTranslation } from '../../../Hooks/UseTranslation';
+import { objectToQuery } from '../../../Utils/ObjectToQuery';
+import { Button } from '../../Button';
+import { Input } from '../../Input';
+import { SelectNew } from '../../SelectNew';
 
 const DEFAULT_FILTER = {
 	name: '',

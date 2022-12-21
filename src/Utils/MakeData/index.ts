@@ -32,19 +32,31 @@ function animal(...lens: number[]) {
 function person(...lens: number[]) {
 	const makeDataLevel = (depth = 0): TPerson[] => {
 		const len = lens[depth]!;
-		return range(len).map(
-			(i): TPerson => ({
+		return range(len).map((i): TPerson => {
+			const name = faker.name.firstName();
+			const lastName = faker.name.lastName();
+			const domainEmail = faker.helpers.arrayElement([
+				'hotmail',
+				'gmail',
+				'outlook',
+				'yahoo',
+			]);
+
+			return {
 				id: String(i + 1),
-				name: faker.name.firstName(),
-				lastName: faker.name.lastName(),
+				name,
+				lastName,
 				birthday: faker.date.past().toISOString(),
-				email: faker.internet.email(),
+				email: `${name.split(' ').join('_').toLocaleLowerCase()}_${lastName
+					.split(' ')
+					.join('_')
+					.toLocaleLowerCase()}@${domainEmail}.com`,
 				avatar: faker.internet.avatar(),
 				role: faker.helpers.arrayElement(['Admin', 'User', 'Dev']),
 				isActive: faker.helpers.arrayElement([true, false]),
 				friends: animal(faker.helpers.arrayElement([1, 2, 3])),
-			})
-		);
+			};
+		});
 	};
 
 	return makeDataLevel();

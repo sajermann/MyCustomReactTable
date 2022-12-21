@@ -5,6 +5,7 @@ import { Input } from '~/Components/Input';
 import { Button } from '~/Components/Button';
 import { Popover } from '~/Components/Popover';
 import { Icons } from '~/Components/Icons';
+import { SuperFilter } from '~/Components/Filter/SuperFilter';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
@@ -281,7 +282,7 @@ export default function Filter() {
 					<FilterId column={column} />
 				),
 				filterFn: (row, columnId, valueFilter) => {
-					console.log(row, columnId, valueFilter);
+					console.log({ row, columnId, valueFilter });
 					if (valueFilter[0] === '' && valueFilter[1] === '') {
 						return true;
 					}
@@ -363,8 +364,23 @@ export default function Filter() {
 				globalFilter={{
 					filter: globalFilter,
 					setFilter: setGlobalFilter,
+					globalFilterFn: (rows, columnIds, filterValue) => {
+						// return the filtered rows
+						console.log('Global', { rows, columnIds, filterValue });
+						console.log(rows.getValue(columnIds));
+						const valueColumn = (
+							rows.getValue(columnIds) as string
+						).toLocaleLowerCase();
+
+						if (valueColumn.includes(filterValue.toLocaleLowerCase())) {
+							return true;
+						}
+						return false;
+					},
 				}}
 			/>
+
+			<SuperFilter />
 		</div>
 	);
 }

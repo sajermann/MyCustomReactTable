@@ -59,6 +59,7 @@
 		"EQUAL": "Equal",
 		"BIGGER_THAN": "Bigger Than",
 		"SMALLER_THAN": "Smaller Than",
-		"FILTER_NAMES": "Filter Names"
+		"FILTER_NAMES": "Filter Names",
+		"PRINT": "Print"
 	}
 }

@@ -6,7 +6,7 @@ import { TPerson } from '../../Types/TPerson';
 import { makeData } from '../../Utils/MakeData';
 import { useColumns } from '../../Hooks/UseColumns';
 import { delay } from '../../Utils/Delay';
-import { Filter } from '../../Components/Filter';
+import { Filter } from '../../Components/Pagination/Filter';
 
 export default function Pagination() {
 	const {

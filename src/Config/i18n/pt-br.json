@@ -59,6 +59,7 @@
 		"EQUAL": "Igual",
 		"BIGGER_THAN": "Maior que",
 		"SMALLER_THAN": "Menor que",
-		"FILTER_NAMES": "Filtrar Nomes"
+		"FILTER_NAMES": "Filtrar Nomes",
+		"PRINT": "Imprimir"
 	}
 }

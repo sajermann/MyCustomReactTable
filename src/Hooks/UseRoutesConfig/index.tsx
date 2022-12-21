@@ -7,6 +7,7 @@ import FullEditable from '~/Pages/FullEditable';
 import Home from '~/Pages/Home';
 import Loading from '~/Pages/Loading';
 import Pagination from '~/Pages/Pagination';
+import Print from '~/Pages/Print';
 import Selection from '~/Pages/Selection';
 import Sort from '~/Pages/Sort';
 import Virtualized from '~/Pages/Virtualized';
@@ -54,6 +55,11 @@ export function useRoutesConfig() {
 			path: '/ellipsis',
 			element: <Ellipsis />,
 			title: translate('ELLIPSIS'),
+		},
+		{
+			path: '/print',
+			element: <Print />,
+			title: translate('PRINT'),
 		},
 	];
 

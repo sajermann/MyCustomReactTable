@@ -14,6 +14,7 @@ import {
 	useReactTable,
 	getFilteredRowModel,
 	TableMeta,
+	FilterFnOption,
 } from '@tanstack/react-table';
 import { TPagination } from '~/Types/TPagination';
 import { TSelection } from '~/Types/TSelection';
@@ -38,6 +39,7 @@ type Props<T> = {
 	globalFilter?: {
 		filter: string;
 		setFilter: (data: string) => void;
+		globalFilterFn?: FilterFnOption<T>;
 	};
 
 	rowForUpdate?: { row: number; data: T } | null;
@@ -176,6 +178,8 @@ export function Table<T>({
 		manualPagination: true,
 		onPaginationChange: pagination?.setPagination,
 		meta,
+
+		globalFilterFn: globalFilter?.globalFilterFn || 'auto',
 	});
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);

@@ -53,6 +53,10 @@ export default function Home() {
 			translate: 'ELLIPSIS',
 			url: '/ellipsis',
 		},
+		{
+			translate: 'PRINT',
+			url: '/print',
+		},
 	];
 
 	return (
