@@ -6,6 +6,7 @@ import { Button } from '~/Components/Button';
 import { Popover } from '~/Components/Popover';
 import { Icons } from '~/Components/Icons';
 import { SuperFilter } from '~/Components/Filter/SuperFilter';
+import { TFilterActive } from '~/Types/TFilterActive';
 import { Table } from '../../Components/Table';
 import { useTranslation } from '../../Hooks/UseTranslation';
 import { TPerson } from '../../Types/TPerson';
@@ -266,7 +267,7 @@ function FilterName({ column, data }: Props2) {
 export default function Filter() {
 	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
-	const [globalFilter, setGlobalFilter] = useState('');
+	const [globalFilter, setGlobalFilter] = useState<TFilterActive[]>([]);
 
 	const { columns } = useColumns();
 
@@ -348,31 +349,83 @@ export default function Filter() {
 		setData(makeData.person(5));
 	}, []);
 
+	function verifyFilter(
+		filterType: string,
+		filterValue: string,
+		valueCell: string
+	) {
+		console.log({ filterType, filterValue, valueCell });
+		const results: boolean[] = [];
+		if (filterType === 'equals') {
+			if (filterValue === valueCell) {
+				return true;
+			}
+		}
+
+		if (filterType === 'different') {
+			if (filterValue !== valueCell) {
+				return true;
+			}
+		}
+
+		if (filterType === 'bigger') {
+			if (Number(valueCell) > Number(filterValue)) {
+				return true;
+			}
+		}
+
+		if (filterType === 'smaller') {
+			if (Number(valueCell) < Number(filterValue)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	return (
 		<div className="p-4 flex flex-col gap-4">
 			<strong>{translate('UNDER_CONSTRUCTION')}</strong>
-
+			{/*
 			<DebouncedInput
 				value={globalFilter ?? ''}
 				onChange={value => setGlobalFilter(String(value))}
 				className="p-2 font-lg shadow border border-block"
 				placeholder="Search all columns..."
-			/>
+			/> */}
 			<Table
 				columns={[...columns2]}
 				data={data}
 				globalFilter={{
 					filter: globalFilter,
 					setFilter: setGlobalFilter,
-					globalFilterFn: (rows, columnIds, filterValue) => {
-						// return the filtered rows
-						console.log('Global', { rows, columnIds, filterValue });
-						console.log(rows.getValue(columnIds));
-						const valueColumn = (
-							rows.getValue(columnIds) as string
-						).toLocaleLowerCase();
+					globalFilterFn: (rows, columnId, filters) => {
+						if (filters.length === 0) {
+							return true;
+						}
+						const valueCell = rows.getValue(columnId) as string;
+						// console.log('Global', { rows, columnId, filters });
+						// console.log(rows);
+						const results: boolean[] = [];
 
-						if (valueColumn.includes(filterValue.toLocaleLowerCase())) {
+						for (const filter of filters) {
+							console.log({ filter });
+							if (filter.column === columnId) {
+								results.push(
+									verifyFilter(filter.type, filter.value, valueCell)
+								);
+								// if (filter.type === 'equals') {
+								// 	if (filter.value === valueCell) {
+								// 		results.push(true);
+								// 	}
+								// }
+							}
+						}
+
+						console.log(results);
+
+						const result = results.find(item => item === true);
+						if (result) {
 							return true;
 						}
 						return false;
@@ -380,7 +433,10 @@ export default function Filter() {
 				}}
 			/>
 
-			<SuperFilter />
+			<SuperFilter
+				globalFilter={globalFilter}
+				setGlobalFilter={setGlobalFilter}
+			/>
 		</div>
 	);
 }

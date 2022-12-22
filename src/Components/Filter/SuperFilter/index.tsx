@@ -1,24 +1,24 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '~/Components/Button';
 import { Input } from '~/Components/Input';
 import { Modal } from '~/Components/Modal';
 import { SelectNew } from '~/Components/SelectNew';
 import { useTranslation } from '~/Hooks/UseTranslation';
 import { generateGuid } from '@sajermann/utils/Random';
+import { TFilterActive } from '~/Types/TFilterActive';
+import Chip from '~/Components/Chip';
 
-type FilterActive = {
-	id: string;
-	column: string;
-	type: string;
-	value: string;
+type Props = {
+	globalFilter: TFilterActive[];
+	setGlobalFilter: Dispatch<SetStateAction<TFilterActive[]>>;
 };
 
-export function SuperFilter() {
+export function SuperFilter({ globalFilter, setGlobalFilter }: Props) {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [optionColumnSelected, setOptionColumnSelected] = useState('id');
 	const [optionTypeSelected, setOptionTypeSelected] = useState('equals');
 	const [valueSelected, setValueSelected] = useState('');
-	const [activeFilters, setActiveFilters] = useState<FilterActive[]>([]);
+	const [activeFilters, setActiveFilters] = useState<TFilterActive[]>([]);
 	const { translate } = useTranslation();
 
 	const optionsColumns = [
@@ -44,6 +44,19 @@ export function SuperFilter() {
 				value: valueSelected,
 			},
 		]);
+
+		setValueSelected('');
+		setOptionColumnSelected('id');
+		setOptionTypeSelected('equals');
+	}
+
+	function handleSave() {
+		setGlobalFilter([...activeFilters]);
+		setIsOpenModal(false);
+	}
+
+	function handleRemoveFilter(id: string) {
+		setActiveFilters(old => old.filter(item => item.id !== id));
 	}
 
 	return (
@@ -57,10 +70,10 @@ export function SuperFilter() {
 				width="70%"
 				isOpen={isOpenModal}
 				onClose={() => setIsOpenModal(false)}
-				closeButton
+				// closeButton
 			>
 				<div className="grid grid-cols-12 gap-4">
-					<div className="col-span-6">
+					<div className="col-span-3">
 						<SelectNew
 							label={translate('COLUMN')}
 							isClearable
@@ -74,7 +87,7 @@ export function SuperFilter() {
 							placeholder={translate('FILTER_TYPE')}
 						/>
 					</div>
-					<div className="col-span-6">
+					<div className="col-span-3">
 						<SelectNew
 							label={translate('TYPE_FILTER')}
 							isClearable
@@ -88,20 +101,45 @@ export function SuperFilter() {
 							placeholder={translate('FILTER_TYPE')}
 						/>
 					</div>
-					<Input
-						placeholder={translate('VALUE')}
-						value={valueSelected}
-						onChange={e => setValueSelected(e.target.value)}
-					/>
+					<div className="col-span-3">
+						<Input
+							label={translate('VALUE')}
+							placeholder={translate('VALUE')}
+							value={valueSelected}
+							onChange={e => setValueSelected(e.target.value)}
+						/>
+					</div>
+					<div className="col-span-3">
+						<div className="flex w-full h-full items-end">
+							<Button onClick={handleAddFilter}>{translate('ADD')}</Button>
+						</div>
+					</div>
+					{/* <div className="col-span-12">
+						{JSON.stringify(
+							{ optionColumnSelected, optionTypeSelected, activeFilters },
+							null,
+							2
+						)}
+					</div> */}
+					<div className="col-span-12">
+						{translate('ACTIVE_FILTERS')}
+						<div className="flex gap-4">
+							{activeFilters.map(item => (
+								<Chip
+									key={item.id}
+									value={`${item.column} ${item.type} ${item.value}`}
+									id={item.id}
+									onRemove={handleRemoveFilter}
+								/>
+							))}
+						</div>
+					</div>
+					<div className="col-span-12">
+						<div className="flex justify-end">
+							<Button onClick={handleSave}>{translate('CONFIRM')}</Button>
+						</div>
+					</div>
 				</div>
-
-				<Button onClick={handleAddFilter}>Adicionar Filtro</Button>
-
-				{JSON.stringify(
-					{ optionColumnSelected, optionTypeSelected, activeFilters },
-					null,
-					2
-				)}
 			</Modal>
 		</>
 	);

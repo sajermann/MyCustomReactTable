@@ -63,6 +63,14 @@
 		"PRINT": "Imprimir",
 		"CONFIGURE_SUPER_FILTER": "Configurar Super Filtro",
 		"ID": "Id",
-		"DIFFERENT": "Diferente"
+		"DIFFERENT": "Diferente",
+		"ROLE": "Role",
+		"SUPER_FILTER": "Super Filtro",
+		"COLUMN": "Coluna",
+		"TYPE_FILTER": "Tipo do Filtro",
+		"VALUE": "Valor",
+		"ACTIVE_FILTERS": "Filtros Ativos",
+		"CONFIRM": "Confirmar",
+		"ADD": "Adicionar"
 	}
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
 	CellContext,
 	ColumnDef,
@@ -26,7 +26,7 @@ import { Thead } from './Thead';
 import { Tbody } from './Tbody';
 import { Pagination } from './Pagination';
 
-type Props<T> = {
+type Props<T, U = undefined> = {
 	selection?: TSelection<T>;
 
 	columns: ColumnDef<T, unknown>[];
@@ -37,8 +37,8 @@ type Props<T> = {
 	};
 
 	globalFilter?: {
-		filter: string;
-		setFilter: (data: string) => void;
+		filter: U;
+		setFilter: Dispatch<SetStateAction<U>>;
 		globalFilterFn?: FilterFnOption<T>;
 	};
 
@@ -54,7 +54,7 @@ type PropsTableInternal = {
 	getIsSomeRowsSelected: () => boolean;
 };
 
-export function Table<T>({
+export function Table<T, U = undefined>({
 	selection,
 	columns,
 	data,
@@ -66,7 +66,7 @@ export function Table<T>({
 	pagination,
 	meta,
 	fullEditable,
-}: Props<T>) {
+}: Props<T, U>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
 	const { translate } = useTranslation();
