@@ -8,6 +8,7 @@ import Home from '~/Pages/Home';
 import Loading from '~/Pages/Loading';
 import Pagination from '~/Pages/Pagination';
 import Print from '~/Pages/Print';
+import Resizing from '~/Pages/Resizing';
 import Selection from '~/Pages/Selection';
 import Sort from '~/Pages/Sort';
 import Virtualized from '~/Pages/Virtualized';
@@ -31,6 +32,7 @@ export function useRoutesConfig() {
 		{ path: '/sort', element: <Sort />, title: translate('SORT') },
 		{ path: '/filter', element: <Filter />, title: translate('FILTER') },
 		{ path: '/editable', element: <Editable />, title: translate('EDITABLE') },
+		{ path: '/resizing', element: <Resizing />, title: translate('RESIZING') },
 		{
 			path: '/full-editable',
 			element: <FullEditable />,

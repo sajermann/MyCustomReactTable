@@ -47,6 +47,7 @@ type Props<T, U = undefined> = {
 	pagination?: TPagination;
 	fullEditable?: boolean;
 	meta?: TableMeta<T>;
+	onResizing?: (data: object) => void;
 };
 
 type PropsTableInternal = {
@@ -66,6 +67,7 @@ export function Table<T, U = undefined>({
 	pagination,
 	meta,
 	fullEditable,
+	onResizing,
 }: Props<T, U>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -180,6 +182,7 @@ export function Table<T, U = undefined>({
 		meta,
 
 		globalFilterFn: globalFilter?.globalFilterFn || 'auto',
+		// onColumnSizingChange: e => console.log({ e }),
 	});
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -192,6 +195,13 @@ export function Table<T, U = undefined>({
 		classes.push('scrollbar-thumb-rounded-full');
 		classes.push('scrollbar-track-rounded-full');
 		return classes.join(' ');
+	}
+
+	if (onResizing) {
+		onResizing({
+			columnSizing: table.getState().columnSizing,
+			columnSizingInfo: table.getState().columnSizingInfo,
+		});
 	}
 
 	return (

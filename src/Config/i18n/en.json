@@ -71,6 +71,7 @@
 		"VALUE": "Value",
 		"ACTIVE_FILTERS": "Active Filters",
 		"CONFIRM": "Confirm",
-		"ADD": "Add"
+		"ADD": "Add",
+		"RESIZING": "Resizing"
 	}
 }

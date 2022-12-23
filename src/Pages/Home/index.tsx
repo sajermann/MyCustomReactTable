@@ -57,6 +57,10 @@ export default function Home() {
 			translate: 'PRINT',
 			url: '/print',
 		},
+		{
+			translate: 'RESIZING',
+			url: '/resizing',
+		},
 	];
 
 	return (

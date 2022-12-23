@@ -43,6 +43,11 @@ export function Thead<T>({ table }: Props<T>) {
 											}[header.column.getIsSorted() as string] ?? null}
 										</div>
 
+										{header.getContext().column.columnDef.onResizing &&
+											header
+												.getContext()
+												.column.columnDef.onResizing(header.column.getSize())}
+
 										{/* Filter */}
 										{header.column.getCanFilter() &&
 										// @ts-expect-error filterElement exists
