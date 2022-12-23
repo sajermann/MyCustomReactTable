@@ -70,7 +70,6 @@ export function SuperFilter({ globalFilter, setGlobalFilter }: Props) {
 				width="70%"
 				isOpen={isOpenModal}
 				onClose={() => setIsOpenModal(false)}
-				// closeButton
 			>
 				<div className="grid grid-cols-12 gap-4">
 					<div className="col-span-3">
@@ -111,16 +110,18 @@ export function SuperFilter({ globalFilter, setGlobalFilter }: Props) {
 					</div>
 					<div className="col-span-3">
 						<div className="flex w-full h-full items-end">
-							<Button onClick={handleAddFilter}>{translate('ADD')}</Button>
+							<Button
+								onClick={handleAddFilter}
+								disabled={
+									optionColumnSelected === '' ||
+									optionTypeSelected === '' ||
+									valueSelected === ''
+								}
+							>
+								{translate('ADD')}
+							</Button>
 						</div>
 					</div>
-					{/* <div className="col-span-12">
-						{JSON.stringify(
-							{ optionColumnSelected, optionTypeSelected, activeFilters },
-							null,
-							2
-						)}
-					</div> */}
 					<div className="col-span-12">
 						{translate('ACTIVE_FILTERS')}
 						<div className="flex gap-4">

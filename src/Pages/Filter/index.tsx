@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Column, ColumnDef } from '@tanstack/react-table';
+import { Column, ColumnDef, Row } from '@tanstack/react-table';
 import { SelectNew } from '~/Components/SelectNew';
 import { Input } from '~/Components/Input';
 import { Button } from '~/Components/Button';
@@ -354,8 +354,6 @@ export default function Filter() {
 		filterValue: string,
 		valueCell: string
 	) {
-		console.log({ filterType, filterValue, valueCell });
-		const results: boolean[] = [];
 		if (filterType === 'equals') {
 			if (filterValue === valueCell) {
 				return true;
@@ -383,6 +381,26 @@ export default function Filter() {
 		return false;
 	}
 
+	function normalFluxFilter(
+		rows: Row<TPerson>,
+		columnId: string,
+		filters: any
+	) {
+		const valueCell = rows.getValue(columnId) as string;
+		const results: boolean[] = [];
+
+		for (const filter of filters) {
+			if (filter.column === columnId) {
+				results.push(verifyFilter(filter.type, filter.value, valueCell));
+			}
+		}
+		const result = results.find(item => item === true);
+		if (result) {
+			return true;
+		}
+		return false;
+	}
+
 	return (
 		<div className="p-4 flex flex-col gap-4">
 			<strong>{translate('UNDER_CONSTRUCTION')}</strong>
@@ -393,6 +411,12 @@ export default function Filter() {
 				className="p-2 font-lg shadow border border-block"
 				placeholder="Search all columns..."
 			/> */}
+			<div>
+				<SuperFilter
+					globalFilter={globalFilter}
+					setGlobalFilter={setGlobalFilter}
+				/>
+			</div>
 			<Table
 				columns={[...columns2]}
 				data={data}
@@ -403,39 +427,9 @@ export default function Filter() {
 						if (filters.length === 0) {
 							return true;
 						}
-						const valueCell = rows.getValue(columnId) as string;
-						// console.log('Global', { rows, columnId, filters });
-						// console.log(rows);
-						const results: boolean[] = [];
-
-						for (const filter of filters) {
-							console.log({ filter });
-							if (filter.column === columnId) {
-								results.push(
-									verifyFilter(filter.type, filter.value, valueCell)
-								);
-								// if (filter.type === 'equals') {
-								// 	if (filter.value === valueCell) {
-								// 		results.push(true);
-								// 	}
-								// }
-							}
-						}
-
-						console.log(results);
-
-						const result = results.find(item => item === true);
-						if (result) {
-							return true;
-						}
-						return false;
+						return normalFluxFilter(rows, columnId, filters);
 					},
 				}}
-			/>
-
-			<SuperFilter
-				globalFilter={globalFilter}
-				setGlobalFilter={setGlobalFilter}
 			/>
 		</div>
 	);
