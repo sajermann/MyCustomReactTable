@@ -15,6 +15,8 @@ import {
 	getFilteredRowModel,
 	TableMeta,
 	FilterFnOption,
+	ColumnSizingState,
+	ColumnSizingInfoState,
 } from '@tanstack/react-table';
 import { TPagination } from '~/Types/TPagination';
 import { TSelection } from '~/Types/TSelection';
@@ -47,7 +49,10 @@ type Props<T, U = undefined> = {
 	pagination?: TPagination;
 	fullEditable?: boolean;
 	meta?: TableMeta<T>;
-	onResizing?: (data: object) => void;
+	onResizing?: (data: {
+		columnSizing: ColumnSizingState;
+		columnSizingInfo: ColumnSizingInfoState;
+	}) => void;
 };
 
 type PropsTableInternal = {
@@ -173,7 +178,6 @@ export function Table<T, U = undefined>({
 		enableRowSelection: selection !== undefined,
 		enableMultiRowSelection: selection?.type === 'multi',
 		onSortingChange: setSorting,
-
 		getSortedRowModel: getSortedRowModel(),
 		getRowCanExpand: () => !!expandLine,
 		getExpandedRowModel: getExpandedRowModel(),
@@ -182,8 +186,14 @@ export function Table<T, U = undefined>({
 		meta,
 
 		globalFilterFn: globalFilter?.globalFilterFn || 'auto',
-		// onColumnSizingChange: e => console.log({ e }),
 	});
+
+	if (onResizing) {
+		onResizing({
+			columnSizing: table.getState().columnSizing,
+			columnSizingInfo: table.getState().columnSizingInfo,
+		});
+	}
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -195,13 +205,6 @@ export function Table<T, U = undefined>({
 		classes.push('scrollbar-thumb-rounded-full');
 		classes.push('scrollbar-track-rounded-full');
 		return classes.join(' ');
-	}
-
-	if (onResizing) {
-		onResizing({
-			columnSizing: table.getState().columnSizing,
-			columnSizingInfo: table.getState().columnSizingInfo,
-		});
 	}
 
 	return (

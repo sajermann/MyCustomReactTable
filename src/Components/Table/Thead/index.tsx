@@ -42,11 +42,15 @@ export function Thead<T>({ table }: Props<T>) {
 												desc: ' 🔽',
 											}[header.column.getIsSorted() as string] ?? null}
 										</div>
-
+										{/* @ts-expect-error onResizing exists */}
 										{header.getContext().column.columnDef.onResizing &&
 											header
 												.getContext()
-												.column.columnDef.onResizing(header.column.getSize())}
+												// @ts-expect-error onResizing exists
+												.column.columnDef.onResizing(
+													header.column.getSize(),
+													header.id
+												)}
 
 										{/* Filter */}
 										{header.column.getCanFilter() &&
