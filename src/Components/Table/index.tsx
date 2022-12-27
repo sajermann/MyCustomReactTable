@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import {
 	CellContext,
 	ColumnDef,
@@ -47,12 +47,14 @@ type Props<T, U = undefined> = {
 	rowForUpdate?: { row: number; data: T } | null;
 	disabledVirtualization?: boolean;
 	pagination?: TPagination;
-	fullEditable?: boolean;
 	meta?: TableMeta<T>;
 	onResizing?: (data: {
 		columnSizing: ColumnSizingState;
 		columnSizingInfo: ColumnSizingInfoState;
 	}) => void;
+
+	columnVisibility?: Record<string, boolean>;
+	columnOrder?: string[];
 };
 
 type PropsTableInternal = {
@@ -71,8 +73,9 @@ export function Table<T, U = undefined>({
 	disabledVirtualization,
 	pagination,
 	meta,
-	fullEditable,
 	onResizing,
+	columnVisibility,
+	columnOrder,
 }: Props<T, U>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -159,6 +162,7 @@ export function Table<T, U = undefined>({
 
 	const table = useReactTable({
 		data,
+		// initialState: { columnVisibility },
 		columns: buildColumns(),
 		getCoreRowModel: getCoreRowModel(),
 		columnResizeMode: 'onChange',
@@ -172,6 +176,8 @@ export function Table<T, U = undefined>({
 			sorting,
 			rowSelection: selection?.rowSelection,
 			globalFilter: globalFilter?.filter,
+			columnVisibility,
+			columnOrder,
 		},
 		onGlobalFilterChange: globalFilter?.setFilter,
 		onRowSelectionChange: selection?.setRowSelection,
@@ -188,12 +194,18 @@ export function Table<T, U = undefined>({
 		globalFilterFn: globalFilter?.globalFilterFn || 'auto',
 	});
 
-	if (onResizing) {
-		onResizing({
-			columnSizing: table.getState().columnSizing,
-			columnSizingInfo: table.getState().columnSizingInfo,
-		});
-	}
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			if (onResizing) {
+				onResizing({
+					columnSizing: table.getState().columnSizing,
+					columnSizingInfo: table.getState().columnSizingInfo,
+				});
+			}
+		}, 1000);
+
+		return () => clearTimeout(timeout);
+	}, [table.getState().columnSizing]);
 
 	const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -227,7 +239,6 @@ export function Table<T, U = undefined>({
 						selection={selection}
 						rowForUpdate={rowForUpdate}
 						disabledVirtualization={disabledVirtualization}
-						fullEditable={fullEditable}
 					/>
 				</table>
 			</div>

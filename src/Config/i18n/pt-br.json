@@ -72,6 +72,11 @@
 		"ACTIVE_FILTERS": "Filtros Ativos",
 		"CONFIRM": "Confirmar",
 		"ADD": "Adicionar",
-		"RESIZING": "Redimencionando"
+		"RESIZING": "Redimencionando",
+		"SAVE_COLUMN_SIZE_STATE_AFTER_ONE_SECOND_IN_LOCAL_STORAGE": "Salva a largura da coluna no local storage depois de um segundo",
+		"COLUMN_VISIBILITY": "Visibilidade da Coluna",
+		"VISIBILITY": "Visibilidade",
+		"COLUMNS_VISIBLED": "Colunas Visíveis",
+		"COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Visibilidade da coluna com estado completamente controlado"
 	}
 }

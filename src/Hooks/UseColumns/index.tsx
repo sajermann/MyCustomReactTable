@@ -5,7 +5,7 @@ import { Icons } from '../../Components/Icons';
 import { TPerson } from '../../Types/TPerson';
 import { useTranslation } from '../UseTranslation';
 
-export function useColumns() {
+export function useColumns(columnSizeDefault?: Record<string, number>) {
 	const { translate } = useTranslation();
 	const columns = useMemo<ColumnDef<TPerson>[]>(
 		() => [
@@ -15,6 +15,7 @@ export function useColumns() {
 				minSize: 100,
 				size: 100,
 				align: 'center',
+				enableResizing: false,
 			},
 			{
 				accessorKey: 'avatar',
@@ -23,12 +24,10 @@ export function useColumns() {
 				size: 60,
 				align: 'left',
 				cell: ({ getValue }) => (
-					<div className="w-14 h-14 flex items-center justify-center">
-						<img
-							className="w-full rounded-full"
-							src={getValue() as string}
-							alt=""
-						/>
+					<div className="w-full h-full flex items-center justify-center">
+						<div className="w-14 h-14">
+							<img className="rounded-full" src={getValue() as string} alt="" />
+						</div>
 					</div>
 				),
 				enableResizing: false,
@@ -39,7 +38,7 @@ export function useColumns() {
 				accessorKey: 'name',
 				header: translate('NAME'),
 				minSize: 100,
-				size: 100,
+				size: columnSizeDefault ? columnSizeDefault?.name : 100,
 				align: 'center',
 				enableSorting: true,
 			},
@@ -47,7 +46,7 @@ export function useColumns() {
 				accessorKey: 'lastName',
 				header: translate('LAST_NAME'),
 				minSize: 100,
-				size: 100,
+				size: columnSizeDefault ? columnSizeDefault?.lastName : 100,
 				align: 'center',
 			},
 			{
@@ -55,21 +54,21 @@ export function useColumns() {
 				accessorKey: 'birthday',
 				header: translate('BIRTHDAY'),
 				minSize: 100,
-				size: 100,
+				size: columnSizeDefault ? columnSizeDefault?.birthday : 100,
 				align: 'center',
 			},
 			{
 				accessorKey: 'email',
 				header: 'Email',
 				minSize: 100,
-				size: 100,
+				size: columnSizeDefault ? columnSizeDefault?.email : 100,
 				align: 'center',
 			},
 			{
 				accessorKey: 'role',
 				header: 'Role',
 				minSize: 100,
-				size: 100,
+				size: columnSizeDefault?.role || 100,
 				align: 'center',
 			},
 			{
@@ -88,6 +87,7 @@ export function useColumns() {
 							<Icons.Error />
 						</div>
 					),
+				enableResizing: false,
 			},
 		],
 		[translate]

@@ -72,6 +72,11 @@
 		"ACTIVE_FILTERS": "Active Filters",
 		"CONFIRM": "Confirm",
 		"ADD": "Add",
-		"RESIZING": "Resizing"
+		"RESIZING": "Resizing",
+		"SAVE_COLUMN_SIZE_STATE_AFTER_ONE_SECOND_IN_LOCAL_STORAGE": "Save column size state after one second in local storage",
+		"COLUMN_VISIBILITY": "Column Visibility",
+		"VISIBILITY": "Visibility",
+		"COLUMNS_VISIBLED": "Columns Visibled",
+		"COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Column visibility with state fully controlled"
 	}
 }

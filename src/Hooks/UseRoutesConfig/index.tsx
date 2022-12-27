@@ -1,3 +1,5 @@
+import ColumnOrder from '~/Pages/ColumnOrder';
+import ColumnVisibility from '~/Pages/ColumnVisibility';
 import Editable from '~/Pages/Editable';
 import Ellipsis from '~/Pages/Ellipsis';
 import ExpandedLine from '~/Pages/ExpandedLine';
@@ -57,6 +59,16 @@ export function useRoutesConfig() {
 			path: '/ellipsis',
 			element: <Ellipsis />,
 			title: translate('ELLIPSIS'),
+		},
+		{
+			path: '/column-visibility',
+			element: <ColumnVisibility />,
+			title: translate('COLUMN_VISIBILITY'),
+		},
+		{
+			path: '/column-order',
+			element: <ColumnOrder />,
+			title: translate('COLUMN_ORDER'),
 		},
 		{
 			path: '/print',

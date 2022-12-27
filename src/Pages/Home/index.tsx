@@ -54,12 +54,20 @@ export default function Home() {
 			url: '/ellipsis',
 		},
 		{
-			translate: 'PRINT',
-			url: '/print',
-		},
-		{
 			translate: 'RESIZING',
 			url: '/resizing',
+		},
+		{
+			translate: 'VISIBILITY',
+			url: '/column-visibility',
+		},
+		{
+			translate: 'ORDER',
+			url: '/column-order',
+		},
+		{
+			translate: 'PRINT',
+			url: '/print',
 		},
 	];
 

@@ -33,7 +33,6 @@ type Props<T> = {
 	};
 	rowForUpdate?: { row: number; data: T } | null;
 	disabledVirtualization?: boolean;
-	fullEditable?: boolean;
 };
 
 export function Tbody<T>({
@@ -46,7 +45,6 @@ export function Tbody<T>({
 	expandLine,
 	rowForUpdate,
 	disabledVirtualization,
-	fullEditable,
 }: Props<T>) {
 	const { translate } = useTranslation();
 	const { rows } = table.getRowModel();
