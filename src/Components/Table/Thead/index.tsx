@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Table, flexRender } from '@tanstack/react-table';
+import { useDarkMode } from '~/Hooks/UseDarkMode';
 import styles from './index.module.css';
 
 type Props<T> = {
@@ -7,8 +8,18 @@ type Props<T> = {
 };
 
 export function Thead<T>({ table }: Props<T>) {
+	const { darkMode } = useDarkMode();
+
+	function getClassThead() {
+		const result = [styles.thead];
+		if (darkMode) {
+			result.push('bg-slate-900');
+		}
+		return result.join(' ');
+	}
+
 	return (
-		<thead className={styles.thead}>
+		<thead className={getClassThead()}>
 			{table.getHeaderGroups().map(headerGroup => (
 				<tr key={headerGroup.id}>
 					{headerGroup.headers.map(header => (

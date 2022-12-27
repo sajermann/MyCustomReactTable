@@ -77,6 +77,11 @@
 		"COLUMN_VISIBILITY": "Visibilidade da Coluna",
 		"VISIBILITY": "Visibilidade",
 		"COLUMNS_VISIBLED": "Colunas Visíveis",
-		"COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Visibilidade da coluna com estado completamente controlado"
+		"COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Visibilidade da coluna com estado completamente controlado",
+		"COLUMN_ORDER": "Ordem da Coluna",
+		"DRAG_AND_DROP_FOR_CHANGE_COLUMN_ORDER": "Arraste e solte para mudar a ordem da coluna",
+		"COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED": "Ordem da coluna com estado completamente controlado",
+		"ORDER": "Ordem",
+		"PRINT_ONLY_TABLE": "Imprimir apenas a tabela"
 	}
 }

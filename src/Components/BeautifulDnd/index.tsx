@@ -1,9 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
+import { CSSProperties, Dispatch, SetStateAction } from 'react';
 import {
 	DragDropContext,
 	Droppable,
 	Draggable,
 	DropResult,
+	DraggingStyle,
+	NotDraggingStyle,
 } from 'react-beautiful-dnd';
 
 type Item = { id: string; content: string };
@@ -18,29 +20,33 @@ export function BeautifulDnd({ items, setItems }: Props) {
 		const result = Array.from(list);
 		const [removed] = result.splice(startIndex, 1);
 		result.splice(endIndex, 0, removed);
-		console.log({ result });
 		return result;
 	}
 
 	const grid = 8;
 
-	const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
-		// some basic styles to make the items look a bit nicer
-		userSelect: 'none',
-		padding: grid * 2,
-		margin: `0 0 ${grid}px 0`,
+	const getItemStyle = (
+		isDragging: boolean,
+		draggableStyle?: DraggingStyle | NotDraggingStyle
+	) =>
+		({
+			// some basic styles to make the items look a bit nicer
+			userSelect: 'none',
+			padding: grid * 2,
+			margin: `0 ${grid}px 0 0`,
 
-		// change background colour if dragging
-		background: isDragging ? 'lightgreen' : 'grey',
+			// change background colour if dragging
+			background: isDragging ? 'lightgreen' : 'grey',
 
-		// styles we need to apply on draggables
-		...draggableStyle,
-	});
+			// styles we need to apply on draggables
+			...draggableStyle,
+		} as CSSProperties);
 
 	const getListStyle = (isDraggingOver: boolean) => ({
 		background: isDraggingOver ? 'lightblue' : 'lightgrey',
+		display: 'flex',
 		padding: grid,
-		width: 250,
+		overflow: 'auto',
 	});
 
 	function onDragEnd(result: DropResult) {
@@ -60,7 +66,7 @@ export function BeautifulDnd({ items, setItems }: Props) {
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="droppable">
+			<Droppable droppableId="droppable" direction="horizontal">
 				{(providedExternal, snapshotExternal) => (
 					<div
 						{...providedExternal.droppableProps}

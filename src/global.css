@@ -5,5 +5,5 @@
 /* @import '@sajermann/ui-react/index.css'; */
 
 body {
-	@apply dark:bg-[#09090a] dark:text-zinc-100;
+	@apply dark:bg-[#000] dark:text-zinc-100;
 }

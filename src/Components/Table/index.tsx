@@ -55,6 +55,9 @@ type Props<T, U = undefined> = {
 
 	columnVisibility?: Record<string, boolean>;
 	columnOrder?: string[];
+	height?: string;
+	minHeight?: string;
+	maxHeight?: string;
 };
 
 type PropsTableInternal = {
@@ -76,6 +79,9 @@ export function Table<T, U = undefined>({
 	onResizing,
 	columnVisibility,
 	columnOrder,
+	height,
+	minHeight,
+	maxHeight,
 }: Props<T, U>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -139,18 +145,22 @@ export function Table<T, U = undefined>({
 				{
 					id: 'expander',
 					header: translate('ACTION'),
-					size: 10,
+					minSize: 50,
+					size: 50,
 					cell: ({ row }: CellContext<T, unknown>) => (
-						<button
-							type="button"
-							onClick={row.getToggleExpandedHandler()}
-							{...{
-								style: { cursor: 'pointer' },
-							}}
-						>
-							{row.getIsExpanded() ? '✏' : '📝'}
-						</button>
+						<div className="w-full flex items-center justify-center">
+							<button
+								type="button"
+								onClick={row.getToggleExpandedHandler()}
+								{...{
+									style: { cursor: 'pointer' },
+								}}
+							>
+								{row.getIsExpanded() ? '✏' : '📝'}
+							</button>
+						</div>
 					),
+					enableResizing: false,
 				},
 			];
 			result.push(t as unknown as ColumnDef<T, unknown>);
@@ -224,7 +234,12 @@ export function Table<T, U = undefined>({
 			<div
 				ref={tableContainerRef}
 				className={buildClass()}
-				style={{ overflow: isLoading ? 'hidden' : 'auto' }}
+				style={{
+					overflow: isLoading ? 'hidden' : 'auto',
+					height: height || undefined,
+					minHeight: minHeight || undefined,
+					maxHeight: maxHeight || undefined,
+				}}
 			>
 				<table className={styles.table}>
 					<Thead table={table} />

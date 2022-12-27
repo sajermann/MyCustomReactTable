@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table';
 import { useVirtualizer as useVirtual } from '@tanstack/react-virtual';
 
+import { useDarkMode } from '~/Hooks/UseDarkMode';
 import { useTranslation } from '../../../Hooks/UseTranslation';
 import { LoadingBar } from '../../LoadingBar';
 import styles from './index.module.css';
@@ -47,6 +48,7 @@ export function Tbody<T>({
 	disabledVirtualization,
 }: Props<T>) {
 	const { translate } = useTranslation();
+	const { darkMode } = useDarkMode();
 	const { rows } = table.getRowModel();
 
 	const rowVirtualizer = useVirtual({
@@ -80,7 +82,7 @@ export function Tbody<T>({
 	function verifyClassesRow(row: Row<T>, index: number) {
 		const classesTemp = [styles.tr];
 		if (index % 2 > 0) {
-			classesTemp.push(styles.even);
+			classesTemp.push(!darkMode ? styles.even : 'bg-gray-800');
 		}
 		if (selection) {
 			try {

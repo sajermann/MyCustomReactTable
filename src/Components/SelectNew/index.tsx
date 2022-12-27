@@ -39,7 +39,6 @@ export function SelectNew({
 	...rest
 }: Props) {
 	function handleOnChange(e: unknown) {
-		console.log({ e });
 		if (!e && onChange) {
 			onChange({ target: { value: '', id } });
 			return;
@@ -49,6 +48,7 @@ export function SelectNew({
 			const dataArray = e as { value: string }[];
 			const onlyValue = dataArray.map(item => item.value);
 			isMulti.onChange({ target: { value: onlyValue, id } });
+			return;
 		}
 
 		const { value: valueNow } = e as { value: string };
@@ -88,7 +88,7 @@ export function SelectNew({
 				noOptionsMessage={() => 'Não há dados'}
 				key={`react-select-${value}-${label}`}
 				id={id}
-				className="basic-single"
+				className="basic-single bg-primary-300"
 				classNamePrefix="select"
 				defaultValue={options.find(item => item.value === defaultValue)}
 				isDisabled={isDisabled}
@@ -99,6 +99,32 @@ export function SelectNew({
 				placeholder={placeholder}
 				onChange={handleOnChange}
 				value={getValue()}
+				styles={{
+					control: baseStyles => ({
+						...baseStyles,
+						background: 'gray',
+						border: 'gray',
+					}),
+					menu: baseStyles => ({
+						...baseStyles,
+						background: 'gray',
+						borderColor: 'gray',
+					}),
+					option: (baseStyles, state) => ({
+						...baseStyles,
+						background: state.isFocused ? '#996DFF' : '',
+
+						color: '#fff',
+					}),
+					singleValue: baseStyles => ({
+						...baseStyles,
+						color: '#fff',
+					}),
+					input: baseStyles => ({
+						...baseStyles,
+						color: '#fff',
+					}),
+				}}
 			/>
 		</div>
 	);

@@ -1,33 +1,37 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from '../../Hooks/UseTranslation';
+import { SelectNew } from '../SelectNew';
 
 const LANGUAGES_LIST = [
-	{ id: 'en', text: 'EN' },
-	{ id: 'pt-BR', text: 'PT-BR' },
+	{ value: 'en', label: 'EN' },
+	{ value: 'pt-BR', label: 'PT-BR' },
 ];
 
 export function SelectLanguage() {
 	const { changeLanguage, currentLanguage } = useTranslation();
 	const [language, setLanguage] = useState(currentLanguage);
 
-	function handleChangeLanguage(e: ChangeEvent<HTMLSelectElement>) {
+	function handleChangeLanguage(e: {
+		target: {
+			id?: string;
+			value: string;
+		};
+	}) {
 		const { value } = e.target;
 		setLanguage(value);
 		changeLanguage(value);
 	}
 
 	return (
-		<select
-			data-testid="selectLanguage"
-			className="bg-slate-600 rounded h-7 w-28 flex justify-between items-center"
-			onChange={handleChangeLanguage}
-			defaultValue={language}
-		>
-			{LANGUAGES_LIST.map(item => (
-				<option value={item.id} key={item.id}>
-					{item.text}
-				</option>
-			))}
-		</select>
+		<div className="w-36">
+			<SelectNew
+				menuPosition="fixed"
+				menuPortalTarget={document.body}
+				isSearchable={false}
+				value={LANGUAGES_LIST.find(item => item.value === language)?.value}
+				options={LANGUAGES_LIST}
+				onChange={handleChangeLanguage}
+			/>
+		</div>
 	);
 }

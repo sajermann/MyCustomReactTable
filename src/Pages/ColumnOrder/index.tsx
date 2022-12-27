@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Container } from '~/Components/Dnd/Container';
+
 import { BeautifulDnd } from '~/Components/BeautifulDnd';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { useColumns } from '../../Hooks/UseColumns';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { useColumns } from '~/Hooks/UseColumns';
 
 export default function ColumnOrder() {
 	const { translate } = useTranslation();
@@ -31,10 +29,10 @@ export default function ColumnOrder() {
 
 	return (
 		<div className="p-4">
-			{translate('COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED')}
+			<div>{translate('COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED')}</div>
 
-			<div className="flex flex-col justify-center text-center">
-				<div>{translate('COLUMNS_VISIBLED')}</div>
+			<div className="flex flex-col justify-center items-center">
+				<div>{translate('DRAG_AND_DROP_FOR_CHANGE_COLUMN_ORDER')}</div>
 				<div className="flex gap-4">
 					<BeautifulDnd items={columnOrder} setItems={setColumnOrder} />
 				</div>

@@ -77,6 +77,11 @@
 		"COLUMN_VISIBILITY": "Column Visibility",
 		"VISIBILITY": "Visibility",
 		"COLUMNS_VISIBLED": "Columns Visibled",
-		"COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Column visibility with state fully controlled"
+		"COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Column visibility with state fully controlled",
+		"COLUMN_ORDER": "Column Order",
+		"DRAG_AND_DROP_FOR_CHANGE_COLUMN_ORDER": "Drag and drop for change column order",
+		"COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED": "Column order with state fully controlled",
+		"ORDER": "Order",
+		"PRINT_ONLY_TABLE": "Print only table"
 	}
 }
