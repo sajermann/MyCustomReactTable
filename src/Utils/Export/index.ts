@@ -5,76 +5,90 @@ const EXCEL_TYPE =
 	'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
-type DefProp = {
+type TCellProps<T> = {
+	valueCell: unknown;
+	row: T;
+	original: T[];
+	index: number;
+};
+
+type THeaderProps<T> = {
+	valueHeader: string;
+	currentDefinition: DefProps<T>;
+	definitions: DefProps<T>[];
+	index: number;
+};
+
+export type DefProps<T> = {
 	header: string;
-	accessor: string;
-	convertionFn?: (data: any) => string;
+	accessor: keyof T;
+	typeCell?: 's' | 'b';
+	accessorFn?: (data: TCellProps<T>) => string;
+	styleCellFn?: (data: TCellProps<T>) => Record<string, unknown>;
+	styleHeaderCellFn?: (data: THeaderProps<T>) => Record<string, unknown>;
 };
 
-type Props = {
-	data: Record<string, unknown>[];
-	defColumns: DefProp[];
+export type Props<T> = {
+	data: T[];
+	defColumns: DefProps<T>[];
 };
 
-const excel = ({ data, defColumns }: Props) => {
-	const dataTemp: Record<string, unknown>[] = [];
+function excel<T>({ data, defColumns }: Props<T>) {
+	const headerTemp: Record<string, unknown>[] = [];
+	const dataTemp: Record<string, unknown>[][] = [];
 
-	for (const item of data) {
-		let t = {};
-		for (const defCol of defColumns) {
-			const value = defCol.convertionFn
-				? defCol.convertionFn(item[defCol.accessor])
-				: item[defCol.accessor];
+	// Add Header
 
-			t = {
-				...t,
-				[defCol.header]: value,
-			};
-		}
-		dataTemp.push(t);
+	for (let i = 0; i < defColumns.length; i += 1) {
+		const styleFn = defColumns[i].styleHeaderCellFn;
+		headerTemp.push({
+			v: defColumns[i].header,
+			s:
+				styleFn &&
+				styleFn({
+					valueHeader: defColumns[i].header,
+					currentDefinition: defColumns[i],
+					definitions: defColumns,
+					index: i,
+				}),
+		});
 	}
-	console.log({ dataTemp });
-	const ws = XLSX.utils.json_to_sheet(dataTemp);
+	// Add Rows
 
-	const styleHeader = {
-		font: {
-			patternType: 'solid',
-			color: { rgb: 'FFFFFF' },
-		},
-		fill: {
-			patternType: 'solid',
-			fgColor: { rgb: '000' },
-		},
-	};
+	for (let i = 0; i < data.length; i += 1) {
+		const rowTemp: Record<string, unknown>[] = [];
+		for (const defCol of defColumns) {
+			const value = defCol.accessorFn
+				? defCol.accessorFn({
+						valueCell: data[i][defCol.accessor],
+						row: data[i],
+						original: data,
+						index: i,
+				  })
+				: data[i][defCol.accessor];
 
-	const head = [
-		{
-			v: 'A',
-			t: 's',
-			s: styleHeader,
-		},
-		{
-			v: 'B',
-			t: 's',
-			s: styleHeader,
-		},
-	];
-	const row = [
-		{ v: 'Courier: 24', t: 's', s: { font: { name: 'Courier', sz: 24 } } },
-		{
-			v: 'bold & color',
-			t: 's',
-			s: { font: { bold: true, color: { rgb: 'FF0000' } } },
-		},
-		{ v: 'fill: color', t: 's', s: { fill: { fgColor: { rgb: 'E9E9E9' } } } },
-		{ v: 'line\nbreak', t: 's', s: { alignment: { wrapText: true } } },
-	];
+			const style = defCol.styleCellFn
+				? defCol.styleCellFn({
+						valueCell: value,
+						row: data[i],
+						original: data,
+						index: i,
+				  })
+				: {};
 
-	const wsw = XLSX.utils.aoa_to_sheet([head, row]);
+			rowTemp.push({ v: value, t: defCol.typeCell, s: style });
+		}
+		dataTemp.push(rowTemp);
+	}
+
+	const ws = XLSX.utils.aoa_to_sheet([
+		[...headerTemp],
+		...dataTemp.map(item => item),
+	]);
 
 	const wb = {
 		Sheets: {
-			data: wsw,
+			data: ws,
 		},
 		SheetNames: ['data'],
 	};
@@ -83,6 +97,6 @@ const excel = ({ data, defColumns }: Props) => {
 	const blob = new Blob([eb], { type: EXCEL_TYPE });
 
 	saveAs(blob, `Data ${EXCEL_EXTENSION}`);
-};
+}
 
 export const exportTo = { excel };

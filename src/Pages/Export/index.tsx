@@ -7,7 +7,8 @@ import { makeData } from '~/Utils/MakeData';
 import { useColumns } from '~/Hooks/UseColumns';
 import { Button } from '~/Components/Button';
 import { formatDate } from '@sajermann/utils/FormatDate';
-import { exportTo } from '~/Utils/Export';
+import { DefProps, exportTo } from '~/Utils/Export';
+import { Icons } from '~/Components/Icons';
 
 export default function Export() {
 	const { translate } = useTranslation();
@@ -26,48 +27,81 @@ export default function Export() {
 		load();
 	}, []);
 
-	const defForExcel = useMemo(
+	const headerStyles = {
+		font: {
+			patternType: 'solid',
+			color: { rgb: 'FFFFFF' },
+			bold: true,
+		},
+		fill: {
+			patternType: 'solid',
+			fgColor: { rgb: '000' },
+		},
+	};
+
+	const defForExcel = useMemo<DefProps<TPerson>[]>(
 		() => [
 			{
 				header: 'Id',
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'id',
 			},
 			{
 				header: 'Avatar',
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'avatar',
 			},
 			{
 				header: translate('NAME'),
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'name',
 			},
 			{
 				header: translate('LAST_NAME'),
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'lastName',
 			},
 			{
 				header: translate('BIRTHDAY'),
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'birthday',
-				convertionFn: (dataColumn: any) => formatDate(new Date(dataColumn)),
+				accessorFn: ({ valueCell }) =>
+					formatDate(new Date(valueCell as string)),
 			},
 			{
 				header: 'Email',
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'email',
 			},
 			{
 				header: 'Role',
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'role',
 			},
 			{
 				header: translate('ACTIVE'),
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'isActive',
-				convertionFn: (dataColumn: any) =>
-					dataColumn ? translate('YES') : translate('NO'),
+				accessorFn: ({ valueCell }) =>
+					(valueCell as string) ? translate('YES') : translate('NO'),
+				styleCellFn: ({ row }) => ({
+					font: {
+						patternType: 'solid',
+						color: { rgb: 'FFFFFF' },
+						bold: true,
+					},
+					fill: {
+						patternType: 'solid',
+						fgColor: { rgb: row.isActive ? '228B22' : 'DC143C' },
+					},
+				}),
 			},
 			{
 				header: translate('FRIENDS'),
+				styleHeaderCellFn: () => headerStyles,
 				accessor: 'friends',
-				convertionFn: (dataColumn: any) =>
-					dataColumn.map((item: any) => item.name).join(', '),
+				accessorFn: ({ valueCell }) =>
+					(valueCell as { name: string }[]).map(item => item.name).join(' | '),
 			},
 		],
 		[translate]
@@ -80,6 +114,9 @@ export default function Export() {
 				<Button
 					onClick={() => exportTo.excel({ data, defColumns: defForExcel })}
 				>
+					<div className="w-5">
+						<Icons.Excel />
+					</div>
 					Excel
 				</Button>
 			</div>
