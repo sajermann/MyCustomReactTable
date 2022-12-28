@@ -13,8 +13,8 @@ import {
 import { describe, expect } from 'vitest';
 import { useState } from 'react';
 
+import { DEFAULT_PAG } from '~/Constants/Others';
 import { Pagination } from '.';
-import { DEFAULT_PAG } from '../../../Constants/Others';
 
 const DATA = [
 	{

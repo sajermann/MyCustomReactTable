@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { SelectNew } from '../SelectNew';
+
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { Select } from '~/Components/Select';
 
 const LANGUAGES_LIST = [
 	{ value: 'en', label: 'EN' },
@@ -24,7 +25,7 @@ export function SelectLanguage() {
 
 	return (
 		<div className="w-36">
-			<SelectNew
+			<Select
 				menuPosition="fixed"
 				menuPortalTarget={document.body}
 				isSearchable={false}

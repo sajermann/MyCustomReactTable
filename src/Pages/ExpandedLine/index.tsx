@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Table } from '../../Components/Table';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { UpdateRowExpanded } from '../../Components/UpdateRowExpanded';
-import { useColumns } from '../../Hooks/UseColumns';
+
+import { Table } from '~/Components/Table';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { UpdateRowExpanded } from '~/Components/UpdateRowExpanded';
+import { useColumns } from '~/Hooks/UseColumns';
 
 export default function ExpandedLine() {
 	const [data, setData] = useState<TPerson[]>([]);

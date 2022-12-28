@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { usePagination } from '~/Hooks/UsePagination';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { useColumns } from '../../Hooks/UseColumns';
-import { delay } from '../../Utils/Delay';
-import { Filter } from '../../Components/Pagination/Filter';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { useColumns } from '~/Hooks/UseColumns';
+import { delay } from '~/Utils/Delay';
+import { Filter } from '~/Components/Pagination/Filter';
 
 export default function Pagination() {
 	const {

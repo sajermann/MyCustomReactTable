@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '~/Components/Button';
 import { Input } from '~/Components/Input';
 import { Modal } from '~/Components/Modal';
-import { SelectNew } from '~/Components/SelectNew';
+import { Select } from '~/Components/Select';
 import { useTranslation } from '~/Hooks/UseTranslation';
 import { generateGuid } from '@sajermann/utils/Random';
 import { TFilterActive } from '~/Types/TFilterActive';
@@ -74,7 +74,7 @@ export function SuperFilter({ globalFilter, setGlobalFilter }: Props) {
 			>
 				<div className="grid grid-cols-12 gap-4">
 					<div className="col-span-3">
-						<SelectNew
+						<Select
 							label={translate('COLUMN')}
 							isClearable
 							options={optionsColumns}
@@ -88,7 +88,7 @@ export function SuperFilter({ globalFilter, setGlobalFilter }: Props) {
 						/>
 					</div>
 					<div className="col-span-3">
-						<SelectNew
+						<Select
 							label={translate('TYPE_FILTER')}
 							isClearable
 							options={optionsType}

@@ -7,7 +7,7 @@ import { TPerson } from '~/Types/TPerson';
 import { makeData } from '~/Utils/MakeData';
 import { Input } from '~/Components/Input';
 import { useColumns } from '~/Hooks/UseColumns';
-import { SelectNew } from '~/Components/SelectNew';
+import { Select } from '~/Components/Select';
 
 export default function Selection() {
 	const { translate } = useTranslation();
@@ -52,7 +52,7 @@ export default function Selection() {
 						<div className="whitespace-nowrap ">
 							{translate('SELECTION_TYPE')}
 						</div>
-						<SelectNew
+						<Select
 							isSearchable={false}
 							menuPosition="fixed"
 							menuPortalTarget={document.body}

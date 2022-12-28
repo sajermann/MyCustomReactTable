@@ -1,9 +1,10 @@
 import { formatDate, stringToDate } from '@sajermann/utils/FormatDate';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
-import { Icons } from '../../Components/Icons';
-import { TPerson } from '../../Types/TPerson';
-import { useTranslation } from '../UseTranslation';
+
+import { Icons } from '~/Components/Icons';
+import { TPerson } from '~/Types/TPerson';
+import { useTranslation } from '~/Hooks/UseTranslation';
 
 export function useColumns(columnSizeDefault?: Record<string, number>) {
 	const { translate } = useTranslation();

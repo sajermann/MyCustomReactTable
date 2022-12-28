@@ -3,14 +3,14 @@
  */
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { it, describe, vi } from 'vitest';
-import { SelectNew } from '.';
+import { Select } from '.';
 
-describe('Components/SelectNew', () => {
-	it(`must change SelectNew components`, async () => {
+describe('Components/Select', () => {
+	it(`must change Select components`, async () => {
 		const mock = vi.fn();
 		const mockOnChange = (e: any) => mock(e.target.value);
 		const { queryByTestId, getByText } = render(
-			<SelectNew
+			<Select
 				data-testid="Test"
 				id="state"
 				label="Estado Label"
@@ -32,7 +32,7 @@ describe('Components/SelectNew', () => {
 
 	it(`must show text 'not data'`, async () => {
 		const { queryByTestId, getByText } = render(
-			<SelectNew
+			<Select
 				data-testid="Test"
 				id="state"
 				label="Estado Label"
@@ -54,7 +54,7 @@ describe('Components/SelectNew', () => {
 
 	it(`must show text 'loading...'`, async () => {
 		const { queryByTestId, getByText } = render(
-			<SelectNew
+			<Select
 				data-testid="Test"
 				id="state"
 				label="Estado Label"

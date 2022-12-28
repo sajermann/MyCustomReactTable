@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+
 import { Button } from '~/Components/Button';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { useColumns } from '../../Hooks/UseColumns';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { useColumns } from '~/Hooks/UseColumns';
 
 const DEFAULT = {
 	id: 100,

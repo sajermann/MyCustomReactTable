@@ -5,7 +5,7 @@ import { Button } from '@sajermann/ui-react';
 import { FloppyDiskBack, Pen, XCircle } from 'phosphor-react';
 
 import { useColumns } from '~/Hooks/UseColumns';
-import { SelectNew } from '~/Components/SelectNew';
+import { Select } from '~/Components/Select';
 import { Table } from '~/Components/Table';
 import { useTranslation } from '~/Hooks/UseTranslation';
 import { TPerson } from '~/Types/TPerson';
@@ -166,7 +166,7 @@ export default function Editable() {
 				size: 100,
 				align: 'center',
 				cellEdit: () => (
-					<SelectNew
+					<Select
 						menuPosition="fixed"
 						menuPortalTarget={document.body}
 						options={ROLES}

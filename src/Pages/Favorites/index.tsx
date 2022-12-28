@@ -1,11 +1,12 @@
 import { CellContext, ColumnDef } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
+
 import { useColumns } from '~/Hooks/UseColumns';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { Icons } from '../../Components/Icons';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { Icons } from '~/Components/Icons';
 
 export default function Favorites() {
 	const { translate } = useTranslation();

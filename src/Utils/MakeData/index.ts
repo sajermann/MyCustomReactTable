@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { faker } from '@faker-js/faker/locale/pt_BR';
-import { TAnimal } from '../../Types/TAnimal';
-import { TPerson } from '../../Types/TPerson';
+
+import { TAnimal } from '~/Types/TAnimal';
+import { TPerson } from '~/Types/TPerson';
 
 const range = (len: number) => {
 	const arr = [];

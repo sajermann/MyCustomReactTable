@@ -1,5 +1,5 @@
-import { useDarkMode } from '../../Hooks/UseDarkMode';
-import { Switch } from '../Switch';
+import { useDarkMode } from '~/Hooks/UseDarkMode';
+import { Switch } from '~/Components/Switch';
 
 function Container({ children }: { children: React.ReactNode }) {
 	return (

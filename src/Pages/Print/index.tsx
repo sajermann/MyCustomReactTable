@@ -1,13 +1,14 @@
 import { ReactInstance, useEffect, useRef, useState } from 'react';
+
 import { ToPrint } from '~/Components/ToPrint';
 import { useReactToPrint } from 'react-to-print';
 import { delay } from '~/Utils/Delay';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { useColumns } from '../../Hooks/UseColumns';
-import { Button } from '../../Components/Button';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { useColumns } from '~/Hooks/UseColumns';
+import { Button } from '~/Components/Button';
 
 export default function Print() {
 	const { translate } = useTranslation();

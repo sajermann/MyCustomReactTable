@@ -2,10 +2,10 @@
  * @vitest-environment jsdom
  */
 import { fireEvent, render } from '@testing-library/react';
-import { it, describe, expect } from 'vitest';
-import { SelectLanguage } from './index';
-import '../../Config/i18n';
-import { useTranslation } from '../../Hooks/UseTranslation';
+import { describe, expect } from 'vitest';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { SelectLanguage } from '.';
+import '~/Config/i18n';
 
 function Mock() {
 	const { translate } = useTranslation();

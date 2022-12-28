@@ -1,10 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { ROLES } from '../../Constants/Roles';
-import { Button } from '../Button';
-import { Checkbox } from '../Checkbox';
-import { Datepicker } from '../Datepicker';
-import { Input } from '../Input';
-import { SelectNew } from '../SelectNew';
+
+import { ROLES } from '~/Constants/Roles';
+import { Button } from '~/Components/Button';
+import { Checkbox } from '~/Components/Checkbox';
+import { Datepicker } from '~/Components/Datepicker';
+import { Input } from '~/Components/Input';
+import { Select } from '~/Components/Select';
 
 type Props = {
 	row: any;
@@ -73,7 +74,7 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 					containerProps={{ className: 'col-span-12 lg:col-span-3' }}
 				/>
 				<div className="col-span-12 lg:col-span-3">
-					<SelectNew
+					<Select
 						label="Role"
 						menuPosition="fixed"
 						menuPortalTarget={document.body}

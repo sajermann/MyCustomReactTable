@@ -1,17 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Column, ColumnDef, Row } from '@tanstack/react-table';
-import { SelectNew } from '~/Components/SelectNew';
+
+import { Select } from '~/Components/Select';
 import { Input } from '~/Components/Input';
 import { Button } from '~/Components/Button';
 import { Popover } from '~/Components/Popover';
 import { Icons } from '~/Components/Icons';
 import { SuperFilter } from '~/Components/Filter/SuperFilter';
 import { TFilterActive } from '~/Types/TFilterActive';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { useColumns } from '../../Hooks/UseColumns';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { useColumns } from '~/Hooks/UseColumns';
 
 type Props = {
 	column: Column<any, any>;
@@ -57,7 +58,7 @@ function FilterId({ column }: Props) {
 			<>
 				<div className="flex flex-col gap-4">
 					<div className="w-48">
-						<SelectNew
+						<Select
 							isClearable
 							options={options}
 							value={options.find(item => item.value === selectType)?.value}
@@ -156,7 +157,7 @@ function FilterName({ column, data }: Props2) {
 			}
 		>
 			<>
-				<SelectNew
+				<Select
 					placeholder={translate('FILTER_NAMES')}
 					menuPosition="fixed"
 					menuPortalTarget={document.body}

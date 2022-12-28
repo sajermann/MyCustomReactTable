@@ -11,11 +11,12 @@ import {
 import { useVirtualizer as useVirtual } from '@tanstack/react-virtual';
 
 import { useDarkMode } from '~/Hooks/UseDarkMode';
-import { useTranslation } from '../../../Hooks/UseTranslation';
-import { LoadingBar } from '../../LoadingBar';
-import styles from './index.module.css';
-import { log } from '../../../Utils/Log';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { LoadingBar } from '~/Components/LoadingBar';
+import { log } from '~/Utils/Log';
 import { Td } from '../Td';
+
+import styles from './index.module.css';
 
 type Props<T> = {
 	table: Table<any>;

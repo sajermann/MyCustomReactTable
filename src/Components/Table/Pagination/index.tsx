@@ -5,7 +5,7 @@ import { Button } from '~/Components/Button';
 
 import { Icons } from '~/Components/Icons';
 import { Input } from '~/Components/Input';
-import { SelectNew } from '~/Components/SelectNew';
+import { Select } from '~/Components/Select';
 
 type Props<T> = {
 	table: Table<T>;
@@ -138,7 +138,7 @@ export function Pagination<T>({
 					<>
 						<div>Linhas</div>
 						<div>
-							<SelectNew
+							<Select
 								isSearchable={false}
 								isDisabled={disabledActions}
 								value={

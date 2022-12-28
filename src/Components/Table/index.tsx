@@ -20,13 +20,14 @@ import {
 } from '@tanstack/react-table';
 import { TPagination } from '~/Types/TPagination';
 import { TSelection } from '~/Types/TSelection';
-import { Checkbox } from '../Checkbox';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { Checkbox } from '~/Components/Checkbox';
 
-import styles from './index.module.css';
-import { useTranslation } from '../../Hooks/UseTranslation';
 import { Thead } from './Thead';
 import { Tbody } from './Tbody';
 import { Pagination } from './Pagination';
+
+import styles from './index.module.css';
 
 type Props<T, U = undefined> = {
 	selection?: TSelection<T>;

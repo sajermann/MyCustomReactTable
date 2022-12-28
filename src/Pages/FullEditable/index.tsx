@@ -1,15 +1,14 @@
-/* eslint-disable react/button-has-type */
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
-import { Table } from '../../Components/Table';
-import { TPerson } from '../../Types/TPerson';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { makeData } from '../../Utils/MakeData';
-import { Datepicker } from '../../Components/Datepicker';
-import { Input } from '../../Components/Input';
-import { SelectNew } from '../../Components/SelectNew';
-import { Checkbox } from '../../Components/Checkbox';
+
+import { Table } from '~/Components/Table';
+import { TPerson } from '~/Types/TPerson';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { makeData } from '~/Utils/MakeData';
+import { Datepicker } from '~/Components/Datepicker';
+import { Input } from '~/Components/Input';
+import { Select } from '~/Components/Select';
+import { Checkbox } from '~/Components/Checkbox';
 
 const DEFAULT_OPTIONS = [
 	{
@@ -135,7 +134,7 @@ export default function FullEditable() {
 				size: 100,
 				align: 'center',
 				cell: info => (
-					<SelectNew
+					<Select
 						menuPosition="fixed"
 						menuPortalTarget={document.body}
 						defaultValue={

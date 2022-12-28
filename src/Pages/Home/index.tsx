@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+
 import { Footer } from '~/Components/Footer';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { Button } from '../../Components/Button';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { Button } from '~/Components/Button';
 
 export default function Home() {
 	const { translate } = useTranslation();

@@ -1,105 +1,125 @@
-import {
-	CheckIcon,
-	ChevronDownIcon,
-	ChevronUpIcon,
-} from '@radix-ui/react-icons';
-import * as SelectPrimitive from '@radix-ui/react-select';
-import { DetailedHTMLProps, HTMLAttributes, LabelHTMLAttributes } from 'react';
-import { ContainerInput } from '../ContainerInput';
+import ReactSelect, { OptionsOrGroups } from 'react-select';
 
-function cx(...rest: string[]) {
-	return rest.join(' ');
-}
-
-type Props<T> = {
-	items: T[];
-	textProp: keyof T;
-	defaultValue?: T;
-	placeholder?: string;
-	onChange?: (data: T) => void;
+type Props = {
+	isClearable?: boolean;
+	isDisabled?: boolean;
+	isLoading?: boolean;
+	isSearchable?: boolean;
 	id?: string;
 	label?: string;
-	labelProps?: DetailedHTMLProps<
-		LabelHTMLAttributes<HTMLLabelElement>,
-		HTMLLabelElement
-	>;
-	containerProps?: DetailedHTMLProps<
-		HTMLAttributes<HTMLDivElement>,
-		HTMLDivElement
-	>;
+	placeholder?: string;
+	value?: unknown;
+	defaultValue?: string;
+	options: OptionsOrGroups<unknown, any>;
+	onChange?: (data: { target: { id?: string; value: string } }) => void;
+	isMulti?: {
+		onChange: (data: { target: { id?: string; value: string[] } }) => void;
+		value?: string[];
+	};
+
+	menuPosition?: 'fixed' | 'absolute';
+	menuPortalTarget?: HTMLElement | null;
 };
 
-export function Select<T>({
-	items,
-	textProp,
+export function Select({
+	isClearable,
+	isDisabled,
+	isLoading,
+	isSearchable,
+	options,
+	id,
+	placeholder,
+	label,
+	value,
 	defaultValue,
 	onChange,
-	placeholder,
-	id,
-	label,
-	labelProps,
-	containerProps,
-}: Props<T>) {
-	function onChangeInternal(e: string) {
+	isMulti,
+	menuPosition,
+	menuPortalTarget,
+	...rest
+}: Props) {
+	function handleOnChange(e: unknown) {
+		if (!e && onChange) {
+			onChange({ target: { value: '', id } });
+			return;
+		}
+
+		if (isMulti) {
+			const dataArray = e as { value: string }[];
+			const onlyValue = dataArray.map(item => item.value);
+			isMulti.onChange({ target: { value: onlyValue, id } });
+			return;
+		}
+
+		const { value: valueNow } = e as { value: string };
 		if (onChange) {
-			onChange(JSON.parse(e));
+			onChange({ target: { value: valueNow, id } });
 		}
 	}
+
+	function getValue() {
+		if (isMulti && isMulti.value) {
+			const optionsTemp: { value: string; label: string }[] = [];
+			for (const valueTemp of isMulti.value) {
+				const result = options.find(opt => opt.value === valueTemp);
+				if (result) {
+					optionsTemp.push(result);
+				}
+			}
+
+			return optionsTemp;
+		}
+		return options.find(item => item.value === value);
+	}
+
 	return (
-		<ContainerInput
-			containerProps={containerProps}
-			label={label}
-			labelProps={labelProps}
-			id={id}
-		>
-			<SelectPrimitive.Root
-				defaultValue={JSON.stringify(defaultValue)}
-				onValueChange={onChangeInternal}
-			>
-				<SelectPrimitive.Trigger asChild id={id}>
-					<button
-						type="button"
-						className="flex items-center rounded border-2 p-1"
-					>
-						<div className="flex-1 text-left">
-							<SelectPrimitive.Value placeholder={placeholder} />
-						</div>
-						<SelectPrimitive.Icon>
-							<ChevronDownIcon />
-						</SelectPrimitive.Icon>
-					</button>
-				</SelectPrimitive.Trigger>
-				<SelectPrimitive.Content className="z-[1]">
-					<SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700 dark:text-gray-300">
-						<ChevronUpIcon />
-					</SelectPrimitive.ScrollUpButton>
-					<SelectPrimitive.Viewport className="bg-white dark:bg-gray-800 p-2 rounded-lg shadow-lg">
-						<SelectPrimitive.Group>
-							{items.map(item => (
-								<SelectPrimitive.Item
-									key={JSON.stringify(item)}
-									value={JSON.stringify(item)}
-									className={cx(
-										'relative flex items-center px-8 py-2 rounded-md text-sm text-gray-700 dark:text-gray-300 font-medium focus:bg-gray-100 dark:focus:bg-gray-900',
-										'radix-disabled:opacity-50',
-										'focus:outline-none select-none'
-									)}
-								>
-									<SelectPrimitive.ItemText>
-										{String(item[textProp])}
-									</SelectPrimitive.ItemText>
-									<SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
-										<CheckIcon />
-									</SelectPrimitive.ItemIndicator>
-								</SelectPrimitive.Item>
-							))}
-						</SelectPrimitive.Group>
-					</SelectPrimitive.Viewport>
-					<SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700 dark:text-gray-300">
-						<ChevronDownIcon />
-					</SelectPrimitive.ScrollDownButton>
-				</SelectPrimitive.Content>
-			</SelectPrimitive.Root>
-		</ContainerInput>
+		<div {...rest}>
+			{label && (
+				<div className="mb-2">
+					<label htmlFor={id}>{label}</label>
+				</div>
+			)}
+
+			<ReactSelect
+				isMulti={!!isMulti}
+				menuPosition={menuPosition}
+				menuPortalTarget={menuPortalTarget}
+				loadingMessage={() => 'Carregando...'}
+				noOptionsMessage={() => 'Não há dados'}
+				key={`react-select-${value}-${label}`}
+				id={id}
+				className="basic-single"
+				classNamePrefix="select"
+				defaultValue={options.find(item => item.value === defaultValue)}
+				isDisabled={isDisabled}
+				isLoading={isLoading}
+				isClearable={isClearable}
+				isSearchable={isSearchable}
+				options={options}
+				placeholder={placeholder}
+				onChange={handleOnChange}
+				value={getValue()}
+				styles={{
+					control: baseStyles => ({
+						...baseStyles,
+					}),
+					menu: baseStyles => ({
+						...baseStyles,
+					}),
+					option: (baseStyles, state) => ({
+						...baseStyles,
+						color: state.isSelected ? '#fff' : '#6C757D',
+					}),
+					singleValue: baseStyles => ({
+						...baseStyles,
+						color: '#6C757D',
+					}),
+					input: baseStyles => ({
+						...baseStyles,
+						color: '#6C757D',
+					}),
+				}}
+			/>
+		</div>
 	);
 }

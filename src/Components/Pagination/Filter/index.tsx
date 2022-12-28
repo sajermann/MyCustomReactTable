@@ -1,9 +1,10 @@
 import { ChangeEvent, useState } from 'react';
-import { useTranslation } from '../../../Hooks/UseTranslation';
-import { objectToQuery } from '../../../Utils/ObjectToQuery';
-import { Button } from '../../Button';
-import { Input } from '../../Input';
-import { SelectNew } from '../../SelectNew';
+
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { objectToQuery } from '~/Utils/ObjectToQuery';
+import { Button } from '~/Components/Button';
+import { Input } from '~/Components/Input';
+import { Select } from '~/Components/Select';
 
 const DEFAULT_FILTER = {
 	name: '',
@@ -60,7 +61,7 @@ export function Filter({
 				}}
 			/>
 			<div className="col-span-4 lg:col-span-4">
-				<SelectNew
+				<Select
 					menuPosition="fixed"
 					menuPortalTarget={document.body}
 					placeholder={translate('IS_ACTIVE')}
