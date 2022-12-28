@@ -82,6 +82,7 @@
 		"DRAG_AND_DROP_FOR_CHANGE_COLUMN_ORDER": "Drag and drop for change column order",
 		"COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED": "Column order with state fully controlled",
 		"ORDER": "Order",
-		"PRINT_ONLY_TABLE": "Print only table"
+		"PRINT_ONLY_TABLE": "Print only table",
+		"SEARCH_ALL_COLUMNS...": "Search all columns..."
 	}
 }

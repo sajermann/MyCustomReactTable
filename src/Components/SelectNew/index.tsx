@@ -88,7 +88,7 @@ export function SelectNew({
 				noOptionsMessage={() => 'Não há dados'}
 				key={`react-select-${value}-${label}`}
 				id={id}
-				className="basic-single bg-primary-300"
+				className="basic-single"
 				classNamePrefix="select"
 				defaultValue={options.find(item => item.value === defaultValue)}
 				isDisabled={isDisabled}
@@ -102,27 +102,21 @@ export function SelectNew({
 				styles={{
 					control: baseStyles => ({
 						...baseStyles,
-						background: 'gray',
-						border: 'gray',
 					}),
 					menu: baseStyles => ({
 						...baseStyles,
-						background: 'gray',
-						borderColor: 'gray',
 					}),
 					option: (baseStyles, state) => ({
 						...baseStyles,
-						background: state.isFocused ? '#996DFF' : '',
-
-						color: '#fff',
+						color: state.isSelected ? '#fff' : '#6C757D',
 					}),
 					singleValue: baseStyles => ({
 						...baseStyles,
-						color: '#fff',
+						color: '#6C757D',
 					}),
 					input: baseStyles => ({
 						...baseStyles,
-						color: '#fff',
+						color: '#6C757D',
 					}),
 				}}
 			/>

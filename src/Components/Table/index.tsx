@@ -117,11 +117,12 @@ export function Table<T, U = undefined>({
 								{...{ disabled: selection.disableSelectionRow !== undefined }}
 							/>
 						),
-					size: 60,
-					minSize: 60,
-					maxSize: 60,
+					size: 50,
+					minSize: 50,
+					maxSize: 50,
 					align: 'center',
 					enableSorting: false,
+					enableResizing: false,
 					cell: ({ row }: CellContext<T, unknown>) => (
 						<Checkbox
 							containerProps={{
@@ -147,6 +148,8 @@ export function Table<T, U = undefined>({
 					header: translate('ACTION'),
 					minSize: 50,
 					size: 50,
+					enableSorting: false,
+					enableResizing: false,
 					cell: ({ row }: CellContext<T, unknown>) => (
 						<div className="w-full flex items-center justify-center">
 							<button
@@ -160,7 +163,6 @@ export function Table<T, U = undefined>({
 							</button>
 						</div>
 					),
-					enableResizing: false,
 				},
 			];
 			result.push(t as unknown as ColumnDef<T, unknown>);

@@ -80,13 +80,12 @@ export function Checkbox({
 
 	function verifyClass() {
 		const classes = [
-			'rounded h-5 w-5 border-[1px] border-black disabled:cursor-not-allowed disabled:!opacity-50',
+			'rounded h-5 w-5 border-[1px] border-black disabled:cursor-not-allowed disabled:!opacity-50 bg-white',
 		];
 
 		if (situation === 'checked' || situation === 'indeterminate') {
-			classes.push('bg-primary-500');
+			classes.push('!bg-primary-500');
 		}
-
 		return classes.join(' ');
 	}
 

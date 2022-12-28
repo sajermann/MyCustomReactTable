@@ -4,7 +4,7 @@ import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { Datepicker } from '../Datepicker';
 import { Input } from '../Input';
-import { Select } from '../Select';
+import { SelectNew } from '../SelectNew';
 
 type Props = {
 	row: any;
@@ -72,16 +72,19 @@ export function UpdateRowExpanded({ row, onSave }: Props) {
 					onChange={handleChange}
 					containerProps={{ className: 'col-span-12 lg:col-span-3' }}
 				/>
-				<Select
-					defaultValue={ROLES.find(item => item.name === row.original.role)}
-					items={ROLES}
-					textProp="name"
-					onChange={onChange}
-					placeholder="Selecione a Role"
-					label="Role"
-					id="role"
-					containerProps={{ className: 'col-span-12 lg:col-span-3' }}
-				/>
+				<div className="col-span-12 lg:col-span-3">
+					<SelectNew
+						label="Role"
+						menuPosition="fixed"
+						menuPortalTarget={document.body}
+						defaultValue={
+							ROLES.find(item => item.value === formData.role)?.value
+						}
+						options={ROLES}
+						onChange={e => handleChange(e as ChangeEvent<HTMLInputElement>)}
+						id="role"
+					/>
+				</div>
 
 				<Checkbox
 					defaultChecked={row.original.isActive}

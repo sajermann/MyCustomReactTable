@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { useColumns } from '../../Hooks/UseColumns';
-import { Button } from '../../Components/Button';
+
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { useColumns } from '~/Hooks/UseColumns';
+import { Button } from '~/Components/Button';
 
 export default function Loading() {
 	const { translate } = useTranslation();
@@ -28,7 +29,7 @@ export default function Loading() {
 	}
 
 	return (
-		<div className="p-4">
+		<div className="p-4 flex flex-col gap-2">
 			<div className="flex gap-2">
 				<Button onClick={() => handleLoading(true)}>
 					{translate('LOADING_WITH_DATA')}

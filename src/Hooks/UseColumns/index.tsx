@@ -1,4 +1,4 @@
-import { formatDate } from '@sajermann/utils/FormatDate';
+import { formatDate, stringToDate } from '@sajermann/utils/FormatDate';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { Icons } from '../../Components/Icons';
@@ -11,7 +11,7 @@ export function useColumns(columnSizeDefault?: Record<string, number>) {
 		() => [
 			{
 				accessorKey: 'id',
-				header: 'ID',
+				header: 'Id',
 				minSize: 100,
 				size: 100,
 				align: 'center',
@@ -56,6 +56,11 @@ export function useColumns(columnSizeDefault?: Record<string, number>) {
 				minSize: 100,
 				size: columnSizeDefault ? columnSizeDefault?.birthday : 100,
 				align: 'center',
+				sortingFn: (rowA, rowB, columnId) => {
+					const dateA = stringToDate(rowA.getValue(columnId));
+					const dateB = stringToDate(rowB.getValue(columnId));
+					return dateB < dateA ? 1 : -1;
+				},
 			},
 			{
 				accessorKey: 'email',

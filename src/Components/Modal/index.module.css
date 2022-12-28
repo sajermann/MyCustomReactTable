@@ -26,10 +26,22 @@
 	border-bottom: 2px solid #dee2e6;
 }
 
+:global(.dark) .header {
+	@apply bg-slate-900;
+}
+
 .title {
 	@apply text-primary-500 font-bold;
 }
 
+:global(.dark) .title {
+	@apply text-white;
+}
+
 .main {
 	@apply px-6 py-3;
+}
+
+:global(.dark) .main {
+	@apply bg-gray-800;
 }
