@@ -70,6 +70,10 @@ export default function Home() {
 			translate: 'PRINT',
 			url: '/print',
 		},
+		{
+			translate: 'EXPORT',
+			url: '/export',
+		},
 	];
 
 	return (

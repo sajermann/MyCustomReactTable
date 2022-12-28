@@ -84,6 +84,8 @@
 		"ORDER": "Order",
 		"PRINT_ONLY_TABLE": "Print only table",
 		"SEARCH_ALL_COLUMNS...": "Search all columns...",
-		"RESET": "Reset"
+		"RESET": "Reset",
+		"EXPORT_DATA": "Export Data",
+		"EXPORT": "Export"
 	}
 }

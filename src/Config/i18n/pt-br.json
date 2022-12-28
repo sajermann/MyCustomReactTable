@@ -84,6 +84,8 @@
 		"ORDER": "Ordem",
 		"PRINT_ONLY_TABLE": "Imprimir apenas a tabela",
 		"SEARCH_ALL_COLUMNS...": "Pesquisar em todas colunas...",
-		"RESET": "Restaurar"
+		"RESET": "Restaurar",
+		"EXPORT_DATA": "Exportar Dados",
+		"EXPORT": "Exportar"
 	}
 }

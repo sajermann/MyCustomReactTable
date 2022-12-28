@@ -14,6 +14,7 @@ import Resizing from '~/Pages/Resizing';
 import Selection from '~/Pages/Selection';
 import Sort from '~/Pages/Sort';
 import Virtualized from '~/Pages/Virtualized';
+import Export from '../../Pages/Export';
 import { useTranslation } from '../UseTranslation';
 
 export function useRoutesConfig() {
@@ -74,6 +75,11 @@ export function useRoutesConfig() {
 			path: '/print',
 			element: <Print />,
 			title: translate('PRINT'),
+		},
+		{
+			path: '/export',
+			element: <Export />,
+			title: translate('EXPORT'),
 		},
 	];
 
