@@ -61,6 +61,8 @@ export function Filter({
 			/>
 			<div className="col-span-4 lg:col-span-4">
 				<SelectNew
+					menuPosition="fixed"
+					menuPortalTarget={document.body}
 					placeholder={translate('IS_ACTIVE')}
 					isSearchable={false}
 					label={translate('IS_ACTIVE')}

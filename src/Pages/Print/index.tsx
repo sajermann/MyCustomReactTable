@@ -38,7 +38,7 @@ export default function Print() {
 	}, []);
 
 	return (
-		<div className="p-4">
+		<div className="p-4 flex flex-col gap-2">
 			<div className="flex flex-col w-48 gap-2">
 				{translate('PRINT_ONLY_TABLE')}
 				<Button disabled={isPrinting} onClick={handlePreparePrint}>

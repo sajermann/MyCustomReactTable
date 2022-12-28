@@ -28,7 +28,7 @@ export default function ColumnOrder() {
 	}, []);
 
 	return (
-		<div className="p-4">
+		<div className="p-4 flex flex-col gap-2">
 			<div>{translate('COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED')}</div>
 
 			<div className="flex flex-col justify-center items-center">

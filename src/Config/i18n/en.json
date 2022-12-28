@@ -83,6 +83,7 @@
 		"COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED": "Column order with state fully controlled",
 		"ORDER": "Order",
 		"PRINT_ONLY_TABLE": "Print only table",
-		"SEARCH_ALL_COLUMNS...": "Search all columns..."
+		"SEARCH_ALL_COLUMNS...": "Search all columns...",
+		"RESET": "Reset"
 	}
 }

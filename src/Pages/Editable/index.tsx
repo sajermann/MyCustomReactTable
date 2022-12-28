@@ -3,17 +3,18 @@ import { ColumnDef } from '@tanstack/react-table';
 import { formatDate } from '@sajermann/utils/FormatDate';
 import { Button } from '@sajermann/ui-react';
 import { FloppyDiskBack, Pen, XCircle } from 'phosphor-react';
+
 import { useColumns } from '~/Hooks/UseColumns';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { Icons } from '../../Components/Icons';
-import { Input } from '../../Components/Input';
-import { Datepicker } from '../../Components/Datepicker';
-import { Select } from '../../Components/Select';
-import { ROLES } from '../../Constants/Roles';
-import { Checkbox } from '../../Components/Checkbox';
+import { SelectNew } from '~/Components/SelectNew';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { Icons } from '~/Components/Icons';
+import { Input } from '~/Components/Input';
+import { Datepicker } from '~/Components/Datepicker';
+import { ROLES } from '~/Constants/Roles';
+import { Checkbox } from '~/Components/Checkbox';
 
 export default function Editable() {
 	const { translate } = useTranslation();
@@ -32,17 +33,6 @@ export default function Editable() {
 		setUpdateLine(prev => {
 			if (!prev) return null;
 			return { ...prev, data: { ...prev?.data, [id]: value } };
-		});
-	}
-
-	function onChangeSelect(e: { id: number; name: string }) {
-		const newRole = e.name as 'Admin' | 'User' | 'Dev';
-		setUpdateLine(prev => {
-			if (!prev) return null;
-			return {
-				...prev,
-				data: { ...prev?.data, role: newRole },
-			};
 		});
 	}
 
@@ -176,14 +166,16 @@ export default function Editable() {
 				size: 100,
 				align: 'center',
 				cellEdit: () => (
-					<Select
-						defaultValue={ROLES.find(
-							item => item.name === updateLine?.data.role
-						)}
-						items={ROLES}
-						textProp="name"
-						onChange={onChangeSelect}
+					<SelectNew
+						menuPosition="fixed"
+						menuPortalTarget={document.body}
+						options={ROLES}
+						value={
+							ROLES.find(item => item.value === updateLine?.data.role)?.value
+						}
+						onChange={e => handleInput(e as ChangeEvent<HTMLInputElement>)}
 						id="role"
+						placeholder={translate('FILTER_TYPE')}
 					/>
 				),
 			},

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+
 import { Checkbox } from '~/Components/Checkbox';
-import { Table } from '../../Components/Table';
-import { useTranslation } from '../../Hooks/UseTranslation';
-import { TPerson } from '../../Types/TPerson';
-import { makeData } from '../../Utils/MakeData';
-import { useColumns } from '../../Hooks/UseColumns';
+import { Table } from '~/Components/Table';
+import { useTranslation } from '~/Hooks/UseTranslation';
+import { TPerson } from '~/Types/TPerson';
+import { makeData } from '~/Utils/MakeData';
+import { useColumns } from '~/Hooks/UseColumns';
 
 export default function ColumnVisibility() {
 	const { translate } = useTranslation();
@@ -81,7 +82,7 @@ export default function ColumnVisibility() {
 	];
 
 	return (
-		<div className="p-4">
+		<div className="p-4 flex flex-col gap-2">
 			{translate('COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED')}
 
 			<div className="flex flex-col justify-center text-center">
