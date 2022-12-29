@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { formatDate } from '@sajermann/utils/FormatDate';
-import { Button } from '@sajermann/ui-react';
 import { FloppyDiskBack, Pen, XCircle } from 'phosphor-react';
 
 import { useColumns } from '~/Hooks/UseColumns';
@@ -15,6 +14,7 @@ import { Input } from '~/Components/Input';
 import { Datepicker } from '~/Components/Datepicker';
 import { ROLES } from '~/Constants/Roles';
 import { Checkbox } from '~/Components/Checkbox';
+import { Button } from '~/Components/Button';
 
 export default function Editable() {
 	const { translate } = useTranslation();
@@ -57,8 +57,6 @@ export default function Editable() {
 						<Button
 							style={{ minWidth: '50px', height: '50px', borderRadius: '50%' }}
 							disabled={isLoading}
-							colorStyle="Primary"
-							variant="Outlined"
 							type="button"
 							onClick={() =>
 								setUpdateLine({
@@ -66,8 +64,9 @@ export default function Editable() {
 									data: { ...info.row.original },
 								})
 							}
-							endIcon={<Pen size={30} />}
-						/>
+						>
+							<Pen size={30} />
+						</Button>
 					</div>
 				),
 				cellEdit: () => (
@@ -75,21 +74,19 @@ export default function Editable() {
 						<Button
 							style={{ minWidth: '50px', height: '50px', borderRadius: '50%' }}
 							disabled={isLoading}
-							colorStyle="Success"
-							variant="Outlined"
 							type="button"
 							onClick={handleSave}
-							endIcon={<FloppyDiskBack size={30} />}
-						/>
+						>
+							<FloppyDiskBack size={30} />
+						</Button>
 						<Button
 							style={{ minWidth: '50px', height: '50px', borderRadius: '50%' }}
 							disabled={isLoading}
-							colorStyle="Secondary"
-							variant="Outlined"
 							type="button"
 							onClick={() => setUpdateLine(null)}
-							endIcon={<XCircle size={30} />}
-						/>
+						>
+							<XCircle size={30} />
+						</Button>
 					</div>
 				),
 			},

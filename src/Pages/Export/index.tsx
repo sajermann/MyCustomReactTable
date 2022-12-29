@@ -9,11 +9,13 @@ import { Button } from '~/Components/Button';
 import { formatDate } from '@sajermann/utils/FormatDate';
 import { DefProps, exportTo } from '~/Utils/Export';
 import { Icons } from '~/Components/Icons';
+import { Input } from '~/Components/Input';
 
 export default function Export() {
 	const { translate } = useTranslation();
 	const [data, setData] = useState<TPerson[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [globalFilter, setGlobalFilter] = useState('');
 
 	const { columns } = useColumns();
 
@@ -110,7 +112,7 @@ export default function Export() {
 	return (
 		<div className="p-4 flex flex-col gap-2">
 			<div className="flex flex-col w-48 gap-2">
-				{translate('EXPORT_DATA')}
+				{translate('UNDER_CONSTRUCTION')}
 				<Button
 					onClick={() => exportTo.excel({ data, defColumns: defForExcel })}
 				>
@@ -119,9 +121,23 @@ export default function Export() {
 					</div>
 					Excel
 				</Button>
+				<Input
+					value={globalFilter ?? ''}
+					onChange={e => setGlobalFilter(e.target.value)}
+					placeholder={translate('SEARCH_ALL_COLUMNS...')}
+					type="search"
+				/>
 			</div>
 
-			<Table isLoading={isLoading} columns={columns} data={data} />
+			<Table
+				isLoading={isLoading}
+				columns={columns}
+				data={data}
+				globalFilter={{
+					filter: globalFilter,
+					setFilter: setGlobalFilter,
+				}}
+			/>
 		</div>
 	);
 }

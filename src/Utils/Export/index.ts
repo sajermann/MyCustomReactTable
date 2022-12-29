@@ -1,9 +1,7 @@
-import saveAs from 'file-saver';
 import * as XLSX from 'xlsx-js-style';
 
 const EXCEL_TYPE =
 	'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
 
 type TCellProps<T> = {
 	valueCell: unknown;
@@ -95,8 +93,11 @@ function excel<T>({ data, defColumns }: Props<T>) {
 
 	const eb = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 	const blob = new Blob([eb], { type: EXCEL_TYPE });
-
-	saveAs(blob, `Data ${EXCEL_EXTENSION}`);
+	const link = document.createElement('a');
+	link.href = URL.createObjectURL(blob);
+	link.download = `Data-${new Date().toISOString()}.xlsx`;
+	link.click();
+	URL.revokeObjectURL(link.href);
 }
 
 export const exportTo = { excel };
