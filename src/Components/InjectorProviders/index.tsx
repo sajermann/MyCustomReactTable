@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export function InjectorProviders({ children }: { children: React.ReactNode }) {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename="MyCustomReactTable">
 			<QueryClientProvider
 				client={
 					new QueryClient({
