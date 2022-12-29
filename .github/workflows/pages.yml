@@ -32,7 +32,7 @@ jobs:
       - name: NPM CI
         run: npm i
       - name: Build
-        run: npm run build:vite
+        run: npm run build
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
