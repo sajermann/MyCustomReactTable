@@ -56,7 +56,7 @@ export function Tbody<T>({
 		getScrollElement: () => tableContainerRef.current,
 		count: rows.length,
 		estimateSize: () => 50,
-		enableSmoothScroll: true,
+		// enableSmoothScroll: true,
 	});
 	const { getVirtualItems, getTotalSize } = rowVirtualizer;
 
