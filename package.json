@@ -36,6 +36,7 @@
     "react-select": "^5.7.0",
     "react-switch": "^7.0.0",
     "react-to-print": "^2.14.10",
+    "vite-plugin-pages": "^0.28.0",
     "xlsx-js-style": "^1.2.0"
   },
   "devDependencies": {
