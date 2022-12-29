@@ -111,22 +111,41 @@ export default function Export() {
 
 	return (
 		<div className="p-4 flex flex-col gap-2">
-			<div className="flex flex-col w-48 gap-2">
+			<div className="flex flex-col gap-2 w-full">
 				{translate('UNDER_CONSTRUCTION')}
-				<Button
-					onClick={() => exportTo.excel({ data, defColumns: defForExcel })}
-				>
-					<div className="w-5">
-						<Icons.Excel />
+				<div className="grid grid-cols-12 gap-2 w-full">
+					<div className="col-span-6">
+						<Input
+							value={globalFilter ?? ''}
+							onChange={e => setGlobalFilter(e.target.value)}
+							placeholder={translate('SEARCH_ALL_COLUMNS...')}
+							type="search"
+						/>
 					</div>
-					Excel
-				</Button>
-				<Input
-					value={globalFilter ?? ''}
-					onChange={e => setGlobalFilter(e.target.value)}
-					placeholder={translate('SEARCH_ALL_COLUMNS...')}
-					type="search"
-				/>
+
+					<div className="col-span-6">
+						<div className="flex gap-2 justify-end">
+							<Button
+								onClick={() =>
+									exportTo.excel({ data, defColumns: defForExcel })
+								}
+							>
+								<div className="w-5">
+									<Icons.Excel />
+								</div>
+								Excel
+							</Button>
+							<Button
+								onClick={() => exportTo.csv({ data, defColumns: defForExcel })}
+							>
+								<div className="w-7">
+									<Icons.Csv />
+								</div>
+								Csv
+							</Button>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<Table

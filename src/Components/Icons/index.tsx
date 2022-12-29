@@ -745,6 +745,114 @@ function Save({ width, height, color, ...rest }: Props) {
 	);
 }
 
+function Csv({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			xmlns="http://www.w3.org/2000/svg"
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+		>
+			<rect width="256" height="256" fill="none" />
+			<polyline
+				points="172 168 192 216 212 168"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<path
+				d="M80,210.5A21,21,0,0,1,66,216c-12.2,0-22-10.7-22-24s9.8-24,22-24a21,21,0,0,1,14,5.5"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<path
+				d="M112,212a25.2,25.2,0,0,0,15,5c9,0,17-3,17-13,0-16-32-9-32-24,0-8,6-13,15-13a25.2,25.2,0,0,1,15,5"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<path
+				d="M48,128V40a8,8,0,0,1,8-8h96l56,56v40"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<polyline
+				points="152 32 152 88 208 88"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
+function Pen({ width, height, color, ...rest }: Props) {
+	return (
+		<svg
+			{...rest}
+			xmlns="http://www.w3.org/2000/svg"
+			width={width || '100%'}
+			height={height || '100%'}
+			fill={color || 'currentColor'}
+			viewBox="0 0 256 256"
+		>
+			<rect width="256" height="256" fill="none" />
+			<path
+				d="M92.7,216H48a8,8,0,0,1-8-8V163.3a7.9,7.9,0,0,1,2.3-5.6l120-120a8,8,0,0,1,11.4,0l44.6,44.6a8,8,0,0,1,0,11.4l-120,120A7.9,7.9,0,0,1,92.7,216Z"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<line
+				x1="136"
+				y1="64"
+				x2="192"
+				y2="120"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<polyline
+				points="160 192 200 152 192 120"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+			<line
+				x1="40.5"
+				y1="160.5"
+				x2="95.5"
+				y2="215.5"
+				fill="none"
+				stroke={color || 'currentColor'}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="16"
+			/>
+		</svg>
+	);
+}
+
 export const Icons = {
 	Download,
 	Upload,
@@ -772,4 +880,6 @@ export const Icons = {
 	Funnel,
 	Trash,
 	Save,
+	Csv,
+	Pen,
 };

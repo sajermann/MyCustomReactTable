@@ -78,4 +78,14 @@ describe('Components/Icons', () => {
 		const { getByTestId } = render(<Icons.Save data-testid="IconSave" />);
 		expect(getByTestId('IconSave')).toBeInTheDocument();
 	});
+
+	it(`should render icon Csv`, async () => {
+		const { getByTestId } = render(<Icons.Csv data-testid="IconCsv" />);
+		expect(getByTestId('IconCsv')).toBeInTheDocument();
+	});
+
+	it(`should render icon Pen`, async () => {
+		const { getByTestId } = render(<Icons.Pen data-testid="IconPen" />);
+		expect(getByTestId('IconPen')).toBeInTheDocument();
+	});
 });

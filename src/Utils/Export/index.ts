@@ -1,5 +1,13 @@
 import * as XLSX from 'xlsx-js-style';
 
+function download(blob: Blob, filemName: string) {
+	const link = document.createElement('a');
+	link.href = URL.createObjectURL(blob);
+	link.download = filemName;
+	link.click();
+	URL.revokeObjectURL(link.href);
+}
+
 const EXCEL_TYPE =
 	'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 
@@ -36,7 +44,6 @@ function excel<T>({ data, defColumns }: Props<T>) {
 	const dataTemp: Record<string, unknown>[][] = [];
 
 	// Add Header
-
 	for (let i = 0; i < defColumns.length; i += 1) {
 		const styleFn = defColumns[i].styleHeaderCellFn;
 		headerTemp.push({
@@ -51,8 +58,8 @@ function excel<T>({ data, defColumns }: Props<T>) {
 				}),
 		});
 	}
-	// Add Rows
 
+	// Add Rows
 	for (let i = 0; i < data.length; i += 1) {
 		const rowTemp: Record<string, unknown>[] = [];
 		for (const defCol of defColumns) {
@@ -93,11 +100,40 @@ function excel<T>({ data, defColumns }: Props<T>) {
 
 	const eb = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 	const blob = new Blob([eb], { type: EXCEL_TYPE });
-	const link = document.createElement('a');
-	link.href = URL.createObjectURL(blob);
-	link.download = `Data-${new Date().toISOString()}.xlsx`;
-	link.click();
-	URL.revokeObjectURL(link.href);
+	download(blob, `Data-${new Date().toISOString()}.xlsx`);
 }
 
-export const exportTo = { excel };
+function csv<T>({ data, defColumns }: Props<T>) {
+	const resultFinal: Record<string, unknown>[] = [];
+
+	for (let i = 0; i < data.length; i += 1) {
+		let result: Record<string, unknown> = {};
+		for (const item of defColumns) {
+			const valueTemp = item.accessorFn
+				? item.accessorFn({
+						original: data,
+						row: data[i],
+						valueCell: data[i][item.accessor],
+						index: i,
+				  })
+				: data[i][item.accessor];
+			const batata = {
+				[item.header]: valueTemp,
+			};
+			result = {
+				...result,
+				...batata,
+			};
+		}
+		resultFinal.push(result);
+	}
+
+	const ws = XLSX.utils.json_to_sheet(resultFinal);
+	const csvOutput: string = XLSX.utils.sheet_to_csv(ws, { FS: ';' });
+
+	const BOM = new Uint8Array([0xef, 0xbb, 0xbf]); // For special characteres
+	const blob = new Blob([BOM, csvOutput], { type: 'application/csv' });
+	download(blob, `Data-${new Date().toISOString()}.csv`);
+}
+
+export const exportTo = { excel, csv };

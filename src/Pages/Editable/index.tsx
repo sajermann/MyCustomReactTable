@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { formatDate } from '@sajermann/utils/FormatDate';
-import { FloppyDiskBack, Pen, XCircle } from 'phosphor-react';
 
 import { useColumns } from '~/Hooks/UseColumns';
 import { Select } from '~/Components/Select';
@@ -49,8 +48,8 @@ export default function Editable() {
 			{
 				accessorKey: 'id_action',
 				header: translate('ACTIONS'),
-				minSize: 80,
-				size: 80,
+				minSize: 100,
+				size: 100,
 				align: 'center',
 				cell: info => (
 					<div className="w-full flex items-center justify-center">
@@ -65,7 +64,9 @@ export default function Editable() {
 								})
 							}
 						>
-							<Pen size={30} />
+							<div className="w-7">
+								<Icons.Pen />
+							</div>
 						</Button>
 					</div>
 				),
@@ -77,7 +78,9 @@ export default function Editable() {
 							type="button"
 							onClick={handleSave}
 						>
-							<FloppyDiskBack size={30} />
+							<div className="w-7">
+								<Icons.Save />
+							</div>
 						</Button>
 						<Button
 							style={{ minWidth: '50px', height: '50px', borderRadius: '50%' }}
@@ -85,7 +88,9 @@ export default function Editable() {
 							type="button"
 							onClick={() => setUpdateLine(null)}
 						>
-							<XCircle size={30} />
+							<div className="w-7">
+								<Icons.Error />
+							</div>
 						</Button>
 					</div>
 				),
