@@ -4,7 +4,7 @@ import { useTranslation } from '~/Hooks/UseTranslation';
 import { Select } from '~/Components/Select';
 
 const LANGUAGES_LIST = [
-	{ value: 'en', label: 'EN' },
+	{ value: 'en-US', label: 'EN' },
 	{ value: 'pt-BR', label: 'PT-BR' },
 ];
 
