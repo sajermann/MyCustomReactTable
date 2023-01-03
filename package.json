@@ -16,6 +16,7 @@
     "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-popover": "^1.0.2",
     "@radix-ui/react-select": "^1.1.1",
+    "@sajermann/react-input": "^0.0.1",
     "@sajermann/utils": "^0.0.10",
     "@tanstack/match-sorter-utils": "^8.5.14",
     "@tanstack/react-query": "^4.18.0",

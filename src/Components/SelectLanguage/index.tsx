@@ -2,11 +2,7 @@ import { useState } from 'react';
 
 import { useTranslation } from '~/Hooks/UseTranslation';
 import { Select } from '~/Components/Select';
-
-const LANGUAGES_LIST = [
-	{ value: 'en', label: 'EN' },
-	{ value: 'pt-BR', label: 'PT-BR' },
-];
+import { Icons } from '../Icons';
 
 export function SelectLanguage() {
 	const { changeLanguage, currentLanguage } = useTranslation();
@@ -22,6 +18,31 @@ export function SelectLanguage() {
 		setLanguage(value);
 		changeLanguage(value);
 	}
+
+	const LANGUAGES_LIST = [
+		{
+			value: 'en',
+			label: (
+				<div className="flex gap-2 items-center justify-between">
+					<div>EN</div>
+					<div className="w-7">
+						<Icons.Eua />
+					</div>
+				</div>
+			),
+		},
+		{
+			value: 'pt-BR',
+			label: (
+				<div className="flex gap-2 items-center justify-between">
+					<div>PT-BR</div>
+					<div className="w-7">
+						<Icons.Brazil />
+					</div>
+				</div>
+			),
+		},
+	];
 
 	return (
 		<div className="w-36">
