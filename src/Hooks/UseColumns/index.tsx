@@ -68,7 +68,7 @@ export function useColumns(columnSizeDefault?: Record<string, number>) {
 				header: 'Email',
 				minSize: 100,
 				size: columnSizeDefault ? columnSizeDefault?.email : 100,
-				align: 'center',
+				align: 'Center',
 			},
 			{
 				accessorKey: 'role',

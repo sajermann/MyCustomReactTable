@@ -28,6 +28,7 @@ import { Tbody } from './Tbody';
 import { Pagination } from './Pagination';
 
 import styles from './index.module.css';
+import { Tfoot } from './Tfoot';
 
 type Props<T, U = undefined> = {
 	selection?: TSelection<T>;
@@ -258,6 +259,7 @@ export function Table<T, U = undefined>({
 						rowForUpdate={rowForUpdate}
 						disabledVirtualization={disabledVirtualization}
 					/>
+					<Tfoot table={table} />
 				</table>
 			</div>
 			{pagination && (
