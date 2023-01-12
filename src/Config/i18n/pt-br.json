@@ -86,6 +86,9 @@
 		"SEARCH_ALL_COLUMNS...": "Pesquisar em todas colunas...",
 		"RESET": "Restaurar",
 		"EXPORT_DATA": "Exportar Dados",
-		"EXPORT": "Exportar"
+		"EXPORT": "Exportar",
+		"FOOTER": "Rodapé",
+		"PRICE": "Preço",
+		"TOTALS": "Totais"
 	}
 }

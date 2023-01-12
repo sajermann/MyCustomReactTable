@@ -7,7 +7,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "vitest": "vitest --coverage --ui --api.port=56789",
-    "sonar": "npx sonar-scanner -D sonar.login=sqp_fa0efce6c42bfaf80a2ce4af6da98a82935703be"
+    "sonar": "npx sonar-scanner -D sonar.login=sqp_fa0efce6c42bfaf80a2ce4af6da98a82935703be",
+    "reInstall": "@powershell Remove-Item './dist' -Recurse -ErrorAction Continue | echo 'Dist folder not found' && @powershell Remove-Item './node_modules' -Recurse -ErrorAction Continue | echo 'Node Modules folder not found' && @powershell Remove-Item './package-lock.json' -ErrorAction Continue | echo 'Package Lock not found'"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",

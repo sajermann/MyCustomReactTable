@@ -86,6 +86,9 @@
 		"SEARCH_ALL_COLUMNS...": "Search all columns...",
 		"RESET": "Reset",
 		"EXPORT_DATA": "Export Data",
-		"EXPORT": "Export"
+		"EXPORT": "Export",
+		"FOOTER": "Footer",
+		"PRICE": "Price",
+		"TOTALS": "Totals"
 	}
 }
